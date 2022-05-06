@@ -1,5 +1,7 @@
 package creatures;
 
+import elements.Holdable;
+
 public class Circe extends Creature{
 
 	private Holdable[] holdings;
