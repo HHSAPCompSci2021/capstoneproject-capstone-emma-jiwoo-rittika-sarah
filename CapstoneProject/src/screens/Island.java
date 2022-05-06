@@ -1,6 +1,30 @@
 package screens;
 
+import java.util.ArrayList;
+
+import creatures.*;
+import elements.Element;
 
 public class Island extends Screen{
 
+	DrawingSurface surface;
+	Element[][] element;
+	ArrayList<Creature> creatures;
+	Circe circe;
+	int currentTime;
+	
+	
+	public Island() {
+		
+	}
+	
+	public void setElement() {
+		
+	}
+	
+	public void keepTime() {
+		
+	}
+	
+	
 }
