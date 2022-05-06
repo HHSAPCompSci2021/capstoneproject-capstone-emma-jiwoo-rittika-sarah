@@ -1,6 +1,7 @@
 package circeIsland.screens;
 
 import java.util.ArrayList;
+import circeIsland.main.DrawingSurface;
 
 import circeIsland.creatures.*;
 import circeIsland.elements.Element;

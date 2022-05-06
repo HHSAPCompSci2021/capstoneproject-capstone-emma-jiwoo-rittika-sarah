@@ -1,7 +1,6 @@
 package circeIsland.creatures;
-import elements*;
 
-import elements.Holdable;
+import circeIsland.elements.*;
 
 public class Circe extends Creature{
 
