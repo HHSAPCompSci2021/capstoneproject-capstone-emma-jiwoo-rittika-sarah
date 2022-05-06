@@ -3,12 +3,18 @@ package circeIsland.creatures;
 import circeIsland.screens.Island;
 import circeIsland.elements.*;
 
+/**
+ * 
+ * @author Jiwoo Kim
+ */
 public class Creature {
-	int x, y;
-	Island myIsland;
+	private int x, y;
+	private int xVelocity, yVelocity;
+	private Island myIsland;
 	
-	public Creature () {
-		
+	public Creature (int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void move() {
