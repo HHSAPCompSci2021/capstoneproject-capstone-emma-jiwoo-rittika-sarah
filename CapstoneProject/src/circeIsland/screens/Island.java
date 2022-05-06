@@ -5,6 +5,7 @@ import circeIsland.main.DrawingSurface;
 
 import circeIsland.creatures.*;
 import circeIsland.elements.Element;
+import circeIsland.main.DrawingSurface;
 
 public class Island extends Screen{
 
