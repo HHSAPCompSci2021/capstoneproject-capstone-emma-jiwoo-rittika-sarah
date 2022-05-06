@@ -4,6 +4,8 @@ public abstract class Element {
 
 	private int x, y;
 	private boolean isInGrid;
+	private int currentTime;
+	private boolean standable;
 
 	
 	//METHOD
@@ -16,9 +18,7 @@ public abstract class Element {
 		
 	}
 	
-	public void draw() {
-		
-	}
+	public abstract void draw();
 	
-	
+	 
 }
