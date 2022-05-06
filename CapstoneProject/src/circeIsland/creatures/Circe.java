@@ -1,6 +1,8 @@
 package circeIsland.creatures;
 import elements*;
 
+import elements.Holdable;
+
 public class Circe extends Creature{
 
 	private Holdable[] holdings;
