@@ -1,4 +1,4 @@
-package elements;
+package circeIsland.elements;
 
 public class Plant extends Element{
 

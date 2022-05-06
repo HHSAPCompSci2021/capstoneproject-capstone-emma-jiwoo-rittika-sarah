@@ -1,7 +1,8 @@
-package screens;
+package circeIsland.screens;
 
 import java.awt.Rectangle;
-import elements.Holdable;
+
+import circeIsland.elements.Holdable;
 
 public class WorkTable extends Screen{
 

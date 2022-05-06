@@ -1,4 +1,4 @@
-package screens;
+package circeIsland.screens;
 
 public class Screen {
 

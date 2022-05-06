@@ -1,4 +1,5 @@
-package creatures;
+package circeIsland.creatures;
+import elements*;
 
 public class Circe extends Creature{
 

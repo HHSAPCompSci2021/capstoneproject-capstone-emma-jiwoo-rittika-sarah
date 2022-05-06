@@ -1,9 +1,9 @@
-package screens;
+package circeIsland.screens;
 
 import java.util.ArrayList;
 
-import creatures.*;
-import elements.Element;
+import circeIsland.creatures.*;
+import circeIsland.elements.Element;
 
 public class Island extends Screen{
 
