@@ -17,7 +17,7 @@ public class Island extends Screen{
 	
 	
 	public Island() {
-		
+		super(5, 5);
 	}
 	
 	public void setElement() {
@@ -28,5 +28,12 @@ public class Island extends Screen{
 		
 	}
 	
+	public int getHeight() {
+		return super.HEIGHT;
+	}
+	
+	public int getWidth() {
+		return super.WIDTH;
+	}
 	
 }

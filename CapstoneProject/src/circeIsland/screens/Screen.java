@@ -2,7 +2,14 @@ package circeIsland.screens;
 
 public class Screen {
 
-	public int height, width;
+	public final int HEIGHT;
+	public final int WIDTH;
+	
+	//CONSTRUCTOR
+	public Screen(int width, int height) {
+		this.HEIGHT = width;
+		this.WIDTH = height;
+	}
 	
 	
 	//METHODS
