@@ -1,5 +1,6 @@
 package circeIsland.screens;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import circeIsland.main.DrawingSurface;
 
@@ -9,15 +10,16 @@ import circeIsland.main.DrawingSurface;
 
 public class Island extends Screen{
 
-	DrawingSurface surface;
-	Element[][] element;
-	ArrayList<Creature> creatures;
-	Circe circe;
-	int currentTime;
+	private DrawingSurface surface;
+	private Element[][] element;
+	private ArrayList<Creature> creatures;
+	private Circe circe;
+	private int currentTime;
 	
 	
-	public Island() {
-		super(5, 5);
+	public Island(DrawingSurface surface) {
+		super(800,600);
+		this.surface = surface;
 	}
 	
 	public void setElement() {
@@ -35,5 +37,6 @@ public class Island extends Screen{
 	public int getWidth() {
 		return super.WIDTH;
 	}
+	
 	
 }

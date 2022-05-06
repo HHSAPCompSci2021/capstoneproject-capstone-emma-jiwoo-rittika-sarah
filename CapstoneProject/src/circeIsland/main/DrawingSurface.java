@@ -1,19 +1,25 @@
 package circeIsland.main;
 
-
-
-
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
+import circeIsland.screens.*;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
 
 public class DrawingSurface extends PApplet {
 	
+	private Island island;
+	private WorkTable workshop;
+	private Screen current;
+	
+	
 	public DrawingSurface() {
-		
+		island = new Island(this);
+		workshop = new WorkTable(this);
+		current = workshop;
 	}
 	
 	// The statements in the setup() function 
@@ -32,7 +38,14 @@ public class DrawingSurface extends PApplet {
 		textSize(12);
 		fill(0);
 		
-		stroke(0);	
+		stroke(0);
+		if(current.equals(workshop)) {
+			workshop.draw();
+		}
+		if(current.equals(island)) {
+			island.draw();
+		}
+		
 	}
 	
 	
