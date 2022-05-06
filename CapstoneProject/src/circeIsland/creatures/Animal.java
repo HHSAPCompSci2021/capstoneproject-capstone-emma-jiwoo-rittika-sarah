@@ -1,5 +1,5 @@
 package circeIsland.creatures;
 
-public class Animal {
+public class Animal extends Creature{
 
 }
