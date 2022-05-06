@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import circeIsland.creatures.*;
 import circeIsland.elements.Element;
+import circeIsland.main.DrawingSurface;
 
 public class Island extends Screen{
 
