@@ -13,13 +13,13 @@ public class DrawingSurface extends PApplet {
 	
 	private Island island;
 	private WorkTable workshop;
-	private Screen current;
+	private Screen currentScreen;
 	
 	
 	public DrawingSurface() {
 		island = new Island(this);
 		workshop = new WorkTable(this);
-		current = workshop;
+		currentScreen = workshop;
 	}
 	
 	// The statements in the setup() function 
@@ -39,20 +39,25 @@ public class DrawingSurface extends PApplet {
 		fill(0);
 		
 		stroke(0);
-		if(current.equals(workshop)) {
+		if(currentScreen.equals(workshop)) {
 			workshop.draw();
 		}
-		if(current.equals(island)) {
+		if(currentScreen.equals(island)) {
 			island.draw();
 		}
-		
+		//System.out.println('c');
 	}
 	
 	
 	public void mouseWheel(MouseEvent event) {
+		//maybe zoom functionality??
 	}
 	
-	public void keyPressed() {
+	
+	public void mouseClicked() {
+		//system.out.println("mouse click");
+		System.out.println('c');
+		currentScreen.processClick(mouseX, mouseY);
 	}
 	
 	
