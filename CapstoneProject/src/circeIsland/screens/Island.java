@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import circeIsland.main.DrawingSurface;
 import circeIsland.creatures.*;
 import circeIsland.elements.Element;
+import circeIsland.elements.*;
 import circeIsland.main.DrawingSurface;
 
 public class Island extends Screen{
@@ -39,8 +40,8 @@ public class Island extends Screen{
 		House circeHouse = new House(hX, hY);
 		
 		for(int i = 0; i<hSize; i++) {
-			it(j = 0; j<hSize; j++){
-				
+			for(int j = 0; j<hSize; j++){
+				element[hX+i][hY + i] = circeHouse;
 			}
 		}
 		
