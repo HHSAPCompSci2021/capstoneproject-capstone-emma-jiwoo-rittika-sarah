@@ -15,11 +15,13 @@ public class DrawingSurface extends PApplet {
 	private WorkTable workshop;
 	private Screen currentScreen;
 	
+	public float ratioX, ratioY;
 	
 	public DrawingSurface() {
 		island = new Island(this);
 		workshop = new WorkTable(this);
-		currentScreen = workshop;
+		//currentScreen = workshop;
+		currentScreen = island;
 	}
 	
 	// The statements in the setup() function 
@@ -33,6 +35,14 @@ public class DrawingSurface extends PApplet {
 	// sequence and after the last line is read, the first 
 	// line is executed again.
 	public void draw() { 
+		
+//		ratioX = (float)width/currentScreen.WIDTH;
+//		ratioY = (float)height/currentScreen.HEIGHT;
+//
+//		push();
+//		
+//		scale(ratioX, ratioY);
+		
 		background(255);   // Clear the screen with a white background
 		
 		textSize(12);

@@ -7,7 +7,10 @@ public abstract class Element {
 	private int currentTime;
 	private boolean standable;
 
-	
+	public Element(int xInput, int yInput) {
+		x = xInput;
+		y = yInput;
+	}
 	//METHOD
 	
 	public void putOnIsland() {

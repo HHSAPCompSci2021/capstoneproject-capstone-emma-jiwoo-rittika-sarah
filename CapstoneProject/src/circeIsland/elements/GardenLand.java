@@ -2,7 +2,15 @@ package circeIsland.elements;
 
 public class GardenLand extends Element{
 
+	
+
 	private String name;
+	
+	
+	public GardenLand(int xInput, int yInput) {
+		super(xInput, yInput);
+		// TODO Auto-generated constructor stub
+	}
 	
 	//METHODS
 	
