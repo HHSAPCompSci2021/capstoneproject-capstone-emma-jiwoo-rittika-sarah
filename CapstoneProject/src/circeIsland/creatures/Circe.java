@@ -8,12 +8,12 @@ import circeIsland.elements.*;
  */
 public class Circe extends Creature{
 
+	private Holdable[] holdings;
+	
 	public Circe(int x, int y) {
-		super(x, y);
-		// TODO Auto-generated constructor stub
+		super(x, y, 100, 100);
 	}
 
-	private Holdable[] holdings;
 	
 	//METHODS
 	

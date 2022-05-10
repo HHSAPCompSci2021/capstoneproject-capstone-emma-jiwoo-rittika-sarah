@@ -15,10 +15,10 @@ public class Creature extends Rectangle2D.Double{
 	private int xVelocity, yVelocity;
 	private PImage image;
 	
-	protected static final int LEFT = -1;
-	protected static final int RIGHT = 1;
-	protected static final int UP = -1;
-	protected static final int DOWN = 1;
+	public static final int LEFT = -1;
+	public static final int RIGHT = 1;
+	public static final int UP = -1;
+	public static final int DOWN = 1;
 
 	
 	
@@ -49,6 +49,21 @@ public class Creature extends Rectangle2D.Double{
 		super.y += (dir * yVelocity);
 	}
 	
+	public int getXVel() {
+		return xVelocity;
+	}
+	
+	public int getYVel() {
+		return yVelocity;
+	}
+	
+	public void setXVel(int xVel) {
+		xVelocity = xVel;
+	}
+	
+	public void setYVel(int yVel) {
+		yVelocity = yVel;
+	}
 	
 	public int[] coorToGrid(double xCoor, double yCoor,Island myIsland) {
 		double width = myIsland.getWidth();
