@@ -20,7 +20,7 @@ public class Creature extends Rectangle2D.Double{
 	public static final int UP = -1;
 	public static final int DOWN = 1;
 
-	
+	// CONSTRUCTOR
 	
 	public Creature (int xCoor, int yCoor, int width, int height) {
 		this(null, xCoor, yCoor, width, height, 1, 1);
@@ -41,12 +41,20 @@ public class Creature extends Rectangle2D.Double{
 		image = img;
 	}
 	
+	
+	// METHOD
+	
 	public void moveX(int dir) {
 		super.x += (dir * xVelocity);
 	}
 	
 	public void moveY(int dir) {
 		super.y += (dir * yVelocity);
+	}
+	
+	public void spawn(double x, double y) {
+		super.x = x;
+		super.y = y;
 	}
 	
 	public int getXVel() {
