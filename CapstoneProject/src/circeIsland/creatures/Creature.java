@@ -12,7 +12,6 @@ import circeIsland.screens.Island;
  * @author Jiwoo Kim
  */
 public class Creature extends Rectangle2D.Double{
-	private double x, y;
 	private int xVelocity, yVelocity;
 	private PImage image;
 	
@@ -23,32 +22,31 @@ public class Creature extends Rectangle2D.Double{
 
 	
 	
-	public Creature (int xCoor, int yCoor) {
-		this(null, xCoor, yCoor, 1, 1);
+	public Creature (int xCoor, int yCoor, int width, int height) {
+		this(null, xCoor, yCoor, width, height, 1, 1);
 	}
 	
-	public Creature (PImage img, int xCoor, int yCoor) {
-		this(img, xCoor, yCoor, 1, 1);
+	public Creature (PImage img, int xCoor, int yCoor, int width, int height) {
+		this(img, xCoor, yCoor, width, height, 1, 1);
 	}
 	
-	public Creature (int xCoor, int yCoor, int xVel, int yVel) {
-		this(null, xCoor, yCoor, xVel, yVel);
+	public Creature (int xCoor, int yCoor, int width, int height, int xVel, int yVel) {
+		this(null, xCoor, yCoor,width, height, xVel, yVel);
 	}
 	
-	public Creature (PImage img, int xCoor, int yCoor, int xVel, int yVel) {
-		x = xCoor;
-		y = yCoor;
+	public Creature (PImage img, int xCoor, int yCoor, int width, int height, int xVel, int yVel) {
+		super(xCoor,yCoor, width, height);
 		xVelocity = xVel;
 		yVelocity = yVel;
 		image = img;
 	}
 	
 	public void moveX(int dir) {
-		x += (dir * xVelocity);
+		super.x += (dir * xVelocity);
 	}
 	
 	public void moveY(int dir) {
-		y += (dir * yVelocity);
+		super.y += (dir * yVelocity);
 	}
 	
 	
