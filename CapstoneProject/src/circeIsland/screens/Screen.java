@@ -1,6 +1,6 @@
 package circeIsland.screens;
 
-public class Screen {
+public class Screen{
 
 	public final int HEIGHT;
 	public final int WIDTH;
