@@ -14,6 +14,7 @@ import circeIsland.screens.Island;
 public class Creature extends Rectangle2D.Double{
 	private int velocity;
 	private PImage image;
+	private Island myIsland;
 	
 	public static final int LEFT = -1;
 	public static final int RIGHT = 1;
@@ -43,6 +44,19 @@ public class Creature extends Rectangle2D.Double{
 	
 	// METHOD
 	
+	
+	public int getXGrid() {
+		return coorToGrid(x,y)[0];
+	}
+	
+	public int getYGrid() {
+		return coorToGrid(x,y)[1];
+	}
+	
+	public Island getIsland() {
+		return myIsland;
+	}
+	
 	public void moveX(int dir) {
 		super.x += (dir * velocity);
 	}
@@ -51,9 +65,10 @@ public class Creature extends Rectangle2D.Double{
 		super.y += (dir * velocity);
 	}
 	
-	public void spawn(double x, double y) {
-		super.x = x;
-		super.y = y;
+	public void spawn(Island i, int x, int y) {
+		double[] coor = gridToCoor(x,y);
+		super.x = coor[0];
+		super.y = coor[1];
 	}
 	
 	public int getVel() {
@@ -64,7 +79,7 @@ public class Creature extends Rectangle2D.Double{
 		velocity = vel;
 	}
 	
-	public int[] coorToGrid(double xCoor, double yCoor,Island myIsland) {
+	public int[] coorToGrid(double xCoor, double yCoor) {
 		double width = myIsland.getWidth();
 		double height = myIsland.getHeight();
 		int xGrid = (int) (xCoor/(width/10));
@@ -74,7 +89,7 @@ public class Creature extends Rectangle2D.Double{
 		return grid;
 	}
 	
-	public double[] gridToCoor(int xGrid, int yGrid, Island myIsland) {
+	public double[] gridToCoor(int xGrid, int yGrid) {
 		double width = myIsland.getWidth();
 		double height = myIsland.getHeight();
 		double xCoor = (int) (xGrid * (width/10));
