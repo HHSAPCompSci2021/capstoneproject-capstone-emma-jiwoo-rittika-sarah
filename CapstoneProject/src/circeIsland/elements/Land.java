@@ -1,10 +1,12 @@
 package circeIsland.elements;
 
+import circeIsland.screens.Island;
+
 public class Land extends Element{
 
-	public Land(int xInput, int yInput) {
-		super(xInput, yInput);
-		// TODO Auto-generated constructor stub
+	public Land(Island i, int xInput, int yInput) {
+		super(i, xInput, yInput);
+		setStandable(true);
 	}
 
 	@Override

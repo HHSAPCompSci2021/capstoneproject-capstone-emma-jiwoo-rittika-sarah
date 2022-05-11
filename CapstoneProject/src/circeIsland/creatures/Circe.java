@@ -8,12 +8,15 @@ import circeIsland.elements.*;
  */
 public class Circe extends Creature{
 
+	public static final int CIRCE_WIDTH = 40;
+	public static final int CIRCE_HEIGHT = 60;
+	
+	private Holdable[] holdings;
+	
 	public Circe(int x, int y) {
-		super(x, y);
-		// TODO Auto-generated constructor stub
+		super(x, y, CIRCE_WIDTH, CIRCE_HEIGHT);
 	}
 
-	private Holdable[] holdings;
 	
 	//METHODS
 	

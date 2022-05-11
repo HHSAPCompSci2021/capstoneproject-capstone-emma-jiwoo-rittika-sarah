@@ -12,45 +12,66 @@ import circeIsland.screens.Island;
  * @author Jiwoo Kim
  */
 public class Creature extends Rectangle2D.Double{
-	private double x, y;
 	private int xVelocity, yVelocity;
 	private PImage image;
 	
-	protected static final int LEFT = -1;
-	protected static final int RIGHT = 1;
-	protected static final int UP = -1;
-	protected static final int DOWN = 1;
+	public static final int LEFT = -1;
+	public static final int RIGHT = 1;
+	public static final int UP = -1;
+	public static final int DOWN = 1;
 
+	// CONSTRUCTOR
 	
-	
-	public Creature (int xCoor, int yCoor) {
-		this(null, xCoor, yCoor, 1, 1);
+	public Creature (int xCoor, int yCoor, int width, int height) {
+		this(null, xCoor, yCoor, width, height, 1, 1);
 	}
 	
-	public Creature (PImage img, int xCoor, int yCoor) {
-		this(img, xCoor, yCoor, 1, 1);
+	public Creature (PImage img, int xCoor, int yCoor, int width, int height) {
+		this(img, xCoor, yCoor, width, height, 1, 1);
 	}
 	
-	public Creature (int xCoor, int yCoor, int xVel, int yVel) {
-		this(null, xCoor, yCoor, xVel, yVel);
+	public Creature (int xCoor, int yCoor, int width, int height, int xVel, int yVel) {
+		this(null, xCoor, yCoor,width, height, xVel, yVel);
 	}
 	
-	public Creature (PImage img, int xCoor, int yCoor, int xVel, int yVel) {
-		x = xCoor;
-		y = yCoor;
+	public Creature (PImage img, int xCoor, int yCoor, int width, int height, int xVel, int yVel) {
+		super(xCoor,yCoor, width, height);
 		xVelocity = xVel;
 		yVelocity = yVel;
 		image = img;
 	}
 	
+	
+	// METHOD
+	
 	public void moveX(int dir) {
-		x += (dir * xVelocity);
+		super.x += (dir * xVelocity);
 	}
 	
 	public void moveY(int dir) {
-		y += (dir * yVelocity);
+		super.y += (dir * yVelocity);
 	}
 	
+	public void spawn(double x, double y) {
+		super.x = x;
+		super.y = y;
+	}
+	
+	public int getXVel() {
+		return xVelocity;
+	}
+	
+	public int getYVel() {
+		return yVelocity;
+	}
+	
+	public void setXVel(int xVel) {
+		xVelocity = xVel;
+	}
+	
+	public void setYVel(int yVel) {
+		yVelocity = yVel;
+	}
 	
 	public int[] coorToGrid(double xCoor, double yCoor,Island myIsland) {
 		double width = myIsland.getWidth();

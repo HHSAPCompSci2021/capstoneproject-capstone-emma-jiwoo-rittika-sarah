@@ -39,7 +39,7 @@ public class Island extends Screen{
 	private void fillElements(int cX, int cY, int hX, int hY, int hSize) {
 		
 		//element[cX][cY] = circe; -- won't work, cause circe isn't an element
-		House circeHouse = new House(hX, hY);
+		House circeHouse = new House(this, hX, hY);
 		
 		//deal with out of bounds
 		for(int i = hX; i<hX+hSize; i++) {

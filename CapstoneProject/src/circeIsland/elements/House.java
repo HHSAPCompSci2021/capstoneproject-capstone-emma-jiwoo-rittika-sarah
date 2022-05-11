@@ -1,20 +1,32 @@
 package circeIsland.elements;
 
+import circeIsland.screens.Island;
+
 public class House extends Element{
 	
-	public House(int xInput, int yInput) {
-		super(xInput, yInput);
-		// TODO Auto-generated constructor stub
-	}
+	private String type; //Either "circe" or "norm"
 
-	private int type; //Either Circe's house or House
+	
+	public House(Island i, int xInput, int yInput) {
+		super(i, xInput, yInput);
+		setStandable(false);
+	}
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
+		if (type == "circe")
+		if (type == "norm") {}
 		
 	}
 	
+	public void putOnIsland(Island i) { //different b/c houses take up more than 1 grid
+		
+		setIsInGrid(true);
+	}
 	
+	public void removeFromIsland(Island i) {
+		
+		setIsInGrid(false);
+	}
 
 }
