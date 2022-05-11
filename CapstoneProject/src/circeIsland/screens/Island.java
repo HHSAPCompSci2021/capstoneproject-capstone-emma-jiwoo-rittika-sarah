@@ -44,7 +44,7 @@ public class Island extends Screen{
 		//deal with out of bounds
 		for(int i = hX; i<hX+hSize; i++) {
 			for(int j = hY; j<hY+hSize; j++){
-				element[i][j] = circeHouse;//this might be backwards
+				element[j][i] = circeHouse;//this might be backwards
 			}
 		}
 		
@@ -63,8 +63,8 @@ public class Island extends Screen{
 		float cellWidth = (surface.width - 11) / element[0].length;
 		float cellHeight = (surface.height - 17) / element.length;
 		
-		for(int i = 0; i<element.length; i++) {
-			for(int j = 0; j<element[0].length; j++) {
+		for(int i = 0; i<element.length; i++) { //x
+			for(int j = 0; j<element[0].length; j++) { //y
 				if(element[i][j] == null) {
 					surface.fill(255);
 					//surface.stroke(22,  22,  222);;
