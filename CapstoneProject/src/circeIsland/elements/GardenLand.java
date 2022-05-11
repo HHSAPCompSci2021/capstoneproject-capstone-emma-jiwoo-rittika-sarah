@@ -31,7 +31,8 @@ public class GardenLand extends Element{
 	}
 	
 	public void water() {
-		hydrationLvl = 5;
+		if (isAlive())
+			hydrationLvl = 5;
 	}
 	
 	public void grow() {
@@ -61,6 +62,12 @@ public class GardenLand extends Element{
 	
 	public int getLifeState() {
 		return lifeState;
+	}
+	
+	private boolean isAlive() {
+		if (lifeState == 1 || lifeState == 2 || lifeState == 3)
+			return true;
+		return false;
 	}
 
 }
