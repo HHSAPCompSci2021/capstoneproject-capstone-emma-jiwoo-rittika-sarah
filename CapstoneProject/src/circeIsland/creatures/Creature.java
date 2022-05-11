@@ -12,7 +12,7 @@ import circeIsland.screens.Island;
  * @author Jiwoo Kim
  */
 public class Creature extends Rectangle2D.Double{
-	private int xVelocity, yVelocity;
+	private int velocity;
 	private PImage image;
 	
 	public static final int LEFT = -1;
@@ -23,21 +23,20 @@ public class Creature extends Rectangle2D.Double{
 	// CONSTRUCTOR
 	
 	public Creature (int xCoor, int yCoor, int width, int height) {
-		this(null, xCoor, yCoor, width, height, 1, 1);
+		this(null, xCoor, yCoor, width, height, 1);
 	}
 	
 	public Creature (PImage img, int xCoor, int yCoor, int width, int height) {
-		this(img, xCoor, yCoor, width, height, 1, 1);
+		this(img, xCoor, yCoor, width, height, 1);
 	}
 	
-	public Creature (int xCoor, int yCoor, int width, int height, int xVel, int yVel) {
-		this(null, xCoor, yCoor,width, height, xVel, yVel);
+	public Creature (int xCoor, int yCoor, int width, int height, int vel) {
+		this(null, xCoor, yCoor,width, height, vel);
 	}
 	
-	public Creature (PImage img, int xCoor, int yCoor, int width, int height, int xVel, int yVel) {
+	public Creature (PImage img, int xCoor, int yCoor, int width, int height, int vel) {
 		super(xCoor,yCoor, width, height);
-		xVelocity = xVel;
-		yVelocity = yVel;
+		velocity = vel;
 		image = img;
 	}
 	
@@ -45,11 +44,11 @@ public class Creature extends Rectangle2D.Double{
 	// METHOD
 	
 	public void moveX(int dir) {
-		super.x += (dir * xVelocity);
+		super.x += (dir * velocity);
 	}
 	
 	public void moveY(int dir) {
-		super.y += (dir * yVelocity);
+		super.y += (dir * velocity);
 	}
 	
 	public void spawn(double x, double y) {
@@ -57,20 +56,12 @@ public class Creature extends Rectangle2D.Double{
 		super.y = y;
 	}
 	
-	public int getXVel() {
-		return xVelocity;
+	public int getVel() {
+		return velocity;
 	}
-	
-	public int getYVel() {
-		return yVelocity;
-	}
-	
-	public void setXVel(int xVel) {
-		xVelocity = xVel;
-	}
-	
-	public void setYVel(int yVel) {
-		yVelocity = yVel;
+
+	public void setVel(int vel) {
+		velocity = vel;
 	}
 	
 	public int[] coorToGrid(double xCoor, double yCoor,Island myIsland) {
