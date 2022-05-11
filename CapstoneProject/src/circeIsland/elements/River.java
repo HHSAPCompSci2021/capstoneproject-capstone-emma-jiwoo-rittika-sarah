@@ -1,15 +1,15 @@
 package circeIsland.elements;
+import circeIsland.screens.Island;
 
 public class River extends Element{
 
-	public River(int xInput, int yInput) {
-		super(xInput, yInput);
-		// TODO Auto-generated constructor stub
+	public River(Island i, int xInput, int yInput) {
+		super(i, xInput, yInput);
+		setStandable(false);
 	}
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
 		
 	}
 
