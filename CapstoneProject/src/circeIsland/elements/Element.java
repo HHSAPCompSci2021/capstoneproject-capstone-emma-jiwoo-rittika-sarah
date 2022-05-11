@@ -1,5 +1,6 @@
 package circeIsland.elements;
 
+import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
 public abstract class Element {
@@ -18,23 +19,23 @@ public abstract class Element {
 	}
 	//METHOD
 	
-	public void putOnIsland(Island i) { //even though is already done in fill? 
-		
+	public void putOnIsland(Island i, int x, int y) { //even though is already done in fill? 
+		if (i.getElement(x,  y)==null)
+			i.setElement(this, x, y);
 		isInGrid = true;
+		island = i;
 	}
 	
 	public void removeFromIsland(Island i) {
+		i.setElement(null, x, y);
 		isInGrid = false;
+		island = null;
 	}
 	
-	public abstract void draw();
+	public abstract void draw(DrawingSurface surface, float cellWidth, float cellHeight);
 	
 	public void setStandable (boolean b) {
 		standable = b;
-	}
-	
-	public void setIsInGrid(boolean b) {
-		isInGrid = b;
 	}
 	
 	public void setX(int x) {
@@ -45,15 +46,23 @@ public abstract class Element {
 		this.y = y;
 	}
 	
+	public void setIsInGrid(boolean b) {
+		isInGrid = b;
+	}
+	
 	public Island getIsland() {
 		return island;
 	}
 	
-	public int getX() {
+	public boolean getStandable() {
+		return standable;
+	}
+	
+	public int getXCoor() {
 		return x;
 	}
 	
-	public int getY() {
+	public int getYCoor() {
 		return y;
 	}
 	

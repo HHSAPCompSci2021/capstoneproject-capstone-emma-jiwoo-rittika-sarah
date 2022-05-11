@@ -2,6 +2,7 @@ package circeIsland.elements;
 
 import java.util.Timer;
 
+import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
 public class GardenLand extends Element{	
@@ -46,7 +47,7 @@ public class GardenLand extends Element{
 		lifeState = 0;
 	}
 
-	public void draw() {
+	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
 		act();
 		if (type == "grape")
 		if (type == "barley")

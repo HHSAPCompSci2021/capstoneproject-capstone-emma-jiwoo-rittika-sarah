@@ -1,4 +1,5 @@
 package circeIsland.elements;
+import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
 public class River extends Element{
@@ -9,7 +10,7 @@ public class River extends Element{
 	}
 
 	@Override
-	public void draw() {
+	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
 		
 	}
 

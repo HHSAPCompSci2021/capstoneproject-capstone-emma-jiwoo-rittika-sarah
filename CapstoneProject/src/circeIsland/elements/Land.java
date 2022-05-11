@@ -1,5 +1,6 @@
 package circeIsland.elements;
 
+import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
 public class Land extends Element{
@@ -10,9 +11,9 @@ public class Land extends Element{
 	}
 
 	@Override
-	public void draw() {
-		// TODO Auto-generated method stub
-		
+	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
+		surface.fill(191, 227, 154);
+		surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth, cellHeight);
 	}
 
 }

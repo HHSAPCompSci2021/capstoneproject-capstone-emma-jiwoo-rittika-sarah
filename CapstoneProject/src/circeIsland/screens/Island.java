@@ -39,19 +39,19 @@ public class Island extends Screen{
 	private void fillElements(int cX, int cY, int hX, int hY, int hSize) {
 		
 		//element[cX][cY] = circe; -- won't work, cause circe isn't an element
-		House circeHouse = new House(this, hX, hY);
+		House circeHouse = new House(this, hX, hY, "circe");
 		
 		//deal with out of bounds
 		for(int i = hX; i<hX+hSize; i++) {
 			for(int j = hY; j<hY+hSize; j++){
-				element[i][j] = circeHouse;
+				element[i][j] = circeHouse;//this might be backwards
 			}
 		}
 		
 		for(int i = 0; i<element.length; i++) {
 			for(int j = 0; j<element.length; j++) {
 				if(element[i][j] == null) {  // && i != cX && j!= cY) {
-					element[i][j] = new Land(i, j);
+					element[i][j] = new Land(this, i, j); //this might also be backwards
 				}
 			}
 		}
@@ -71,14 +71,16 @@ public class Island extends Screen{
 					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
 					
 				}
-				else if(element[i][j] instanceof House){
+				else// if
+				/*(element[i][j] instanceof House){
 					surface.fill(191, 128, 111);
 					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
 				}
 				else {
 					surface.fill(191, 227, 154);
 					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
-				}
+				}*/
+					element[i][j].draw(surface, cellWidth, cellHeight);
 			}
 		}
 	}
@@ -88,9 +90,12 @@ public class Island extends Screen{
 //		
 //	}
 	
+	public Element getElement(int x, int y) {
+		return element[y][x];
+	}
 	
-	public void setElement() {
-		
+	public void setElement(Element e, int x, int y) {
+		element[y][x] = e;
 	}
 	
 	public void keepTime() {
