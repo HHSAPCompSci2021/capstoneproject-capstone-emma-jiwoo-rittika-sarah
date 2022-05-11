@@ -18,7 +18,8 @@ public class DrawingSurface extends PApplet {
 	public float ratioX, ratioY;
 	
 	public DrawingSurface() {
-		island = new Island(this);
+		//island = new Island(this);
+		island = new Island(this, 2, 2, 7, 10, 2);
 		workshop = new WorkTable(this);
 		//currentScreen = workshop;
 		currentScreen = island;

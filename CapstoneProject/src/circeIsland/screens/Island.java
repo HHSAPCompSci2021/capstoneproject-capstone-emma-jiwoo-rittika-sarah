@@ -29,22 +29,32 @@ public class Island extends Screen{
 	public Island(DrawingSurface surface, int circeX, int circeY, int houseX, int houseY, int houseSize) {
 		super(800,600);
 		this.surface = surface;
-		element = new Element[10][10];
+		element = new Element[15][15];
+		//circe = new Circe(circeX, circeY);
+		//creatures.add(circe);
 		fillElements(circeX, circeY, houseX, houseY, houseSize);
 	}
 	
 	
 	private void fillElements(int cX, int cY, int hX, int hY, int hSize) {
-		circe = new Circe(cX, cY);
+		
 		//element[cX][cY] = circe; -- won't work, cause circe isn't an element
 		House circeHouse = new House(hX, hY);
 		
-		for(int i = 0; i<hSize; i++) {
-			for(int j = 0; j<hSize; j++){
-				element[hX+i][hY + i] = circeHouse;
+		//deal with out of bounds
+		for(int i = hX; i<hX+hSize; i++) {
+			for(int j = hY; j<hY+hSize; j++){
+				element[i][j] = circeHouse;
 			}
 		}
 		
+		for(int i = 0; i<element.length; i++) {
+			for(int j = 0; j<element.length; j++) {
+				if(element[i][j] == null) {  // && i != cX && j!= cY) {
+					element[i][j] = new Land(i, j);
+				}
+			}
+		}
 		
 	}
 
@@ -55,14 +65,18 @@ public class Island extends Screen{
 		
 		for(int i = 0; i<element.length; i++) {
 			for(int j = 0; j<element[0].length; j++) {
-				if(element[i][j] != null) {
+				if(element[i][j] == null) {
 					surface.fill(255);
-					surface.stroke(22,  22,  222);;
+					//surface.stroke(22,  22,  222);;
 					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
 					
 				}
+				else if(element[i][j] instanceof House){
+					surface.fill(191, 128, 111);
+					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
+				}
 				else {
-					surface.fill(128, 128, 128);
+					surface.fill(191, 227, 154);
 					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
 				}
 			}
@@ -70,7 +84,9 @@ public class Island extends Screen{
 	}
 	
 	
-	
+//	public void processClick(int mouseX, int mouseY) {
+//		
+//	}
 	
 	
 	public void setElement() {
@@ -88,7 +104,6 @@ public class Island extends Screen{
 	public int getWidth() {
 		return super.WIDTH;
 	}
-	
 	
 	
 	//have to change to not include water outside island
