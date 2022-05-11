@@ -26,5 +26,4 @@ public class Circe extends Creature{
 	
 	public void magic() {};
 	
-	public void detectKey() {}
 }
