@@ -94,9 +94,6 @@ public class WorkTable extends Screen{
 			}
 		}
 		
-		
-		
-		
 	}
 	
 	

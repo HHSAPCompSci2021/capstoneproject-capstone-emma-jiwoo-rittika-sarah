@@ -83,6 +83,8 @@ public class DrawingSurface extends PApplet {
 	}
 	
 	public void keyPressed() {
+		if(key == CODED)
+			currentScreen.processKey(key);
 		
 	}
 	

@@ -18,9 +18,9 @@ public class Island extends Screen{
 	private Element[][] element;
 	private ArrayList<Creature> creatures;
 	private Circe circe;
-	private int currentTime;
+	//private int currentTime;
 	private House circeHouse;
-	private GButton b1, b2, b3;
+	//private GButton b1, b2, b3;
 	
 	private boolean elementSelected;
 	private int[] selectedSpot;
@@ -54,7 +54,11 @@ public class Island extends Screen{
 		//element[cX][cY] = circe; -- won't work, cause circe isn't an element
 		
 		element[hY][hX] = circeHouse;
-				
+		
+		element[2][2] = new GardenLand(this, 2, 2);
+		element[2][3] = new GardenLand(this, 3, 2);
+		element[3][2] = new GardenLand(this, 2, 3);
+		element[3][3] = new GardenLand(this, 3, 3);
 		
 		
 		for(int i = 1; i<element.length - 1; i++) {
@@ -64,10 +68,6 @@ public class Island extends Screen{
 				}
 			}
 		}
-		
-		
-		
-		
 		
 	}
 
@@ -139,8 +139,13 @@ public class Island extends Screen{
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
 		}
-		
-		
+	}
+	
+	
+	public void processKey(char key) {
+		if(key == 'w' || key == 'W' || key == 'a' || key == 'A' || key == 's' || key == 'S' || key == 'd' || key == 'D') {
+			//circe.move(key);
+		}
 		
 	}
 	
@@ -182,6 +187,10 @@ public class Island extends Screen{
     {
         return 0 <= rowLoc && rowLoc < 10 && 0 <= colLoc && colLoc < 10;
     }
+	
+	
+	
+	
 	
 //	public void handleButtonEvents(GButton button, GEvent event) { 
 //		System.out.println("handled!!");
