@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import circeIsland.main.DrawingSurface;
-import g4p_controls.G4P;
 import g4p_controls.GButton;
-import g4p_controls.GCScheme;
-import g4p_controls.GDropList;
 import g4p_controls.GEvent;
 import circeIsland.creatures.*;
 import circeIsland.elements.Element;
@@ -49,9 +46,6 @@ public class Island extends Screen{
 		//circe = new Circe(circeX, circeY);
 		//creatures.add(circe);
 		fillElements(circeX, circeY, houseX, houseY);
-		
-		
-		
 	}
 	
 	
@@ -59,9 +53,10 @@ public class Island extends Screen{
 		
 		//element[cX][cY] = circe; -- won't work, cause circe isn't an element
 		
-		element[hY][hX] = circeHouse;
+		circeHouse.putOnIsland(this);
 		
-		element[2][2] = new GardenLand(this, 2, 2);
+		
+		new GardenLand(this, 2, 2).putOnIsland(this, 2, 2);
 		element[2][3] = new GardenLand(this, 3, 2);
 		element[3][2] = new GardenLand(this, 2, 3);
 		element[3][3] = new GardenLand(this, 3, 3);
@@ -70,7 +65,10 @@ public class Island extends Screen{
 		for(int i = 1; i<element.length - 1; i++) {
 			for(int j = 1; j<element.length - 1; j++) {
 				if(element[i][j] == null) {  // && i != cX && j!= cY) {
-					element[i][j] = new Land(this, i, j); //this might also be backwards
+					Land l = new Land(this, i, j);
+					element[i][j] = l;
+					l.setIsInGrid(true);
+					
 				}
 			}
 		}
@@ -95,11 +93,8 @@ public class Island extends Screen{
 //		float cellWidth = ((surface.width - 11) - 150) / element[0].length;
 //		float cellHeight = (surface.height - 17) / element.length;
 		
-		
-		
-		
-		surface.fill(24, 24, 24);
-		surface.rect(10 + (7 * cellWidth), 10 + (10*cellHeight), cellWidth, cellHeight);
+//		surface.fill(24, 24, 24);
+//		surface.rect(10 + (7 * cellWidth), 10 + (10*cellHeight), cellWidth, cellHeight);
 		
 		for(int i = 0; i<element.length; i++) { //x
 			for(int j = 0; j<element[0].length; j++) { //y
@@ -107,12 +102,10 @@ public class Island extends Screen{
 					surface.fill(15, 163, 189); //the ocean around the island
 					//surface.stroke(22,  22,  222);;
 					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
-					
 				}
 				else {
 					element[i][j].draw(surface, cellWidth, cellHeight);
 				}
-				
 			}
 		}
 		
@@ -178,7 +171,6 @@ public class Island extends Screen{
 //		System.out.println(Arrays.toString(grid));
 		return grid;
 	}
-	
 	
 	public Element getElement(int x, int y) {
 		return element[y][x];

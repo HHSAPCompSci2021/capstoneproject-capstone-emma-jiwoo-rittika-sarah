@@ -20,7 +20,7 @@ public abstract class Element {
 	//METHOD
 	
 	public void putOnIsland(Island i, int x, int y) { //even though is already done in fill? 
-		if (i.getElement(x,  y)==null)
+		if (i.getElement(x,  y) == null)
 			i.setElement(this, x, y);
 		isInGrid = true;
 		island = i;

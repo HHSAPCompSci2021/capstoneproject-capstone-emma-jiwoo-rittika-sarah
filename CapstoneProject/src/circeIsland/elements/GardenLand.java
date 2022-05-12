@@ -56,10 +56,6 @@ public class GardenLand extends Element{
 		surface.fill(0);
 		surface.text(type, 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
 		surface.pop();
-		if (type == "grape")
-		if (type == "barley")
-		if (type == "maratho")
-		if (type == "anithos") {}
 	}
 	
 	public void act() {  
