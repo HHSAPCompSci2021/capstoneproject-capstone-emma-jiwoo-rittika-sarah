@@ -22,7 +22,7 @@ public class House extends Element{
 			surface.fill(191, 128, 111);
 			surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth, cellHeight);
 			surface.fill(0);
-			surface.text("cHouse", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight));
+			surface.text("cHouse", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
 			surface.pop();
 		}
 		if (type == "norm") {
@@ -30,7 +30,7 @@ public class House extends Element{
 			surface.fill(191, 128, 111);
 			surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth, cellHeight);
 			surface.fill(0);
-			surface.text("house", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight));
+			surface.text("house", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
 			surface.pop();
 		}
 		

@@ -50,6 +50,12 @@ public class GardenLand extends Element{
 
 	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
 		act();
+		surface.push();
+		surface.fill(105, 67, 45);
+		surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth, cellHeight);
+		surface.fill(0);
+		surface.text(type, 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
+		surface.pop();
 		if (type == "grape")
 		if (type == "barley")
 		if (type == "maratho")
