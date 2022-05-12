@@ -5,6 +5,8 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import circeIsland.screens.*;
+import g4p_controls.GButton;
+import g4p_controls.GEvent;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 
@@ -19,7 +21,7 @@ public class DrawingSurface extends PApplet {
 	
 	public DrawingSurface() {
 		//island = new Island(this);
-		island = new Island(this, 2, 2, 7, 10, 2);
+		island = new Island(this, 200, 200, 7, 10);
 		workshop = new WorkTable(this);
 		//currentScreen = workshop;
 		currentScreen = island;
@@ -60,6 +62,15 @@ public class DrawingSurface extends PApplet {
 	}
 	
 	
+	
+	public void switchScreen() {
+		if(currentScreen.equals(workshop))
+			currentScreen = island;
+		else
+			currentScreen = workshop;
+	}
+	
+	
 	public void mouseWheel(MouseEvent event) {
 		//maybe zoom functionality??
 	}
@@ -67,9 +78,18 @@ public class DrawingSurface extends PApplet {
 	
 	public void mouseClicked() {
 		//system.out.println("mouse click");
-		System.out.println('c');
-		currentScreen.processClick(mouseX, mouseY);
+		//System.out.println('c');
+		currentScreen.processMouseClick(mouseX, mouseY);
 	}
+	
+	public void keyPressed() {
+		
+	}
+	
+	
+	
+	//useless
+	public void handleButtonEvents(GButton button, GEvent event) { /* code */ }
 	
 	
 }

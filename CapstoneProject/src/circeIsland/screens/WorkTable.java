@@ -115,7 +115,7 @@ public class WorkTable extends Screen{
 	}
 	
 	
-	public void processClick(int mouseX, int mouseY) {
+	public void processMouseClick(int mouseX, int mouseY) {
 		//inside the brew button
 		System.out.println("processing");
 		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){

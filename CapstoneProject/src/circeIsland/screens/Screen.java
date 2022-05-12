@@ -19,7 +19,7 @@ public class Screen{
 		
 	}
 	
-	public void processClick(int mouseX, int mouseY) {
+	public void processMouseClick(int mouseX, int mouseY) {
 		
 	}
 	

@@ -38,7 +38,6 @@ public class Circe extends Creature{
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
 		if(e instanceof GardenLand) {
 			if(((GardenLand) e).getType().equals(""));
-				
 		}
 	}
 	
