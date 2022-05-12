@@ -22,7 +22,6 @@ public class WorkTable extends Screen{
 		//cookButton = new Rectangle(800/2-100,600/2-50,200,100);
 		storage = new ArrayList<Holdable>();
 		
-		
 		cookButton = new Rectangle(100, 500, 100, 50);
 		recipeButton = new Rectangle(400, 500, 100, 50);
 		recipes = new ArrayList<String>();

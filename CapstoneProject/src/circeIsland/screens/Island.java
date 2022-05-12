@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import circeIsland.main.DrawingSurface;
+import g4p_controls.G4P;
 import g4p_controls.GButton;
+import g4p_controls.GCScheme;
+import g4p_controls.GDropList;
 import g4p_controls.GEvent;
 import circeIsland.creatures.*;
 import circeIsland.elements.Element;
@@ -46,6 +49,9 @@ public class Island extends Screen{
 		//circe = new Circe(circeX, circeY);
 		//creatures.add(circe);
 		fillElements(circeX, circeY, houseX, houseY);
+		
+		
+		
 	}
 	
 	
@@ -89,6 +95,9 @@ public class Island extends Screen{
 //		float cellWidth = ((surface.width - 11) - 150) / element[0].length;
 //		float cellHeight = (surface.height - 17) / element.length;
 		
+		
+		
+		
 		surface.fill(24, 24, 24);
 		surface.rect(10 + (7 * cellWidth), 10 + (10*cellHeight), cellWidth, cellHeight);
 		
@@ -103,10 +112,18 @@ public class Island extends Screen{
 				else {
 					element[i][j].draw(surface, cellWidth, cellHeight);
 				}
+				
 			}
 		}
 		
+		 G4P.setGlobalColorScheme(1);
+		GDropList list = new GDropList(surface, 10 + (5 * cellWidth), 10 + (5*cellHeight), cellWidth, cellHeight*4, 0);  
+		list.setItems(new String[] {"House", "Land", "None"}, 0);
+		
+		
+		
 		circe.draw(surface);
+		
 		
 		
 		//menu
@@ -161,6 +178,7 @@ public class Island extends Screen{
 //		System.out.println(Arrays.toString(grid));
 		return grid;
 	}
+	
 	
 	public Element getElement(int x, int y) {
 		return element[y][x];
