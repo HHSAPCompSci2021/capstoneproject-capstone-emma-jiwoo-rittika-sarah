@@ -13,6 +13,10 @@ public class House extends Element{
 		super(i, xInput, yInput);
 		setStandable(false);
 		this.type = type;
+		if (type == "circe") {
+			xSize = 2;
+			ySize = 2;
+		}
 	}
 
 	@Override
@@ -20,7 +24,7 @@ public class House extends Element{
 		if (type == "circe") {
 			surface.push();
 			surface.fill(191, 128, 111);
-			surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth, cellHeight);
+			surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth*2, cellHeight*2);
 			surface.fill(0);
 			surface.text("cHouse", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
 			surface.pop();
@@ -37,7 +41,13 @@ public class House extends Element{
 	}
 	
 	public void putOnIsland(Island i) { //different b/c houses take up more than 1 grid
-		
+		if (type == "circe") {
+			for (int j = getYCoor(); j<getYCoor()+ySize; j++) {
+				for (int k = getXCoor(); k<getXCoor()+xSize; k++) {
+					i.setElement(this,  k,  j);
+				}
+			}
+		}
 		setIsInGrid(true);
 	}
 	
