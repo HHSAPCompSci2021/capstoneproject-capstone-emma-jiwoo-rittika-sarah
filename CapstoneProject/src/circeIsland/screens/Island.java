@@ -21,7 +21,7 @@ public class Island extends Screen{
 	//private int currentTime;
 	private House circeHouse;
 	private Rectangle infoButton;
-	private boolean landElementSelected, mouseClickEnabled, showInfo;
+	private boolean landElementSelected, mouseClickEnabled, showInfo, gardenElementSelected;
 	private int[] selectedSpot;
 	//GButton brewer, recipe, exit;
 	
@@ -46,6 +46,7 @@ public class Island extends Screen{
 		infoButton = new Rectangle(super.WIDTH+40, 20, super.WIDTH / element.length + 30, super.HEIGHT /element[0].length - 10);
 		
 		landElementSelected = false;
+		gardenElementSelected = false;
 		mouseClickEnabled = true;
 		showInfo = false;
 		
@@ -120,6 +121,15 @@ public class Island extends Screen{
 			list.setItems(new String[] {"Choose", "House", "Garden", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
+		if(gardenElementSelected) {
+			System.out.println("gardening now");
+			gardenElementSelected = false;
+			mouseClickEnabled = false;
+			G4P.setGlobalColorScheme(4);
+			GDropList list = new GDropList(surface, 13 + (selectedSpot[0] * cellWidth), 13 + (selectedSpot[1]*cellHeight), cellWidth-6, cellHeight*4 - 10, 0);  
+			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
+			list.addEventHandler(this,  "handlePlantChange");
+		}
 		
 		Nymph c1 = new Nymph(450, 700);
 		c1.putOnIsland(this);
@@ -153,7 +163,9 @@ public class Island extends Screen{
 			surface.switchScreen();
 		}
 		else if(element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
-			
+			gardenElementSelected = true;
+			selectedSpot[0] = clickInGrid[0];
+			selectedSpot[1] = clickInGrid[1];
 		}
 		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
 			System.out.println("info");
@@ -300,6 +312,49 @@ public class Island extends Screen{
 			int y = selectedSpot[1];
 			element[x][y] = new GardenLand(this, x, y);
 			System.out.println("Executing land ");
+			//mouseClickEnabled = true;
+		}
+
+	}
+	
+	
+	public void handlePlantChange(GDropList list, GEvent event) {
+		mouseClickEnabled = false;
+		System.out.println(mouseClickEnabled);
+		String text = list.getSelectedText();
+		System.out.println(text);
+		list.setVisible(false);
+		if(text.equals("Grape")) {
+			System.out.println("GRAPE");
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			GardenLand gl = (GardenLand)element[x][y];
+			gl.plant("grape");
+			//element[x][y] = new House(this, x, y, "norm");
+		}
+		else if(text.equals("Barley")) {
+			System.out.println("BARLEY");
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			GardenLand gl = (GardenLand)element[x][y];
+			gl.plant("barley");
+			//(GardenLand)(element[x][y])
+			//mouseClickEnabled = true;
+		}
+		else if(text.equals("Marathos")) {
+			System.out.println("MARATHOS");
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			GardenLand gl = (GardenLand)element[x][y];
+			gl.plant("marathos");
+			//mouseClickEnabled = true;
+		}
+		else if(text.equals("Anithos")) {
+			System.out.println("ANITHOS");
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			GardenLand gl = (GardenLand)element[x][y];
+			gl.plant("barley");
 			//mouseClickEnabled = true;
 		}
 
