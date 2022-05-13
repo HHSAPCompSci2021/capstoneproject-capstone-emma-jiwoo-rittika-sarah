@@ -15,9 +15,7 @@ public class Holdable {
 	public static final String BARLEY = "barley";
 	public static final String MARATHOS = "marathos";
 	public static final String ANITHOS = "anithos";
-
 	
-
 
 	public Holdable(int type) {
 		this.type = type;

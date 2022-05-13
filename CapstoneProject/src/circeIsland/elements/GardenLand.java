@@ -76,5 +76,9 @@ public class GardenLand extends Element{
 			return true;
 		return false;
 	}
+	
+	public String toString() {
+		return super.toString() + " type: "+type + " hydration level:"+hydrationLvl+" life state:" + lifeState;
+	}
 
 }

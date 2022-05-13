@@ -23,7 +23,7 @@ public abstract class Element {
 	}
 	//METHOD
 	
-	public void putOnIsland(Island i, int x, int y) { //even though is already done in fill? 
+	public void putOnIsland(Island i, int x, int y) { 
 		if (i.getElement(x,  y) == null)
 			i.setElement(this, x, y);
 		isInGrid = true;
@@ -77,5 +77,7 @@ public abstract class Element {
 		return y;
 	}
 	
-	 
+	public String toString() {
+		return "x="+x + " y="+y + " in grid?:"+isInGrid + " standable?"+standable;
+	}
 }
