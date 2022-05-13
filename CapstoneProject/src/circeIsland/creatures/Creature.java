@@ -160,11 +160,14 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	public boolean canStand(double xCoor, double yCoor) {
-		int[] grid = coorToGrid(xCoor, yCoor );
-		if (myIsland.getElement(grid[0], grid[1]) == null) {
+		int[] gridTopLeft = coorToGrid(xCoor, yCoor );
+		int[] gridBottomRight = coorToGrid(xCoor + width, yCoor + height);
+		if (myIsland.getElement(gridTopLeft[0], gridTopLeft[1]) == null || 
+			myIsland.getElement(gridBottomRight[0], gridBottomRight[1]) == null) {
 			return false;
 		}
-		return myIsland.getElement(grid[0], grid[1]).getStandable();
+		return myIsland.getElement(gridTopLeft[0], gridTopLeft[1]).getStandable() &&
+				myIsland.getElement(gridBottomRight[0], gridBottomRight[1]).getStandable();
 	}
 	
 	public abstract void act();
