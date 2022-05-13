@@ -21,7 +21,7 @@ public class Island extends Screen{
 	//private int currentTime;
 	private House circeHouse;
 	private Rectangle infoButton;
-	private boolean elementSelected, mouseClickEnabled, showInfo;
+	private boolean landElementSelected, mouseClickEnabled, showInfo;
 	private int[] selectedSpot;
 	//GButton brewer, recipe, exit;
 	
@@ -45,7 +45,7 @@ public class Island extends Screen{
 		creatures = new ArrayList<Creature>();
 		infoButton = new Rectangle(super.WIDTH+40, 20, super.WIDTH / element.length + 30, super.HEIGHT /element[0].length - 10);
 		
-		elementSelected = false;
+		landElementSelected = false;
 		mouseClickEnabled = true;
 		showInfo = false;
 		
@@ -112,8 +112,8 @@ public class Island extends Screen{
 		surface.text("info", infoButton.x+infoButton.width/2-w/2, infoButton.y+infoButton.height/2);
 		
 		
-		if(elementSelected) {
-			elementSelected = false;
+		if(landElementSelected) {
+			landElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
 			GDropList list = new GDropList(surface, 13 + (selectedSpot[0] * cellWidth), 13 + (selectedSpot[1]*cellHeight), cellWidth-6, cellHeight*4 - 10, 0);  
@@ -152,12 +152,15 @@ public class Island extends Screen{
 			System.out.println("at circe's");
 			surface.switchScreen();
 		}
+		else if(element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
+			
+		}
 		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
 			System.out.println("info");
 		}
 		else if(clickedElement != null && clickedElement instanceof Land){
 			System.out.println("here");
-			elementSelected = true;
+			landElementSelected = true;
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
 		}
@@ -270,6 +273,10 @@ public class Island extends Screen{
 		return circeHouse;
 	}
 	
+	public Element[][] getElements(){
+		return element;
+	}
+	
 	//have to change to not include water outside island
 	public boolean isValid(int rowLoc, int colLoc)
     {
@@ -298,6 +305,9 @@ public class Island extends Screen{
 
 	}
 	
+//	private boolean intersectsAnyGarden() {
+//		
+//	}
 	
 	//to prevent the text from coming
 	

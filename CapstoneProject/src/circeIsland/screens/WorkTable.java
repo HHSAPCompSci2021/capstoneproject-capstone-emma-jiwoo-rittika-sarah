@@ -17,7 +17,6 @@ public class WorkTable extends Screen{
 	//GButton brewer, recipe, exit;
 	private ArrayList<String> recipes;
 	private boolean showRecipes;
-	private boolean buttonVisibility;
 	
 	
 	
@@ -32,20 +31,9 @@ public class WorkTable extends Screen{
 		recipes = new ArrayList<String>();
 		addRecipes();
 		showRecipes = false;
-		buttonVisibility = true;
 	}
 	
-//	public void setup() {
-//
-//		G4P.setGlobalColorScheme(3);
-//		brewer = new GButton(surface, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
-//		recipe = new GButton(surface, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
-//		exit = new GButton(surface, 25, 25, 25, 25, "X");
-//		brewer.addEventHandler(this,  "handleButtonClick");
-//		recipe.addEventHandler(this,  "handleButtonClick");
-//		exit.addEventHandler(this,  "handleButtonClick");
-//		
-//	}
+
 	
 	public void draw() {
 
@@ -59,14 +47,7 @@ public class WorkTable extends Screen{
 //		float w = surface.textWidth(str);
 //		surface.textSize(20);
 //		surface.text(str, cookButton.x+cookButton.width/2-w/2, cookButton.y+cookButton.height/2);
-		
-		
-//		if(!buttonVisibility) {
-//			brewer.setVisible(false);
-//			recipe.setVisible(false);
-//			exit.setVisible(false);
-//		}
-		//brewer.setVisible(false);
+
 		
 		drawInventory();
 		
@@ -159,7 +140,6 @@ public class WorkTable extends Screen{
 		}
 		else if(buttonName.equals("X")) {
 			System.out.println("EXIT");
-			buttonVisibility = false;
 //			brewer.setVisible(false);
 //			b.setOpaque(false);
 //			b.setEnabled(false);
@@ -172,7 +152,7 @@ public class WorkTable extends Screen{
 	public void setButtonVisible(boolean b) {
 		ArrayList<GButton> buttonList = surface.getButtons();
 		for(GButton button : buttonList) {
-			button.setVisible(false);
+			button.setVisible(b);
 		}
 	}
 	

@@ -49,11 +49,9 @@ public class DrawingSurface extends PApplet {
 		recipe.setVisible(false);
 		exit.setVisible(false);
 		
-		
 		cImage= loadImage("Images/tempImage.png");
 		island = new Island(this, cImage, 300, 300, 7, 10);
 		currentScreen = island;
-		
 	}
 	
 	// The statements in draw() are executed until the 
