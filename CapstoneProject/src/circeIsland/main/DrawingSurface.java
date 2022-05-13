@@ -5,11 +5,13 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+import circeIsland.creatures.Circe;
 import circeIsland.screens.*;
 import g4p_controls.G4P;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.event.MouseEvent;
 
 
@@ -19,15 +21,16 @@ public class DrawingSurface extends PApplet {
 	private WorkTable workshop;
 	private Screen currentScreen;
 	GButton brewer, recipe, exit;
+	public PImage cImage;
 	
 	public float ratioX, ratioY;
 	
 	public DrawingSurface() {
 		//island = new Island(this);
-		island = new Island(this, 300, 300, 7, 10);
+		//island = new Island(this, 300, 300, 7, 10);
 		workshop = new WorkTable(this);
 		//currentScreen = workshop;
-		currentScreen = island;
+		
 	}
 	
 	// The statements in the setup() function 
@@ -42,6 +45,14 @@ public class DrawingSurface extends PApplet {
 		brewer.addEventHandler(workshop,  "handleButtonClick");
 		recipe.addEventHandler(workshop,  "handleButtonClick");
 		exit.addEventHandler(workshop,  "handleButtonClick");
+		brewer.setVisible(false);
+		recipe.setVisible(false);
+		exit.setVisible(false);
+		
+		
+		cImage= loadImage("Images/tempImage.png");
+		island = new Island(this, cImage, 300, 300, 7, 10);
+		currentScreen = island;
 		
 	}
 	
@@ -65,6 +76,7 @@ public class DrawingSurface extends PApplet {
 		
 		stroke(0);
 		if(currentScreen.equals(workshop)) {
+			workshop.setButtonVisible(true);
 			workshop.draw();
 		}
 		if(currentScreen.equals(island)) {

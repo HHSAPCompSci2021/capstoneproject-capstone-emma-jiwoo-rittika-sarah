@@ -61,9 +61,6 @@ public class WorkTable extends Screen{
 //		surface.text(str, cookButton.x+cookButton.width/2-w/2, cookButton.y+cookButton.height/2);
 		
 		
-		
-		
-		
 //		if(!buttonVisibility) {
 //			brewer.setVisible(false);
 //			recipe.setVisible(false);

@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import circeIsland.main.DrawingSurface;
 import g4p_controls.*;
+import processing.core.PImage;
 import circeIsland.creatures.*;
 import circeIsland.elements.Element;
 import circeIsland.elements.*;
@@ -34,12 +35,13 @@ public class Island extends Screen{
 	 * @param houseY the y coordinate of Circe's house
 	 * @param houseSize the size (length of the side) of Circe's house
 	 */
-	public Island(DrawingSurface surface, int circeX, int circeY, int houseX, int houseY) {
+	public Island(DrawingSurface surface, PImage cImage, int circeX, int circeY, int houseX, int houseY) {
 		super(800,600, surface);
 		
 		element = new Element[15][15];
 		circeHouse = new House(this, houseX, houseX, "circe");
-		circe = new Circe(circeX, circeY);
+		//PImage cImage = super.surface.loadImage("Images\tempImage.png");
+		circe = new Circe(cImage, circeX, circeY);
 		creatures = new ArrayList<Creature>();
 		infoButton = new Rectangle(super.WIDTH+40, 20, super.WIDTH / element.length + 30, super.HEIGHT /element[0].length - 10);
 		
