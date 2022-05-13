@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import circeIsland.main.*;
+import g4p_controls.G4P;
+import g4p_controls.GButton;
 import circeIsland.elements.Holdable;
 
 public class WorkTable extends Screen{
@@ -11,6 +13,7 @@ public class WorkTable extends Screen{
 	private DrawingSurface surface;
 	private ArrayList<Holdable> storage;
 	private Rectangle cookButton, recipeButton;
+	GButton brewer, recipe;
 	private ArrayList<String> recipes;
 	private boolean showRecipes;
 	
@@ -33,15 +36,18 @@ public class WorkTable extends Screen{
 
 		surface.background(255,255,255);
 		
-		surface.fill(235, 213, 190);
-		surface.rect(cookButton.x, cookButton.y, cookButton.width, cookButton.height);
-		surface.rect(recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height);
-		surface.fill(0);
-		String str = "BREW"; 
-		float w = surface.textWidth(str);
-		surface.textSize(20);
-		surface.text(str, cookButton.x+cookButton.width/2-w/2, cookButton.y+cookButton.height/2);
-		
+//		surface.fill(235, 213, 190);
+//		surface.rect(cookButton.x, cookButton.y, cookButton.width, cookButton.height);
+//		surface.rect(recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height);
+//		surface.fill(0);
+//		String str = "BREW"; 
+//		float w = surface.textWidth(str);
+//		surface.textSize(20);
+//		surface.text(str, cookButton.x+cookButton.width/2-w/2, cookButton.y+cookButton.height/2);
+//		
+		G4P.setGlobalColorScheme(7);
+		brewer = new GButton(surface, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
+		recipe = new GButton(surface, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
 		
 		drawInventory();
 		

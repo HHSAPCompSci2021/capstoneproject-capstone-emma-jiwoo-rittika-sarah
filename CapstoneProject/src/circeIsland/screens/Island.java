@@ -1,6 +1,7 @@
 package circeIsland.screens;
 
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -114,9 +115,8 @@ public class Island extends Screen{
 			GDropList list = new GDropList(surface, 13 + (selectedSpot[0] * cellWidth), 13 + (selectedSpot[1]*cellHeight), cellWidth-6, cellHeight*4 - 10, 0);  
 			list.setItems(new String[] {"House", "Land", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
-			
-			
 		}
+		
 		
 		
 		
@@ -144,7 +144,7 @@ public class Island extends Screen{
 		
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 		
-		if(clickInGrid[0] == circeHouse.getXCoor() && clickInGrid[1] == circeHouse.getYCoor()) {
+		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
 			System.out.println("at circe's");
 			surface.switchScreen();
 		}
@@ -159,11 +159,6 @@ public class Island extends Screen{
 	
 	
 	public void processKey(char key) {
-//		if(key == 'w' || key == 'W' || key == 'a' || key == 'A' || key == 's' || key == 'S' || key == 'd' || key == 'D') {
-//			//circe.move(key);
-//		}
-		
-		System.out.println("processing key");
 		
 		if(key == 'w' || key == 'W') {
 			System.out.println("ww");
@@ -181,10 +176,18 @@ public class Island extends Screen{
 			System.out.println("dd");
 			circe.moveX(Creature.RIGHT);
 		}
-//		if(key == 'd' || key == 'D')
-//			circe.moveY(Creature.RIGHT);
-//		if(key == 's' || key == 'S')
-//			circe.moveY(Creature.DOWN);
+		
+		if(key == '\n') {
+			System.out.println("ENTER");
+			float cellWidth = (surface.width - 11) / element[0].length;
+			float cellHeight = (surface.height - 17) / element.length;
+			
+			Rectangle2D.Double cHouseRect = new Rectangle2D.Double(circeHouse.getXCoor() * cellWidth, circeHouse.getYCoor() * cellHeight, 2*cellWidth, 2*cellHeight);
+			if(circe.intersects(cHouseRect)) {
+				System.out.println("switching?");
+				surface.switchScreen();
+			}
+		}
 		
 	}
 	
