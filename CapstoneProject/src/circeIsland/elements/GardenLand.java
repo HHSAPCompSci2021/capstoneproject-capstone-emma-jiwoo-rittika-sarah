@@ -11,6 +11,11 @@ public class GardenLand extends Element{
 	int hydrationLvl; //watering plants increases the hydration level to 5. it decreases by 1 daily so you must
 					  //water your plants periodically for them to survive. watering brings it back to 5 
 	public int lifeState; //0 is unplanted, 1 is bud, 2 is sprout, 3 is ready to harvest, 4 is dead 
+	private static final int UNPLANTED = 0;
+	private static final int BUD = 1;
+	private static final int SPROUT = 2;
+	private static final int GROWN = 3;
+	private static final int DEAD = 4;
 	
 	
 	public GardenLand(Island i, int xInput, int yInput) {
@@ -26,7 +31,7 @@ public class GardenLand extends Element{
 	
 	public void plant(String type) {
 		this.type = type;
-		lifeState = 1;
+		lifeState = BUD;
 		hydrationLvl = 5;
 	}
 	
@@ -36,7 +41,7 @@ public class GardenLand extends Element{
 	}
 	
 	public void grow() {
-		if (hydrationLvl > 3 && (lifeState == 1 || lifeState == 2)) 
+		if (hydrationLvl > 3 && (lifeState == BUD || lifeState == SPROUT)) 
 			lifeState ++;
 		//some call to island.keepTime() in here somewhere probably
 	}
@@ -54,7 +59,7 @@ public class GardenLand extends Element{
 		surface.fill(105, 67, 45);
 		surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth, cellHeight);
 		surface.fill(0);
-		surface.text(type, 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
+		surface.text("garden", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
 		surface.pop();
 	}
 	
@@ -67,7 +72,7 @@ public class GardenLand extends Element{
 	}
 	
 	private boolean isAlive() {
-		if (lifeState == 1 || lifeState == 2 || lifeState == 3)
+		if (lifeState == BUD || lifeState == SPROUT || lifeState == GROWN)
 			return true;
 		return false;
 	}
