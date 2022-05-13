@@ -39,9 +39,10 @@ public class DrawingSurface extends PApplet {
 		brewer = new GButton(this, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
 		recipe = new GButton(this, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
 		exit = new GButton(this, 25, 25, 25, 25, "X");
-		brewer.addEventHandler(this,  "handleButtonClick");
-		recipe.addEventHandler(this,  "handleButtonClick");
-		exit.addEventHandler(this,  "handleButtonClick");
+		brewer.addEventHandler(workshop,  "handleButtonClick");
+		recipe.addEventHandler(workshop,  "handleButtonClick");
+		exit.addEventHandler(workshop,  "handleButtonClick");
+		
 	}
 	
 	// The statements in draw() are executed until the 
