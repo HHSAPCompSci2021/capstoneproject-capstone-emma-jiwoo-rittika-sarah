@@ -3,7 +3,7 @@ package circeIsland.creatures;
 import java.awt.geom.Rectangle2D;
 import processing.core.PApplet;
 import processing.core.PImage;
-
+import circeIsland.elements.Land;
 import circeIsland.screens.Island;
 
 
@@ -11,15 +11,16 @@ import circeIsland.screens.Island;
  * 
  * @author Jiwoo Kim
  */
-public class Creature extends Rectangle2D.Double{
+public abstract class Creature extends Rectangle2D.Double{
 	private int velocity;
 	private PImage image;
 	private Island myIsland;
+	private boolean isInGrid;
 	
-	public static final int LEFT = -1;
+	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
-	public static final int UP = -1;
-	public static final int DOWN = 1;
+	public static final int UP = 2;
+	public static final int DOWN = 3;
 
 	// CONSTRUCTOR
 	
@@ -39,6 +40,8 @@ public class Creature extends Rectangle2D.Double{
 		super(xCoor,yCoor, width, height);
 		velocity = vel;
 		image = img;
+		isInGrid = false;
+		myIsland = null;
 	}
 	
 	
@@ -58,18 +61,38 @@ public class Creature extends Rectangle2D.Double{
 	}
 	
 	public void moveX(int dir) {
-		super.x += (dir * velocity);
+		if(dir == LEFT) {
+			super.x += (-1 * velocity);
+		}else if (dir == RIGHT){
+			super.x += velocity;
+		}
 	}
 	
 	public void moveY(int dir) {
-		super.y += (dir * velocity);
+		if(dir == UP) {
+			super.y += (-1 * velocity);
+		}else if (dir == DOWN){
+			super.y += velocity;
+		}
 	}
 	
-	public void spawn(Island i, int x, int y) {
+	public void moveToXY(int x, int y) {
 		double[] coor = gridToCoor(x,y);
 		super.x = coor[0];
 		super.y = coor[1];
 	}
+	
+	public void putOnIsland(Island i) {
+		if(i != null)
+			isInGrid = true;
+			myIsland = i;
+	}
+	
+	public void removeFromIsland(Island i) {
+		isInGrid = false;
+		myIsland = null;
+	}
+	
 	
 	public int getVel() {
 		return velocity;
@@ -100,13 +123,49 @@ public class Creature extends Rectangle2D.Double{
 	}
 	
 	public void draw(PApplet g) {
-		if (image != null)
-			g.image(image,(float)x,(float)y,(float)width,(float)height);
-		else {
-			g.fill(100);
-			g.rect((float)x,(float)y,(float)width,(float)height);
+		if(isInGrid) {
+			if (image != null)
+				g.image(image,(float)x,(float)y,(float)width,(float)height);
+			else {
+				g.fill(100);
+				g.rect((float)x,(float)y,(float)width,(float)height);
+				g.fill(0);
+				g.text(getType(), (float)x, (float)y);
+			}
 		}
 	}
+	
+	public void act() {
+		act(-1);
+	}
+	
+	public void act(int dir) {
+		if(isInGrid) {
+			int[] grid = coorToGrid(x, y);
+			if(dir == -1) 
+				dir = (int)Math.random() * 4;
+			
+			if(dir == LEFT) {
+				if(canStand(grid[0]-1, grid[1]))
+					moveX(Creature.LEFT);
+			}else if(dir == RIGHT) {
+				if(canStand(grid[0]+1, grid[1]))
+					moveX(Creature.RIGHT);
+			}else if(dir == UP) {
+				if(canStand(grid[0]-1, grid[1]-1))
+					moveX(Creature.UP);
+			}else if(dir == DOWN) {
+				if(canStand(grid[0], grid[1]+1))
+					moveX(Creature.DOWN);
+			}
+		}
+	}
+	
+	public boolean canStand(int gridX, int gridY) {
+		return myIsland.getElement(gridX, gridY).getStandable();
+	}
+	
+	public abstract String getType();
 	
 	
 	

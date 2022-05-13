@@ -26,14 +26,14 @@ public class Circe extends Creature{
 
 	
 	//METHODS
-	public void grab() {
+	public void act() {
 		
 	}
 	
-	public void brew() {
-		
+	public void grab(int boxNum) {
+		currentHold = boxNum;
 	}
-	
+
 	public void plant() {
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
 		if(e instanceof GardenLand) {
@@ -53,18 +53,36 @@ public class Circe extends Creature{
 		if(e instanceof GardenLand) {
 			if(((GardenLand) e).getLifeState() >= 3)
 				((GardenLand) e).harvest();
-				
+//				holdings[nextEmptySpace()] = new Holdable()
 		}
 	}
 	
-	public void turnPig() {
-		
+	public void turnPig(MaliciousVisitor visitor) {
+		int diffX = Math.abs(visitor.getXGrid() - this.getXGrid());
+		int diffY =Math.abs(visitor.getYGrid() - this.getYGrid());
+		if(diffX < 3 && diffY < 3) {
+			Pig pig = new Pig((int)visitor.getX(), (int)visitor.getY());
+			pig.putOnIsland(visitor.getIsland());
+			visitor.removeFromIsland(visitor.getIsland());
+
+		}
 	}
 	
 	public void draw(PApplet g) {
 		super.draw(g);
 	}
 	
+	public int nextEmptySpace() {
+		for (int i = 0; i<5; i++) {
+			if (holdings[i] == null)
+				return i;
+		}
+		return -1;
+	}
+	
+	public String getType() {
+		return "Circe";
+	}
 	
 	
 }

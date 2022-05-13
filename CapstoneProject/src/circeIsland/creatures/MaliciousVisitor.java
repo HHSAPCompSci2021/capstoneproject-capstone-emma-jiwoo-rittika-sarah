@@ -11,4 +11,7 @@ public class MaliciousVisitor extends Visitor{
 		// TODO Auto-generated constructor stub
 	}
 
+	public String getType() {
+		return "Malicious";
+	}
 }
