@@ -14,7 +14,7 @@ import circeIsland.main.DrawingSurface;
 
 public class Island extends Screen{
 
-	private DrawingSurface surface;
+	//private DrawingSurface surface;
 	private Element[][] element;
 	private ArrayList<Creature> creatures;
 	private Circe circe;
@@ -22,7 +22,7 @@ public class Island extends Screen{
 	private House circeHouse;
 	//private GButton b1, b2, b3;
 	
-	private boolean elementSelected;
+	private boolean elementSelected, mouseClickEnabled;
 	private int[] selectedSpot;
 	
 	
@@ -36,25 +36,25 @@ public class Island extends Screen{
 	 * @param houseSize the size (length of the side) of Circe's house
 	 */
 	public Island(DrawingSurface surface, int circeX, int circeY, int houseX, int houseY) {
-		super(800,600);
-		this.surface = surface;
+		super(800,600, surface);
+		//this.surface = surface;
+		
 		element = new Element[15][15];
 		circeHouse = new House(this, houseX, houseX, "circe");
 		circe = new Circe(circeX, circeY);
+		creatures = new ArrayList<Creature>();
+		
 		elementSelected = false;
+		mouseClickEnabled = true;
 		selectedSpot = new int[2];
-		//circe = new Circe(circeX, circeY);
 		//creatures.add(circe);
 		fillElements(circeX, circeY, houseX, houseY);
 	}
 	
 	
 	private void fillElements(int cX, int cY, int hX, int hY) {
-		
-		//element[cX][cY] = circe; -- won't work, cause circe isn't an element
-		
 		circeHouse.putOnIsland(this);
-		
+		circe.putOnIsland(this);
 		
 		new GardenLand(this, 2, 2).putOnIsland(this, 2, 2);
 		element[2][3] = new GardenLand(this, 3, 2);
@@ -68,7 +68,6 @@ public class Island extends Screen{
 					Land l = new Land(this, i, j);
 					element[i][j] = l;
 					l.setIsInGrid(true);
-					
 				}
 			}
 		}
@@ -76,16 +75,11 @@ public class Island extends Screen{
 	}
 
 
+	/**
+	 * Draws the island with all its elements and creatures to the screen.
+	 * @post The properties of the provided PApplet provided will be modified
+	 */
 	public void draw() {
-//		b1 = new GButton(surface, 650, 60, 100, 40, "House");
-//		b2 = new GButton(surface, 650, 120, 100, 40, "Garden Plot");
-//		b3 = new GButton(surface, 650, 180, 100, 40, "None");
-//		
-//		b1.addEventHandler(this,  "handleElementChange");
-//		b2.addEventHandler(this,  "handleElementChange");
-//		b3.addEventHandler(this,  "handleElementChange");
-		
-		
 		
 		float cellWidth = (surface.width - 11) / element[0].length;
 		float cellHeight = (surface.height - 17) / element.length;
@@ -108,37 +102,38 @@ public class Island extends Screen{
 		
 		if(elementSelected) {
 			elementSelected = false;
+			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
 			GDropList list = new GDropList(surface, 13 + (selectedSpot[0] * cellWidth), 13 + (selectedSpot[1]*cellHeight), cellWidth-6, cellHeight*4 - 10, 0);  
-			list.setItems(new String[] {"House", "Land", "None"}, 0);
+			list.setItems(new String[] {"Choose", "House", "Garden", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
 		
-		
-		
-		
+		Nymph c1 = new Nymph(450, 700);
+		c1.putOnIsland(this);
+		c1.draw(surface);
+//		creatures.add(new Nymph(450, 700));
+//		creatures.add(new Nymph(200, 200));
+//		for(Creature c : creatures) {
+//			c.putOnIsland(this);
+//			c.draw(surface);
+//		}
 		circe.draw(surface);
-		
-		
-		
-		//menu
-//		surface.fill(235, 213, 190);
-//		surface.rect(20 + (element.length * cellWidth),  10, 140, surface.height - 50);
-		
 	}
 	
 	
 	public void processMouseClick(int mouseX, int mouseY) {
+		//System.out.println("Processing click");
+		if(!mouseClickEnabled) {
+			//System.out.println("ENETERED FALSE CLICK");
+			mouseClickEnabled = true;
+			return;
+		}
+		
 		float cellWidth = (surface.width - 11) / element[0].length;
-		//float cellWidth = ((surface.width - 11) - 150) / element[0].length;
 		float cellHeight = (surface.height - 17) / element.length;
 		
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
-		
-		
-		
-		System.out.println(circeHouse.getXCoor() + " " + circeHouse.getYCoor());
-		
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 		
 		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
@@ -155,6 +150,13 @@ public class Island extends Screen{
 	}
 	
 	
+	
+	/**
+	 * In the event that a key is pressed, takes in the key that is pressed and executes the correct response
+	 * - if the key is W,A, S, D, then moves Circe in the corresponding direction
+	 * - if the key is enter and Circe is at her house, then switches the DrawingSurface screen
+	 * @param key the key pressed
+	 */
 	public void processKey(char key) {
 		
 		if(key == 'w' || key == 'W') {
@@ -188,7 +190,12 @@ public class Island extends Screen{
 		
 	}
 	
-	
+	/**
+	 * Returns the indexes of the location in the 2DArray of elements, given the x and y coordinates on the screen, 
+	 * @param xCoor x-coordinate on the screen
+	 * @param yCoor y-coordinate on the screen
+	 * @return int array with the the specific indexes in element[][] at which the given coordinate point occurs.
+	 */
 	public int[] coorToGrid(double xCoor, double yCoor) {
 		float cellWidth = (surface.width - 11) / element[0].length;
 		float cellHeight = (surface.height - 17) / element.length;
@@ -201,6 +208,12 @@ public class Island extends Screen{
 		return grid;
 	}
 	
+	/**
+	 * Returns the Element at a given location in the 2D array of Elements
+	 * @param x the x-index
+	 * @param y the y-index
+	 * @return Element at elements[y][x]
+	 */
 	public Element getElement(int x, int y) {
 		return element[y][x];
 	}
@@ -245,19 +258,28 @@ public class Island extends Screen{
     }
 	
 	
-//	public void handleButtonEvents(GButton button, GEvent event) { /* code */ }
-//	
 	public void handleElementChange(GDropList list, GEvent event) {
+		mouseClickEnabled = false;
+		System.out.println(mouseClickEnabled);
+		String text = list.getSelectedText();
+		System.out.println(text);
 		list.setVisible(false);
-		list.setEnabled(false);
-		if(list.getSelectedText().equals("House")) {
+		if(text.equals("House")) {
 			int x = selectedSpot[0];
 			int y = selectedSpot[1];
-			element[y][x] = new House(this, x, y, "norm");
+			element[x][y] = new House(this, x, y, "norm");
 		}
-		list = null;
-		//list.setVisible(false);
+		else if(text.equals("Garden")) {
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			element[x][y] = new GardenLand(this, x, y);
+			System.out.println("Executing land ");
+			//mouseClickEnabled = true;
+		}
 
 	}
+	
+	
+	//to prevent the text from coming
 	
 }

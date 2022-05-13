@@ -6,22 +6,24 @@ import java.util.ArrayList;
 import circeIsland.main.*;
 import g4p_controls.G4P;
 import g4p_controls.GButton;
+import g4p_controls.GEvent;
 import circeIsland.elements.Holdable;
 
 public class WorkTable extends Screen{
 
-	private DrawingSurface surface;
+	//private DrawingSurface surface;
 	private ArrayList<Holdable> storage;
 	private Rectangle cookButton, recipeButton;
-	GButton brewer, recipe;
+	GButton brewer, recipe, exit;
 	private ArrayList<String> recipes;
 	private boolean showRecipes;
+	private boolean buttonVisibility;
 	
 	
 	
 	public WorkTable(DrawingSurface surface) {
-		super(800,600);
-		this.surface = surface;
+		super(800,600, surface);
+		//this.surface = surface;
 		//cookButton = new Rectangle(800/2-100,600/2-50,200,100);
 		storage = new ArrayList<Holdable>();
 		
@@ -30,6 +32,7 @@ public class WorkTable extends Screen{
 		recipes = new ArrayList<String>();
 		addRecipes();
 		showRecipes = false;
+		buttonVisibility = true;
 	}
 	
 	public void draw() {
@@ -44,10 +47,25 @@ public class WorkTable extends Screen{
 //		float w = surface.textWidth(str);
 //		surface.textSize(20);
 //		surface.text(str, cookButton.x+cookButton.width/2-w/2, cookButton.y+cookButton.height/2);
-//		
-		G4P.setGlobalColorScheme(7);
+		
+		
+		G4P.setGlobalColorScheme(3);
 		brewer = new GButton(surface, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
 		recipe = new GButton(surface, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
+		exit = new GButton(surface, 25, 25, 25, 25, "X");
+		brewer.addEventHandler(this,  "handleButtonClick");
+		recipe.addEventHandler(this,  "handleButtonClick");
+		exit.addEventHandler(this,  "handleButtonClick");
+		
+		
+		
+		
+//		if(!buttonVisibility) {
+//			brewer.setVisible(false);
+//			recipe.setVisible(false);
+//			exit.setVisible(false);
+//		}
+		//brewer.setVisible(false);
 		
 		drawInventory();
 		
@@ -127,6 +145,32 @@ public class WorkTable extends Screen{
 			showRecipes = !showRecipes;
 		}
 	}
+	
+	public void handleButtonClick(GButton b, GEvent event) {
+		String buttonName = b.getText();
+		System.out.println(buttonName);
+		System.out.println("CLICK");
+		if(buttonName.equals("Brew")) {
+			brew();
+		}
+		else if(buttonName.equals("Recipes")) {
+			showRecipes = !showRecipes;
+		}
+		else if(buttonName.equals("X")) {
+			System.out.println("EXIT");
+			buttonVisibility = false;
+//			brewer.setVisible(false);
+//			b.setOpaque(false);
+//			b.setEnabled(false);
+			System.out.println("Visible: " + brewer.isVisible());
+			surface.switchScreen();
+		}
+	}
+	
+	
+	
+	
+	
 	
 	private void brew() {
 		surface.text("BREWING",  100, 100);
