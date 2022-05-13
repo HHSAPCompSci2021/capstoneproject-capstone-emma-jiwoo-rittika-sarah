@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import circeIsland.main.DrawingSurface;
-import g4p_controls.GButton;
-import g4p_controls.GEvent;
+import g4p_controls.*;
 import circeIsland.creatures.*;
 import circeIsland.elements.Element;
 import circeIsland.elements.*;
@@ -109,9 +108,15 @@ public class Island extends Screen{
 			}
 		}
 		
-		 G4P.setGlobalColorScheme(1);
-		GDropList list = new GDropList(surface, 10 + (5 * cellWidth), 10 + (5*cellHeight), cellWidth, cellHeight*4, 0);  
-		list.setItems(new String[] {"House", "Land", "None"}, 0);
+		if(elementSelected) {
+			elementSelected = false;
+			G4P.setGlobalColorScheme(4);
+			GDropList list = new GDropList(surface, 13 + (selectedSpot[0] * cellWidth), 13 + (selectedSpot[1]*cellHeight), cellWidth-6, cellHeight*4 - 10, 0);  
+			list.setItems(new String[] {"House", "Land", "None"}, 0);
+			list.addEventHandler(this,  "handleElementChange");
+			
+			
+		}
 		
 		
 		
@@ -140,7 +145,7 @@ public class Island extends Screen{
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 		
 		if(clickInGrid[0] == circeHouse.getXCoor() && clickInGrid[1] == circeHouse.getYCoor()) {
-			System.out.println("here");
+			System.out.println("at circe's");
 			surface.switchScreen();
 		}
 		else if(clickedElement != null && clickedElement instanceof Land){
@@ -149,13 +154,37 @@ public class Island extends Screen{
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
 		}
+		
 	}
 	
 	
 	public void processKey(char key) {
-		if(key == 'w' || key == 'W' || key == 'a' || key == 'A' || key == 's' || key == 'S' || key == 'd' || key == 'D') {
-			//circe.move(key);
+//		if(key == 'w' || key == 'W' || key == 'a' || key == 'A' || key == 's' || key == 'S' || key == 'd' || key == 'D') {
+//			//circe.move(key);
+//		}
+		
+		System.out.println("processing key");
+		
+		if(key == 'w' || key == 'W') {
+			System.out.println("ww");
+			circe.moveY(Creature.UP);
 		}
+		if(key == 'a' || key == 'A') {
+			System.out.println("aa");
+			circe.moveX(Creature.LEFT);
+		}
+		if(key == 's' || key == 'S') {
+			System.out.println("ss");
+			circe.moveY(Creature.DOWN);
+		}
+		if(key == 'd' || key == 'D') {
+			System.out.println("dd");
+			circe.moveX(Creature.RIGHT);
+		}
+//		if(key == 'd' || key == 'D')
+//			circe.moveY(Creature.RIGHT);
+//		if(key == 's' || key == 'S')
+//			circe.moveY(Creature.DOWN);
 		
 	}
 	
@@ -199,44 +228,19 @@ public class Island extends Screen{
     }
 	
 	
-	
-	
-	
-//	public void handleButtonEvents(GButton button, GEvent event) { 
-//		System.out.println("handled!!");
-//		if(elementSelected) {
-//			if(button == b1 && event == GEvent.CLICKED) {
-//				setElement(new House(this, selectedSpot[0], selectedSpot[1], "norm"), selectedSpot[0], selectedSpot[1]);
-//			}
-//			else if(button == b2 && event == GEvent.CLICKED) {
-//				//should be garden
-//				setElement(new GardenLand(this, selectedSpot[0], selectedSpot[1]), selectedSpot[0], selectedSpot[1]);
-//			}
-//			elementSelected = false;
-//		}
-//		
-//	}
-	
 //	public void handleButtonEvents(GButton button, GEvent event) { /* code */ }
 //	
-//	public void handleElementChange(GButton button, GEvent event) {
-//		
-//		System.out.println("handled!!");
-//		System.out.println(elementSelected);
-//		System.out.println(Arrays.toString(selectedSpot));
-//		//element[0][0] = new Land(this, 0, 0);
-//		if(elementSelected) {
-//			if(button == b1) {// && event == GEvent.CLICKED) {
-//				element[0][0] = new Land(this, 0, 0);
-//				setElement(new House(this, selectedSpot[0], selectedSpot[1], "norm"), selectedSpot[0], selectedSpot[1]);
-//			}
-//			else if(button == b2) {// && event == GEvent.CLICKED) {
-//				element[0][0] = new Land(this, 1, 0);
-//				//should be garden
-//				setElement(new GardenLand(this, selectedSpot[0], selectedSpot[1]), selectedSpot[0], selectedSpot[1]);
-//			}
-//			elementSelected = false;
-//		}
-//	}
+	public void handleElementChange(GDropList list, GEvent event) {
+		list.setVisible(false);
+		list.setEnabled(false);
+		if(list.getSelectedText().equals("House")) {
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			element[y][x] = new House(this, x, y, "norm");
+		}
+		list = null;
+		//list.setVisible(false);
+
+	}
 	
 }

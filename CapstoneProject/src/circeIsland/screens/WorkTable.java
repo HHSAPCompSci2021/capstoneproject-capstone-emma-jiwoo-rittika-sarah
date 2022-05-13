@@ -132,7 +132,6 @@ public class WorkTable extends Screen{
 		surface.rect(50, 50, 350, 300);
 		surface.fill(0);
 		surface.textSize(20);
-		//Pfont f = surface.loadFont("fontTemp.otf");
 		for(int i = 0; i<recipes.size(); i++) {
 			surface.text(recipes.get(i) + "\n", 60, 80 + (30 * i));
 		}
