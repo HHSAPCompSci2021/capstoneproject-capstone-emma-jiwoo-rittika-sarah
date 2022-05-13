@@ -49,7 +49,7 @@ public class DrawingSurface extends PApplet {
 		recipe.setVisible(false);
 		exit.setVisible(false);
 		
-		cImage= loadImage("Images/tempImage.png");
+		cImage= loadImage("Images/CirceFrontStand.png");
 		island = new Island(this, cImage, 300, 300, 7, 10);
 		currentScreen = island;
 	}
