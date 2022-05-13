@@ -16,7 +16,7 @@ public class Circe extends Creature{
 	private int currentHold;
 	
 	public Circe(int x, int y) {
-		super(x, y, CIRCE_WIDTH, CIRCE_HEIGHT);
+		super(x, y, CIRCE_WIDTH, CIRCE_HEIGHT, 20);
 		holdings = new Holdable[5];
 		currentHold = 0;
 		for(int i = 0; i < 5; i++) {

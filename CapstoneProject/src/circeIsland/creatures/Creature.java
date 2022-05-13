@@ -24,11 +24,11 @@ public class Creature extends Rectangle2D.Double{
 	// CONSTRUCTOR
 	
 	public Creature (int xCoor, int yCoor, int width, int height) {
-		this(null, xCoor, yCoor, width, height, 1);
+		this(null, xCoor, yCoor, width, height, 10);
 	}
 	
 	public Creature (PImage img, int xCoor, int yCoor, int width, int height) {
-		this(img, xCoor, yCoor, width, height, 1);
+		this(img, xCoor, yCoor, width, height, 10);
 	}
 	
 	public Creature (int xCoor, int yCoor, int width, int height, int vel) {
