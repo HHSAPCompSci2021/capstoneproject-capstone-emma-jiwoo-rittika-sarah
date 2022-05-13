@@ -37,14 +37,14 @@ public class Circe extends Creature{
 	
 	public void plant() {
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
-		if(e instanceof GardenLand) {
-			if(((GardenLand) e).getType().equals(""));
+		if(e instanceof GardenLand && holdings[currentHold].getType() == Holdable.SEED) {
+			if(((GardenLand) e).getType().equals(holdings[currentHold].getDetails()));
 		}
 	}
 	
 	public void water() {
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
-		if(e instanceof GardenLand) {
+		if(e instanceof GardenLand && holdings[currentHold].getType() == Holdable.WATER) {
 			((GardenLand) e).water();
 		}
 	}
@@ -53,8 +53,8 @@ public class Circe extends Creature{
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
 		if(e instanceof GardenLand) {
 			if(((GardenLand) e).getLifeState() >= 3)
+				holdings[nextEmptySpace()] = new Holdable(Holdable.SEED, ((GardenLand) e).getType());
 				((GardenLand) e).harvest();
-//				holdings[nextEmptySpace()] = new Holdable()
 		}
 	}
 	
@@ -71,6 +71,7 @@ public class Circe extends Creature{
 	
 	public void draw(PApplet g) {
 		super.draw(g);
+		
 	}
 	
 	public int nextEmptySpace() {
