@@ -5,7 +5,7 @@ import circeIsland.screens.Island;
 public class House extends Element{
 	
 	private String type; //Either "circe" or "norm"
-	private int xSize;
+	private int xSize; //circe: 3x3 Normal: 2x2 
 	private int ySize;
 
 	
@@ -54,6 +54,10 @@ public class House extends Element{
 	public void removeFromIsland(Island i) {
 		
 		setIsInGrid(false);
+	}
+	
+	public String toString() {
+		return super.toString() + " type: "+type;
 	}
 
 }
