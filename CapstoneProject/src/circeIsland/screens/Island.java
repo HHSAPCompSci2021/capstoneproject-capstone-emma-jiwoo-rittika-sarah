@@ -18,13 +18,11 @@ public class Island extends Screen{
 	private Element[][] element;
 	private ArrayList<Creature> creatures;
 	private Circe circe;
-	//private int currentTime;
 	private House circeHouse;
 	private Rectangle infoButton;
 	private boolean landElementSelected, mouseClickEnabled, showInfo, gardenElementSelected;
 	private int[] selectedSpot;
-	//GButton brewer, recipe, exit;
-	
+	private int drawCount, days;
 	
 	/**
 	 * Creates a new island in the provided surface, given the location of Circe and her house.
@@ -53,7 +51,9 @@ public class Island extends Screen{
 		selectedSpot = new int[2];
 		//creatures.add(circe);
 		fillElements(circeX, circeY, houseX, houseY);
+		
 	}
+
 	
 	
 	private void fillElements(int cX, int cY, int hX, int hY) {
@@ -84,6 +84,7 @@ public class Island extends Screen{
 	 * @post The properties of the provided PApplet provided will be modified
 	 */
 	public void draw() {
+		super.draw();
 		
 		float cellWidth = (surface.width - 11) / element[0].length;
 		float cellHeight = (surface.height - 17) / element.length;
@@ -130,8 +131,8 @@ public class Island extends Screen{
 			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
 			list.addEventHandler(this,  "handlePlantChange");
 		}
-		
-		Nymph c1 = new Nymph(450, 700);
+		surface.textSize(10);
+		Nymph c1 = new Nymph(450, 400);
 		c1.putOnIsland(this);
 		c1.draw(surface);
 //		creatures.add(new Nymph(450, 700));

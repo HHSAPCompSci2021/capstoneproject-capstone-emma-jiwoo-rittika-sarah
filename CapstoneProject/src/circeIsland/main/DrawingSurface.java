@@ -24,6 +24,10 @@ public class DrawingSurface extends PApplet {
 	public PImage cImage;
 	
 	public float ratioX, ratioY;
+	public int drawCounter;
+	public int time;
+	
+	
 	
 	public DrawingSurface() {
 		//island = new Island(this);
@@ -59,7 +63,7 @@ public class DrawingSurface extends PApplet {
 	// sequence and after the last line is read, the first 
 	// line is executed again.
 	public void draw() { 
-		
+		drawCounter++;
 //		ratioX = (float)width/currentScreen.WIDTH;
 //		ratioY = (float)height/currentScreen.HEIGHT;
 //
@@ -80,6 +84,11 @@ public class DrawingSurface extends PApplet {
 		if(currentScreen.equals(island)) {
 			island.draw();
 		}
+		
+		
+		
+		
+		
 		//System.out.println('c');
 	}
 	

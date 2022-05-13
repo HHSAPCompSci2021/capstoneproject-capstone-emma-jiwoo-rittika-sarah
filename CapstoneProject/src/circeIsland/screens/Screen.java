@@ -10,6 +10,7 @@ public class Screen{
 	public final int HEIGHT;
 	public final int WIDTH;
 	protected DrawingSurface surface;
+	private int drawCount, days;
 	
 	//CONSTRUCTOR
 	/**
@@ -21,6 +22,8 @@ public class Screen{
 		this.HEIGHT = width;
 		this.WIDTH = height;
 		this.surface = surface;
+		drawCount = 0;
+		days = 0;
 	}
 	
 	
@@ -30,7 +33,13 @@ public class Screen{
 	 * Draws the screen to the provided DrawingSurface
 	 */
 	public void draw() {
+		drawCount++;
 		
+		if(drawCount == 500) {
+			drawCount = 0;
+			System.out.println("DAY UP");
+			days++;
+		}
 	}
 	
 	/**
@@ -56,6 +65,10 @@ public class Screen{
 	
 	public int getWidth() {
 		return WIDTH;
+	}
+	
+	public int getDays() {
+		return days;
 	}
 	
 }
