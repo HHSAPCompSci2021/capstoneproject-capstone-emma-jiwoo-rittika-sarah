@@ -1,5 +1,9 @@
 package circeIsland.elements;
 
+import java.awt.Rectangle;
+
+import circeIsland.creatures.Circe;
+import circeIsland.creatures.Creature;
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
@@ -33,6 +37,13 @@ public abstract class Element {
 	}
 	
 	public abstract void draw(DrawingSurface surface, float cellWidth, float cellHeight);
+	
+	public boolean intersects(Creature c, float cellWidth, float cellHeight) {
+		Rectangle r = new Rectangle((int)(10 + (getXCoor() * cellWidth)), (int)(10 + (getYCoor()*cellHeight)), (int)cellWidth, (int)cellHeight);
+		if (c.intersects(r))
+			return true;
+		return false;
+	}
 	
 	public void setStandable (boolean b) {
 		standable = b;
