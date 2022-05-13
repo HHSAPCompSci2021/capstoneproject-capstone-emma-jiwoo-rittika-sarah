@@ -86,11 +86,15 @@ public abstract class Creature extends Rectangle2D.Double{
 		if(i != null)
 			isInGrid = true;
 			myIsland = i;
+			if(!(this instanceof Circe))
+				myIsland.addCreature(this);
 	}
 	
 	public void removeFromIsland(Island i) {
 		isInGrid = false;
 		myIsland = null;
+		if(!(this instanceof Circe))
+			myIsland.removeCreature(this);
 	}
 	
 	
