@@ -18,12 +18,15 @@ public class Pig extends Creature{
 		super.act(-1);
 	}
 	
-	public boolean canStand(double coorX, double coorY) {
-		int[] grid = coorToGrid(x, y);
-		if (super.getIsland().getElement(grid[0], grid[1]) == null) {
+	public boolean canStand(double xCoor, double yCoor) {
+		int[] gridTopLeft = coorToGrid(xCoor, yCoor );
+		int[] gridBottomRight = coorToGrid(xCoor + width, yCoor + height);
+		if (super.getIsland().getElement(gridTopLeft[0], gridTopLeft[1]) == null || 
+			super.getIsland().getElement(gridBottomRight[0], gridBottomRight[1]) == null) {
 			return false;
 		}
-		return super.getIsland().getElement(grid[0], grid[1]) instanceof PigPen;
+		return super.getIsland().getElement(gridTopLeft[0], gridTopLeft[1]) instanceof PigPen &&
+				super.getIsland().getElement(gridBottomRight[0], gridBottomRight[1]) instanceof PigPen;
 	}
 	
 	public String getType() {
