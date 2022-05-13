@@ -64,6 +64,7 @@ public abstract class Creature extends Rectangle2D.Double{
 		if(dir == LEFT) {
 			if(canStand(x+(-1 * velocity), y))
 				super.x += (-1 * velocity);
+			
 		}else if(dir == RIGHT) {
 			if(canStand(x+velocity, y))
 				super.x += velocity;
@@ -111,11 +112,11 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	public int[] coorToGrid(double xCoor, double yCoor) {
-		double width = myIsland.getWidth();
-		double height = myIsland.getHeight();
-		int xGrid = (int) (xCoor/(width/10));
-		int yGrid = (int) (yCoor/(height/10));
-		
+		double cellWidth = myIsland.getWidth()/myIsland.getElements()[0].length;
+		double cellHeight = myIsland.getHeight()/myIsland.getElements().length;
+		int xGrid = (int) (xCoor/cellWidth);
+		int yGrid = (int) (yCoor/cellHeight);
+		System.out.println(xGrid + "," + yGrid);
 		int[] grid = {xGrid, yGrid};
 		return grid;
 	}
@@ -158,8 +159,8 @@ public abstract class Creature extends Rectangle2D.Double{
 		}
 	}
 	
-	public boolean canStand(double coorX, double coorY) {
-		int[] grid = coorToGrid(x, y);
+	public boolean canStand(double xCoor, double yCoor) {
+		int[] grid = coorToGrid(xCoor, yCoor );
 		if (myIsland.getElement(grid[0], grid[1]) == null) {
 			return false;
 		}
