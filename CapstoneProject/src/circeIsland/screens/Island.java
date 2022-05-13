@@ -14,16 +14,15 @@ import circeIsland.main.DrawingSurface;
 
 public class Island extends Screen{
 
-	//private DrawingSurface surface;
 	private Element[][] element;
 	private ArrayList<Creature> creatures;
 	private Circe circe;
 	//private int currentTime;
 	private House circeHouse;
-	//private GButton b1, b2, b3;
-	
-	private boolean elementSelected, mouseClickEnabled;
+	private Rectangle infoButton;
+	private boolean elementSelected, mouseClickEnabled, showInfo;
 	private int[] selectedSpot;
+	//GButton brewer, recipe, exit;
 	
 	
 	/**
@@ -37,15 +36,17 @@ public class Island extends Screen{
 	 */
 	public Island(DrawingSurface surface, int circeX, int circeY, int houseX, int houseY) {
 		super(800,600, surface);
-		//this.surface = surface;
 		
 		element = new Element[15][15];
 		circeHouse = new House(this, houseX, houseX, "circe");
 		circe = new Circe(circeX, circeY);
 		creatures = new ArrayList<Creature>();
+		infoButton = new Rectangle(super.WIDTH+40, 20, super.WIDTH / element.length + 30, super.HEIGHT /element[0].length - 10);
 		
 		elementSelected = false;
 		mouseClickEnabled = true;
+		showInfo = false;
+		
 		selectedSpot = new int[2];
 		//creatures.add(circe);
 		fillElements(circeX, circeY, houseX, houseY);
@@ -86,7 +87,8 @@ public class Island extends Screen{
 		
 //		float cellWidth = ((surface.width - 11) - 150) / element[0].length;
 //		float cellHeight = (surface.height - 17) / element.length;
-		
+		surface.strokeWeight(0);
+		//surface.stroke(173, 227, 154);
 		for(int i = 0; i<element.length; i++) { //x
 			for(int j = 0; j<element[0].length; j++) { //y
 				if(element[i][j] == null) {
@@ -99,6 +101,14 @@ public class Island extends Screen{
 				}
 			}
 		}
+		
+		surface.fill(222, 139, 62);
+		surface.rect(infoButton.x,  infoButton.y,  infoButton.width,  infoButton.height); 
+		float w = surface.textWidth("info");
+		surface.textSize(20);
+		surface.fill(225);
+		surface.text("info", infoButton.x+infoButton.width/2-w/2, infoButton.y+infoButton.height/2);
+		
 		
 		if(elementSelected) {
 			elementSelected = false;
@@ -139,6 +149,9 @@ public class Island extends Screen{
 		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
 			System.out.println("at circe's");
 			surface.switchScreen();
+		}
+		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
+			System.out.println("info");
 		}
 		else if(clickedElement != null && clickedElement instanceof Land){
 			System.out.println("here");
@@ -249,6 +262,10 @@ public class Island extends Screen{
 	
 	public Circe getCirce() {
 		return circe;
+	}
+	
+	public House getCirceHouse() {
+		return circeHouse;
 	}
 	
 	//have to change to not include water outside island

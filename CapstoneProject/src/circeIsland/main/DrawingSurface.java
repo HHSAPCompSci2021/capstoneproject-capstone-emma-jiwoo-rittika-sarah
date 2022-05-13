@@ -1,10 +1,12 @@
 package circeIsland.main;
 
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import circeIsland.screens.*;
+import g4p_controls.G4P;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
 import processing.core.PApplet;
@@ -16,6 +18,7 @@ public class DrawingSurface extends PApplet {
 	private Island island;
 	private WorkTable workshop;
 	private Screen currentScreen;
+	GButton brewer, recipe, exit;
 	
 	public float ratioX, ratioY;
 	
@@ -30,7 +33,15 @@ public class DrawingSurface extends PApplet {
 	// The statements in the setup() function 
 	// execute once when the program begins
 	public void setup() {
-		
+		G4P.setGlobalColorScheme(3);
+		Rectangle cookButton = new Rectangle(100, 500, 100, 50);
+		Rectangle recipeButton = new Rectangle(400, 500, 100, 50);
+		brewer = new GButton(this, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
+		recipe = new GButton(this, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
+		exit = new GButton(this, 25, 25, 25, 25, "X");
+		brewer.addEventHandler(this,  "handleButtonClick");
+		recipe.addEventHandler(this,  "handleButtonClick");
+		exit.addEventHandler(this,  "handleButtonClick");
 	}
 	
 	// The statements in draw() are executed until the 
@@ -64,10 +75,16 @@ public class DrawingSurface extends PApplet {
 	
 	
 	public void switchScreen() {
-		if(currentScreen.equals(workshop))
+		
+		
+		if(currentScreen.equals(workshop)) {
 			currentScreen = island;
-		else
+			workshop.setButtonVisible(false);
+		} 
+		else {
 			currentScreen = workshop;
+			workshop.setButtonVisible(true);
+		}
 	}
 	
 	
@@ -91,7 +108,13 @@ public class DrawingSurface extends PApplet {
 		
 	}
 	
-	
+	public ArrayList<GButton> getButtons(){
+		ArrayList<GButton> buttons = new ArrayList<GButton>();
+		buttons.add(brewer);
+		buttons.add(recipe);
+		buttons.add(exit);
+		return buttons;
+	}
 	
 	//useless
 	public void handleButtonEvents(GButton button, GEvent event) { /* code */ }

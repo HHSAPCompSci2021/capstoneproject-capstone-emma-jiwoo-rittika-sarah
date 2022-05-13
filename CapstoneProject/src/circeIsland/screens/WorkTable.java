@@ -14,7 +14,7 @@ public class WorkTable extends Screen{
 	//private DrawingSurface surface;
 	private ArrayList<Holdable> storage;
 	private Rectangle cookButton, recipeButton;
-	GButton brewer, recipe, exit;
+	//GButton brewer, recipe, exit;
 	private ArrayList<String> recipes;
 	private boolean showRecipes;
 	private boolean buttonVisibility;
@@ -35,6 +35,18 @@ public class WorkTable extends Screen{
 		buttonVisibility = true;
 	}
 	
+//	public void setup() {
+//
+//		G4P.setGlobalColorScheme(3);
+//		brewer = new GButton(surface, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
+//		recipe = new GButton(surface, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
+//		exit = new GButton(surface, 25, 25, 25, 25, "X");
+//		brewer.addEventHandler(this,  "handleButtonClick");
+//		recipe.addEventHandler(this,  "handleButtonClick");
+//		exit.addEventHandler(this,  "handleButtonClick");
+//		
+//	}
+	
 	public void draw() {
 
 		surface.background(255,255,255);
@@ -48,14 +60,6 @@ public class WorkTable extends Screen{
 //		surface.textSize(20);
 //		surface.text(str, cookButton.x+cookButton.width/2-w/2, cookButton.y+cookButton.height/2);
 		
-		
-		G4P.setGlobalColorScheme(3);
-		brewer = new GButton(surface, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
-		recipe = new GButton(surface, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
-		exit = new GButton(surface, 25, 25, 25, 25, "X");
-		brewer.addEventHandler(this,  "handleButtonClick");
-		recipe.addEventHandler(this,  "handleButtonClick");
-		exit.addEventHandler(this,  "handleButtonClick");
 		
 		
 		
@@ -162,13 +166,18 @@ public class WorkTable extends Screen{
 //			brewer.setVisible(false);
 //			b.setOpaque(false);
 //			b.setEnabled(false);
-			System.out.println("Visible: " + brewer.isVisible());
+			//System.out.println("Visible: " + brewer.isVisible());
 			surface.switchScreen();
 		}
 	}
 	
 	
-	
+	public void setButtonVisible(boolean b) {
+		ArrayList<GButton> buttonList = surface.getButtons();
+		for(GButton button : buttonList) {
+			button.setVisible(false);
+		}
+	}
 	
 	
 	
@@ -185,5 +194,6 @@ public class WorkTable extends Screen{
 		for(int i = 0; i<recipes.size(); i++) {
 			surface.text(recipes.get(i) + "\n", 60, 80 + (30 * i));
 		}
+		
 	}
 }
