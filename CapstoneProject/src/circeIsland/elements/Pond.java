@@ -2,9 +2,9 @@ package circeIsland.elements;
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
-public class River extends Element{
+public class Pond extends Element{
 
-	public River(Island i, int xInput, int yInput) {
+	public Pond(Island i, int xInput, int yInput) {
 		super(i, xInput, yInput);
 		setStandable(false);
 	}
