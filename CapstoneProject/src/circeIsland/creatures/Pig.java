@@ -14,6 +14,10 @@ public class Pig extends Creature{
 		super(x, y, PIG_WIDTH, PIG_HEIGHT, 3);
 	}
 	
+	public void act() {
+		super.act(-1);
+	}
+	
 	public boolean canStand(double coorX, double coorY) {
 		int[] grid = coorToGrid(x, y);
 		if (super.getIsland().getElement(grid[0], grid[1]) == null) {

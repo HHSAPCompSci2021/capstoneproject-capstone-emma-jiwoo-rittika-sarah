@@ -1,7 +1,5 @@
 package circeIsland.creatures;
 
-import circeIsland.screens.Island;
-
 /**
  * 
  * @author Jiwoo Kim
@@ -16,19 +14,9 @@ public abstract class Visitor extends Creature{
 	}
 	
 	public void act() {
-		int[] circeGrid = checkCirceNearby();
-		if(circeGrid == null ) {
-			super.act();
-			return;
-		}
-		
-		int dir = circeDir(circeGrid);
-		if(dir == -1) {
-			super.act();
-		}else {
-			super.act(dir);
-		}
+		super.act(-1);
 	}
+	
 
 	public int[] checkCirceNearby() {
 		int circeX = super.getIsland().getCirce().getXGrid();
@@ -46,7 +34,7 @@ public abstract class Visitor extends Creature{
 		return null;
 	}
 	
-	public abstract int circeDir(int[] circeGrid);
+	public abstract int destinationDir(int[] destination);
 	
 	public abstract String getType();
 }

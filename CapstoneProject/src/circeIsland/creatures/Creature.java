@@ -143,9 +143,7 @@ public abstract class Creature extends Rectangle2D.Double{
 		}
 	}
 	
-	public void act() {
-		act(-1);
-	}
+	
 	
 	public void act(int dir) {
 		if(isInGrid) {
@@ -167,6 +165,8 @@ public abstract class Creature extends Rectangle2D.Double{
 		}
 		return myIsland.getElement(grid[0], grid[1]).getStandable();
 	}
+	
+	public abstract void act();
 	
 	public abstract String getType();
 	

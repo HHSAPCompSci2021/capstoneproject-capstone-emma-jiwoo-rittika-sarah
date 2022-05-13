@@ -14,10 +14,21 @@ public class Nymph extends Visitor{
 		return "Nymph";
 	}
 	
-	public int circeDir(int[] circeGrid) {
+	public void act() {
+		int[] circeGrid = checkCirceNearby();
+		if(circeGrid == null ) {
+			super.act();
+			return;
+		}
+		
+		int dir = destinationDir(circeGrid);
+		super.act(dir);
+	}
+	
+	public int destinationDir(int[] destination) {
 		int[] grid = coorToGrid(x, y);
-		int diffX = grid[0] - circeGrid[0];
-		int diffY = grid[1] - circeGrid[1];
+		int diffX = grid[0] - destination[0];
+		int diffY = grid[1] - destination[1];
 		
 		if(diffX == 0 && diffY == 0) {
 			return -1;

@@ -1,5 +1,7 @@
 package circeIsland.creatures;
 
+import circeIsland.elements.House;
+
 /**
  * 
  * @author Jiwoo Kim
@@ -15,12 +17,24 @@ public class MaliciousVisitor extends Visitor{
 		return "Malicious";
 	}
 	
+	public void act() {
+		int[] circeGrid = checkCirceNearby();
+		int dir = -1;
+		if(circeGrid == null ) {
+			House circeHouse = super.getIsland().getCirceHouse();
+			int[] circeHouseCoor = {circeHouse.getXCoor(), circeHouse.getYCoor()};
+			dir = destinationDir(circeHouseCoor);
+		}else {
+			dir = destinationDir(circeGrid);
+		}
+		
+		super.act(dir);
+	}
 	
-	
-	public int circeDir(int[] circeGrid) {
+	public int destinationDir(int[] destination) {
 		int[] grid = coorToGrid(x, y);
-		int diffX = grid[0] - circeGrid[0];
-		int diffY = grid[1] - circeGrid[1];
+		int diffX = grid[0] - destination[0];
+		int diffY = grid[1] - destination[1];
 		
 		if(diffX == 0 && diffY == 0) {
 			return -1;
@@ -35,7 +49,8 @@ public class MaliciousVisitor extends Visitor{
 		if(diffX<0)
 			return Creature.LEFT;
 		return Creature.RIGHT;
-
 	}
+	
+
 	
 }
