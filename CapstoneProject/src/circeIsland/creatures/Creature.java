@@ -112,8 +112,8 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	public int[] coorToGrid(double xCoor, double yCoor) {
-		double cellWidth = myIsland.getWidth()/myIsland.getElements()[0].length;
-		double cellHeight = myIsland.getHeight()/myIsland.getElements().length;
+		double cellWidth = myIsland.getHeight()/myIsland.getElements()[0].length;
+		double cellHeight = myIsland.getWidth()/myIsland.getElements().length;
 		int xGrid = (int) (xCoor/cellWidth);
 		int yGrid = (int) (yCoor/cellHeight);
 		System.out.println(xGrid + "," + yGrid);
