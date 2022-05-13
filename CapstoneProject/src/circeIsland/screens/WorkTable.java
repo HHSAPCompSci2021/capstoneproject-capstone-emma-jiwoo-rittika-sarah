@@ -108,9 +108,9 @@ public class WorkTable extends Screen{
 	
 	
 	private void addRecipes() {
-		String wine = "3 grapes. 1 water.";
-		String bread = "5 barley. 2 water.";
-		String swinePotion = "2 maratho. 3 anithos. 1 water.";
+		String wine = "Wine: 3 grapes + 1 water";
+		String bread = "Bread: 5 barley + 2 water";
+		String swinePotion = "Potion: 2 maratho + 3 anithos + 1 water";
 		recipes.add(wine);
 		recipes.add(bread);
 		recipes.add(swinePotion);
@@ -118,14 +118,15 @@ public class WorkTable extends Screen{
 	
 	
 	public void processMouseClick(int mouseX, int mouseY) {
-		//inside the brew button
+//		//inside the brew button
 		System.out.println("processing");
-		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){
-			brew();
-		}
-		else if(mouseX>recipeButton.x && mouseX<recipeButton.x + recipeButton.width && mouseY>recipeButton.y && mouseY<recipeButton.y + recipeButton.height) {
-			showRecipes = !showRecipes;
-		}
+//		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){
+//			brew();
+//		}
+//		else if(mouseX>recipeButton.x && mouseX<recipeButton.x + recipeButton.width && mouseY>recipeButton.y && mouseY<recipeButton.y + recipeButton.height) {
+//			System.out.println(showRecipes);
+//			showRecipes = !showRecipes;
+//		}
 	}
 	
 	public void handleButtonClick(GButton b, GEvent event) {
@@ -136,6 +137,7 @@ public class WorkTable extends Screen{
 			brew();
 		}
 		else if(buttonName.equals("Recipes")) {
+			System.out.println(showRecipes);
 			showRecipes = !showRecipes;
 		}
 		else if(buttonName.equals("X")) {
@@ -165,7 +167,7 @@ public class WorkTable extends Screen{
 	private void displayRecipes() {
 		surface.text("RECIPES YAYYY",  100, 100);
 		surface.fill(250, 249, 200);
-		surface.rect(50, 50, 350, 300);
+		surface.rect(50, 50, 410, 300);
 		surface.fill(0);
 		surface.textSize(20);
 		for(int i = 0; i<recipes.size(); i++) {
