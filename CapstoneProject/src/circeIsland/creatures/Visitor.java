@@ -14,6 +14,21 @@ public abstract class Visitor extends Creature{
 	public Visitor(int x, int y) {
 		super(x, y, VISITOR_WIDTH, VISITOR_HEIGHT);
 	}
+	
+	public void act() {
+		int[] circeGrid = checkCirceNearby();
+		if(circeGrid == null ) {
+			super.act();
+			return;
+		}
+		
+		int dir = circeDir(circeGrid);
+		if(dir == -1) {
+			super.act();
+		}else {
+			super.act(dir);
+		}
+	}
 
 	public int[] checkCirceNearby() {
 		int circeX = super.getIsland().getCirce().getXGrid();
@@ -23,13 +38,15 @@ public abstract class Visitor extends Creature{
 		for(int i = -2; i <= 2; i++) {
 			for(int j = -2; j<=2; j++) {
 				if(grid[0]+i == circeX && grid[0]+j == circeY) {
-					int[] circeCoor = {circeX, circeY};
-					return circeCoor;
+					int[] circeGrid = {circeX, circeY};
+					return circeGrid;
 				}
 			}
 		}
 		return null;
 	}
+	
+	public abstract int circeDir(int[] circeGrid);
 	
 	public abstract String getType();
 }
