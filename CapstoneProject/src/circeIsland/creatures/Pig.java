@@ -14,8 +14,12 @@ public class Pig extends Creature{
 		super(x, y, PIG_WIDTH, PIG_HEIGHT, 3);
 	}
 	
-	public boolean canStand(int gridX, int gridY) {
-		return super.getIsland().getElement(gridX, gridY) instanceof PigPen;
+	public boolean canStand(double coorX, double coorY) {
+		int[] grid = coorToGrid(x, y);
+		if (super.getIsland().getElement(grid[0], grid[1]) == null) {
+			return false;
+		}
+		return super.getIsland().getElement(grid[0], grid[1]) instanceof PigPen;
 	}
 	
 	public String getType() {

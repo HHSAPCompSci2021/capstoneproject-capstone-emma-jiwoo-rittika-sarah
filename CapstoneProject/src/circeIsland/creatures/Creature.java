@@ -62,17 +62,21 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public void moveX(int dir) {
 		if(dir == LEFT) {
-			super.x += (-1 * velocity);
-		}else if (dir == RIGHT){
-			super.x += velocity;
+			if(canStand(x+(-1 * velocity), y))
+				super.x += (-1 * velocity);
+		}else if(dir == RIGHT) {
+			if(canStand(x+velocity, y))
+				super.x += velocity;
 		}
 	}
 	
 	public void moveY(int dir) {
 		if(dir == UP) {
-			super.y += (-1 * velocity);
-		}else if (dir == DOWN){
-			super.y += velocity;
+			if(canStand(x, y+(-1 * velocity)))
+				super.y += (-1 * velocity);
+		}else if(dir == DOWN) {
+			if(canStand(x, y + velocity))
+				super.y += velocity;
 		}
 	}
 	
@@ -145,28 +149,23 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public void act(int dir) {
 		if(isInGrid) {
-			int[] grid = coorToGrid(x, y);
 			if(dir == -1) 
 				dir = (int)Math.random() * 4;
 			
-			if(dir == LEFT) {
-				if(canStand(grid[0]-1, grid[1]))
-					moveX(Creature.LEFT);
-			}else if(dir == RIGHT) {
-				if(canStand(grid[0]+1, grid[1]))
-					moveX(Creature.RIGHT);
-			}else if(dir == UP) {
-				if(canStand(grid[0]-1, grid[1]-1))
-					moveX(Creature.UP);
-			}else if(dir == DOWN) {
-				if(canStand(grid[0], grid[1]+1))
-					moveX(Creature.DOWN);
+			if(dir == LEFT || dir == RIGHT) {
+				moveX(dir);
+			}else if(dir == UP || dir == DOWN) {
+				moveY(dir);
 			}
 		}
 	}
 	
-	public boolean canStand(int gridX, int gridY) {
-		return myIsland.getElement(gridX, gridY).getStandable();
+	public boolean canStand(double coorX, double coorY) {
+		int[] grid = coorToGrid(x, y);
+		if (myIsland.getElement(grid[0], grid[1]) == null) {
+			return false;
+		}
+		return myIsland.getElement(grid[0], grid[1]).getStandable();
 	}
 	
 	public abstract String getType();
