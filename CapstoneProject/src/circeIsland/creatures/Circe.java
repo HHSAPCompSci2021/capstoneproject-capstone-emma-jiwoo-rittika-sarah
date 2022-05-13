@@ -2,6 +2,7 @@ package circeIsland.creatures;
 
 import circeIsland.elements.*;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 /**
  * 
@@ -15,8 +16,8 @@ public class Circe extends Creature{
 	private Holdable[] holdings;
 	private int currentHold;
 	
-	public Circe(int x, int y) {
-		super(x, y, CIRCE_WIDTH, CIRCE_HEIGHT, 10);
+	public Circe(PImage img, int x, int y) {
+		super(img, x, y, CIRCE_WIDTH, CIRCE_HEIGHT, 10);
 		holdings = new Holdable[5];
 		currentHold = 0;
 		for(int i = 0; i < 5; i++) {
