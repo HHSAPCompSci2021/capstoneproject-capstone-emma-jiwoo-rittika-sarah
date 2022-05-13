@@ -93,9 +93,6 @@ public class Island extends Screen{
 //		float cellWidth = ((surface.width - 11) - 150) / element[0].length;
 //		float cellHeight = (surface.height - 17) / element.length;
 		
-//		surface.fill(24, 24, 24);
-//		surface.rect(10 + (7 * cellWidth), 10 + (10*cellHeight), cellWidth, cellHeight);
-		
 		for(int i = 0; i<element.length; i++) { //x
 			for(int j = 0; j<element[0].length; j++) { //y
 				if(element[i][j] == null) {
@@ -212,6 +209,19 @@ public class Island extends Screen{
 		element[y][x] = e;
 	}
 	
+	public void addCreature(Creature c) {
+		creatures.add(c);
+	}
+	
+	public void removeCreature(Creature c) {
+		for(int i = 0; i<creatures.size(); i++) {
+			if(creatures.get(i).equals(c)) {
+				creatures.remove(i);
+				break;
+			}
+		}
+	}
+	
 	public void keepTime() {
 		
 	}
@@ -222,6 +232,10 @@ public class Island extends Screen{
 	
 	public int getWidth() {
 		return super.WIDTH;
+	}
+	
+	public Circe getCirce() {
+		return circe;
 	}
 	
 	//have to change to not include water outside island
