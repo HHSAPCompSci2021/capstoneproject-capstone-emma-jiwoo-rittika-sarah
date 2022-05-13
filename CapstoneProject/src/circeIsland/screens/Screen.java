@@ -50,5 +50,12 @@ public class Screen{
 	
 	public void handleDropListEvents(GDropList list, GEvent event) { /* code */ }
 	
+	public int getHeight() {
+		return HEIGHT;
+	}
+	
+	public int getWidth() {
+		return WIDTH;
+	}
 	
 }

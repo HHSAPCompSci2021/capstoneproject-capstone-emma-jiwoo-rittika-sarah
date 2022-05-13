@@ -269,13 +269,7 @@ public class Island extends Screen{
 		
 	}
 	
-	public int getHeight() {
-		return super.HEIGHT;
-	}
-	
-	public int getWidth() {
-		return super.WIDTH;
-	}
+
 	
 	public Circe getCirce() {
 		return circe;
