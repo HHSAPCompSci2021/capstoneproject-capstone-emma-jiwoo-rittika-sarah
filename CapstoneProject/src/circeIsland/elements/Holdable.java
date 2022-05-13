@@ -19,6 +19,7 @@ public class Holdable {
 
 	public Holdable(int type) {
 		this.type = type;
+		details = "";
 	}
 	
 	public Holdable(int type, String details) {
@@ -35,7 +36,16 @@ public class Holdable {
 		return details;
 	}
 	
-	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
-		
+	public void draw(DrawingSurface surface, float xCoor, float yCoor) {
+		surface.push();
+		surface.fill(210, 229, 246);
+		surface.rect(10 + xCoor, 10 +yCoor, 10, 10);
+		surface.fill(0);
+		surface.text(type+details, 10 + xCoor, 10 + yCoor);
+		surface.pop();
+	}
+	
+	public String toString() {
+		return "type:"+type+details;
 	}
 }
