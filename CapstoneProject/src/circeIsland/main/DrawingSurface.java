@@ -19,9 +19,10 @@ public class DrawingSurface extends PApplet {
 	
 	private Island island;
 	private WorkTable workshop;
+	private Information info;
 	private Screen currentScreen;
 	GButton brewer, recipe, exit;
-	public PImage cImage;
+	public PImage cImage, iImage;
 	
 	public float ratioX, ratioY;
 	public int drawCounter;
@@ -33,6 +34,7 @@ public class DrawingSurface extends PApplet {
 		//island = new Island(this);
 		//island = new Island(this, 300, 300, 7, 10);
 		workshop = new WorkTable(this);
+		info = new Information(this);
 		//currentScreen = workshop;
 		
 	}
@@ -53,8 +55,9 @@ public class DrawingSurface extends PApplet {
 		recipe.setVisible(false);
 		exit.setVisible(false);
 		
-		cImage= loadImage("Images/CirceFrontStand.png");
-		island = new Island(this, cImage, 300, 300, 7, 10);
+		cImage = loadImage("Images/CirceFrontStand.png");
+		iImage = loadImage("Images/Island.png");
+		island = new Island(this, iImage, cImage, 300, 300, 7, 10);
 		currentScreen = island;
 	}
 	
@@ -84,6 +87,9 @@ public class DrawingSurface extends PApplet {
 		if(currentScreen.equals(island)) {
 			island.draw();
 		}
+		if (currentScreen.equals(info)){
+			info.draw();
+		}
 		
 		
 		
@@ -94,16 +100,22 @@ public class DrawingSurface extends PApplet {
 	
 	
 	
-	public void switchScreen() {
-		
-		
-		if(currentScreen.equals(workshop)) {
-			currentScreen = island;
-			workshop.setButtonVisible(false);
-		} 
+	public void switchScreen(int x) {
+		if(x == 1) {
+			if(currentScreen.equals(island))
+				currentScreen = info;
+			else
+				currentScreen = island;
+		}
 		else {
-			currentScreen = workshop;
-			workshop.setButtonVisible(true);
+			if(currentScreen.equals(workshop)) {
+				currentScreen = island;
+				workshop.setButtonVisible(false);
+			} 
+			else {
+				currentScreen = workshop;
+				workshop.setButtonVisible(true);
+			}
 		}
 	}
 	

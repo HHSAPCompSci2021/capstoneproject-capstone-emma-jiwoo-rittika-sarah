@@ -146,7 +146,7 @@ public class WorkTable extends Screen{
 //			b.setOpaque(false);
 //			b.setEnabled(false);
 			//System.out.println("Visible: " + brewer.isVisible());
-			surface.switchScreen();
+			surface.switchScreen(0);
 		}
 	}
 	

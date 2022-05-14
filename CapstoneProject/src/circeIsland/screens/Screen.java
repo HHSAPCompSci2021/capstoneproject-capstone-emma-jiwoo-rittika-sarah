@@ -19,8 +19,8 @@ public class Screen{
 	 * @param height the height of the Screen
 	 */
 	public Screen(int width, int height, DrawingSurface surface) {
-		this.HEIGHT = width;
-		this.WIDTH = height;
+		this.HEIGHT = height;
+		this.WIDTH = width;
 		this.surface = surface;
 		drawCount = 0;
 		days = 0;
@@ -55,9 +55,9 @@ public class Screen{
 	 * In the event that a key is pressed, takes in the key and executes the appropriate response
 	 * @param key the key pressed
 	 */
-	public void processKey(char key) {}
-	
-	public void handleDropListEvents(GDropList list, GEvent event) { /* code */ }
+	public void processKey(char key) {
+		
+	}
 	
 	public int getHeight() {
 		return HEIGHT;
