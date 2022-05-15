@@ -13,6 +13,10 @@ import circeIsland.elements.Element;
 import circeIsland.elements.*;
 import circeIsland.main.DrawingSurface;
 
+/**
+ * 
+ * @author Rittika Saha
+ */
 public class Island extends Screen{
 
 	private Element[][] element;
@@ -22,51 +26,33 @@ public class Island extends Screen{
 	private Rectangle infoButton;
 	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected;
 	private int[] selectedSpot;
+	private PImage islandImage;	
 	
 	/**
 	 * Creates a new island in the provided surface, given the location of Circe and her house.
-	 * @param surface the PApplet on which this island may be drawn
+	 * @param surface the PApplet on which this island will be drawn
+	 * @param islandImage
+	 * @param cImage the Image of Circe
 	 * @param circeX the x coordinate of Circe
 	 * @param circeY the y coordinate of Circe
 	 * @param houseX the x coordinate of Circe's house
 	 * @param houseY the y coordinate of Circe's house
-	 * @param houseSize the size (length of the side) of Circe's house
 	 */
-	public Island(DrawingSurface surface, PImage cImage, int circeX, int circeY, int houseX, int houseY) {
-		super(800,600, surface);
-		
-		element = new Element[15][15];
-		circeHouse = new House(this, houseX, houseX, "circe");
-		//PImage cImage = super.surface.loadImage("Images\tempImage.png");
-		circe = new Circe(cImage, circeX, circeY);
-		creatures = new ArrayList<Creature>();
-		
-		
-		landElementSelected = false;
-		gardenElementSelected = false;
-		mouseClickEnabled = true;
-		
-		selectedSpot = new int[2];
-		//creatures.add(circe);
-		fillElements(circeX, circeY, houseX, houseY);
-	}
-
 	public Island(DrawingSurface surface, PImage islandImage, PImage cImage, int circeX, int circeY, int houseX, int houseY) {
 		super(800,600, surface);
+		this.islandImage = islandImage;
 		
 		element = new Element[15][15];
 		circeHouse = new House(this, houseX, houseX, "circe");
-		//PImage cImage = super.surface.loadImage("Images\tempImage.png");
 		circe = new Circe(cImage, circeX, circeY);
 		creatures = new ArrayList<Creature>();
-		//infoButton = new Rectangle(super.WIDTH+40, 20, super.WIDTH / element.length + 30, super.HEIGHT /element[0].length - 10);
-		infoButton = new Rectangle(15, 15, 30, 30);
+		infoButton = new Rectangle(super.WIDTH-80, 20, super.WIDTH / element.length -10, super.HEIGHT /element[0].length - 10);
+		
 		landElementSelected = false;
 		gardenElementSelected = false;
 		mouseClickEnabled = true;
-		
 		selectedSpot = new int[2];
-		//creatures.add(circe);
+		
 		fillElements(circeX, circeY, houseX, houseY);
 	}
 	
@@ -76,10 +62,13 @@ public class Island extends Screen{
 		circeHouse.putOnIsland(this);
 		circe.putOnIsland(this);
 		
-		new GardenLand(this, 2, 2).putOnIsland(this, 2, 2);
-		element[2][3] = new GardenLand(this, 3, 2);
-		element[3][2] = new GardenLand(this, 2, 3);
-		element[3][3] = new GardenLand(this, 3, 3);
+		new GardenLand(this, 12, 7).putOnIsland(this, 12, 7);
+		new GardenLand(this, 10, 8).putOnIsland(this, 10, 9);
+		new GardenLand(this, 10, 7).putOnIsland(this, 10, 7);
+		new GardenLand(this, 12, 8).putOnIsland(this, 12, 8);
+//		element[15][7] = new GardenLand(this, 3, 2);
+//		element[3][2] = new GardenLand(this, 2, 3);
+//		element[3][3] = new GardenLand(this, 3, 3);
 		
 		
 		for(int i = 1; i<element.length - 1; i++) {
@@ -107,39 +96,36 @@ public class Island extends Screen{
 		
 		surface.strokeWeight(0);
 		
+		surface.image(islandImage, 0, 0, 800, 600);
+		
 		//drawing grid of elements
 		for(int i = 0; i<element.length; i++) { //x
 			for(int j = 0; j<element[0].length; j++) { //y
 				if(element[i][j] == null) {
-					surface.fill(15, 163, 189); //the ocean around the island
+					//surface.fill(15, 163, 189); //the ocean around the island
+					surface.noFill();
 					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
 				}
 				else {
-					element[i][j].draw(surface, cellWidth, cellHeight);
+					surface.noFill();
+					if(element[i][j] instanceof Land) {
+						surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
+					}
+					else {
+						element[i][j].draw(surface, cellWidth, cellHeight);
+					}
+					//element[i][j].draw(surface, cellWidth, cellHeight);
 				}
-//				
-//				//draw information button
-//				if(j == element[0].length - 1 && i == 0) {
-//					
-//				}
 			}
 		}
 		
-//		surface.fill(222, 139, 62);
-//		surface.rect(infoButton.x,  infoButton.y,  infoButton.width,  infoButton.height); 
-//		//surface.rect(20 + (j * cellWidth), 20 + (i*cellHeight), cellWidth-15, cellHeight-10);
-//		float w = surface.textWidth("info");
-//		surface.textSize(20);
-//		surface.fill(225);
-//		surface.text("info", infoButton.x+infoButton.width/2-w/2, infoButton.y+infoButton.height/2);
-		
+		//info button
 		surface.fill(222, 139, 62);
 		surface.rect(infoButton.x,  infoButton.y,  infoButton.width,  infoButton.height);
 		float w = surface.textWidth("i");
 		surface.textSize(20);
 		surface.fill(255);
 		surface.text("i", infoButton.x+infoButton.width/2 - w/2, infoButton.y+infoButton.height/3 * 2);
-		
 		
 		if(landElementSelected) {
 			landElementSelected = false;
@@ -158,16 +144,22 @@ public class Island extends Screen{
 			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
 			list.addEventHandler(this,  "handlePlantChange");
 		}
+		
+		
 		surface.textSize(10);
+		
 		Nymph c1 = new Nymph(450, 400);
+		Nymph c2 = new Nymph(300, 100);
 		c1.putOnIsland(this);
-		c1.draw(surface);
-//		creatures.add(new Nymph(450, 700));
-//		creatures.add(new Nymph(200, 200));
-//		for(Creature c : creatures) {
+		c2.putOnIsland(this);
+//		creatures.add(c1);
+//		creatures.add(c2);
+		for(Creature c : creatures) {
 //			c.putOnIsland(this);
-//			c.draw(surface);
-//		}
+			c.draw(surface);
+		}
+//		c1.putOnIsland(this);
+//		c1.draw(surface);
 		circe.draw(surface);
 	}
 	
@@ -307,7 +299,9 @@ public class Island extends Screen{
 	
 	//have to change to not include water outside island
 	public boolean isValid(int rowLoc, int colLoc) {
-        return 0 <= rowLoc && rowLoc < 10 && 0 <= colLoc && colLoc < 10;
+        if(element[colLoc][rowLoc] == null)
+        	return false;
+        return true;
     }
 	
 	

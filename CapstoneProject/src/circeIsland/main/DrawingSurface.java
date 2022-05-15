@@ -11,36 +11,46 @@ import g4p_controls.G4P;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 import processing.event.MouseEvent;
 
-
+/**
+ * 
+ * @author Rittika Saha
+ *
+ */
 public class DrawingSurface extends PApplet {
 	
 	private Island island;
 	private WorkTable workshop;
 	private Information info;
 	private Screen currentScreen;
-	GButton brewer, recipe, exit;
-	public PImage cImage, iImage;
+	
+	private GButton brewer, recipe, exit;
+	private PImage cImage, iImage;
+	private PFont font;
 	
 	public float ratioX, ratioY;
 	public int drawCounter;
 	public int time;
 	
 	
-	
+	/**
+	 * Creates a new Drawing Surface, with the workshop and information screens
+	 */
 	public DrawingSurface() {
 		//island = new Island(this);
 		//island = new Island(this, 300, 300, 7, 10);
 		workshop = new WorkTable(this);
 		info = new Information(this);
-		//currentScreen = workshop;
+		
 		
 	}
 	
-	// The statements in the setup() function 
-	// execute once when the program begins
+	/**
+	 * Sets up the buttons and the island screen
+	 */
 	public void setup() {
 		G4P.setGlobalColorScheme(3);
 		Rectangle cookButton = new Rectangle(100, 500, 100, 50);
@@ -55,18 +65,19 @@ public class DrawingSurface extends PApplet {
 		recipe.setVisible(false);
 		exit.setVisible(false);
 		
-		cImage = loadImage("Images/CirceFrontStand.png");
-		iImage = loadImage("Images/Island.png");
-		island = new Island(this, iImage, cImage, 300, 300, 7, 10);
+		font = createFont("Files/DrakalligroOriginal.ttf", 128);
+		cImage = loadImage("Files/CirceFrontStand.png");
+		iImage = loadImage("Files/IslandImg.png");
+		island = new Island(this, iImage, cImage, 300, 300, 10, 5);
 		currentScreen = island;
 	}
 	
-	// The statements in draw() are executed until the 
-	// program is stopped. Each statement is executed in 
-	// sequence and after the last line is read, the first 
-	// line is executed again.
+	/**
+	 * Draws the current screen to the PApplet
+	 */
 	public void draw() { 
 		drawCounter++;
+		textFont(font);
 //		ratioX = (float)width/currentScreen.WIDTH;
 //		ratioY = (float)height/currentScreen.HEIGHT;
 //
@@ -74,7 +85,7 @@ public class DrawingSurface extends PApplet {
 //		
 //		scale(ratioX, ratioY);
 		
-		background(255);   // Clear the screen with a white background
+		background(255);// Clear the screen with a white background
 		
 		textSize(12);
 		fill(0);
@@ -90,16 +101,15 @@ public class DrawingSurface extends PApplet {
 		if (currentScreen.equals(info)){
 			info.draw();
 		}
-		
-		
-		
-		
-		
-		//System.out.println('c');
 	}
 	
 	
-	
+	/**
+	 * Switches the current screen displayed to a different screen depending on the provided code. 
+	 * If the code is 0, switches between Island and Workshop.
+	 * If the code is 1, switches between island and information
+	 * @param x the code determining which switch to execute
+	 */
 	public void switchScreen(int x) {
 		if(x == 1) {
 			if(currentScreen.equals(island))
@@ -126,8 +136,6 @@ public class DrawingSurface extends PApplet {
 	
 	
 	public void mouseClicked() {
-		//system.out.println("mouse click");
-		//System.out.println('c');
 		currentScreen.processMouseClick(mouseX, mouseY);
 	}
 	
@@ -135,10 +143,8 @@ public class DrawingSurface extends PApplet {
 		System.out.println("pressed key");
 		System.out.println(key);
 		currentScreen.processKey(key);
-//		if(key == CODED)
-//			currentScreen.processKey(key);
-		
 	}
+	
 	
 	public ArrayList<GButton> getButtons(){
 		ArrayList<GButton> buttons = new ArrayList<GButton>();

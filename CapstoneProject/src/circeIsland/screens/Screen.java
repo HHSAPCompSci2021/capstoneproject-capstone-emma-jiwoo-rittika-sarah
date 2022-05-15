@@ -5,6 +5,10 @@ import g4p_controls.GDropList;
 import g4p_controls.GEvent;
 import processing.core.PApplet;
 
+/**
+ * 
+ * @author Rittika Saha
+ */
 public class Screen{
 
 	public final int HEIGHT;
