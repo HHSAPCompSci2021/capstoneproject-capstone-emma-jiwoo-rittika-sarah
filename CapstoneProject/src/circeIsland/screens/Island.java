@@ -58,30 +58,7 @@ public class Island extends Screen{
 	
 	
 	
-	private void fillElements(int cX, int cY, int hX, int hY) {
-		circeHouse.putOnIsland(this);
-		circe.putOnIsland(this);
-		
-		new GardenLand(this, 12, 7).putOnIsland(this, 12, 7);
-		new GardenLand(this, 10, 8).putOnIsland(this, 10, 9);
-		new GardenLand(this, 10, 7).putOnIsland(this, 10, 7);
-		new GardenLand(this, 12, 8).putOnIsland(this, 12, 8);
-//		element[15][7] = new GardenLand(this, 3, 2);
-//		element[3][2] = new GardenLand(this, 2, 3);
-//		element[3][3] = new GardenLand(this, 3, 3);
-		
-		
-		for(int i = 1; i<element.length - 1; i++) {
-			for(int j = 1; j<element.length - 1; j++) {
-				if(element[i][j] == null) {  // && i != cX && j!= cY) {
-					Land l = new Land(this, i, j);
-					element[i][j] = l;
-					l.setIsInGrid(true);
-				}
-			}
-		}
-		
-	}
+
 
 
 	/**
@@ -177,6 +154,8 @@ public class Island extends Screen{
 		
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
+
+		System.out.println("IMPORTANT : " + clickedElement.toString());
 		
 		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
 			System.out.println("at circe's");
@@ -324,9 +303,7 @@ public class Island extends Screen{
 	
 	public void handlePlantChange(GDropList list, GEvent event) {
 		mouseClickEnabled = false;
-		System.out.println(mouseClickEnabled);
 		String text = list.getSelectedText();
-		System.out.println(text);
 		list.setVisible(false);
 		int x = selectedSpot[0];
 		int y = selectedSpot[1];
@@ -352,6 +329,123 @@ public class Island extends Screen{
 			gl.plant("barley");
 		}
 
+	}
+	
+	
+	
+	private void fillElements(int cX, int cY, int hX, int hY) {
+		circeHouse.putOnIsland(this);
+		circe.putOnIsland(this);
+		
+//		new GardenLand(this, 12, 7).putOnIsland(this, 12, 7);
+//		new GardenLand(this, 10, 8).putOnIsland(this, 10, 9);
+//		new GardenLand(this, 10, 7).putOnIsland(this, 10, 7);
+//		new GardenLand(this, 12, 8).putOnIsland(this, 12, 8);
+////		element[15][7] = new GardenLand(this, 3, 2);
+////		element[3][2] = new GardenLand(this, 2, 3);
+////		element[3][3] = new GardenLand(this, 3, 3);
+//		
+//		
+//		for(int i = 1; i<element.length - 1; i++) {
+//			for(int j = 1; j<element.length - 1; j++) {
+//				if(element[i][j] == null) {  // && i != cX && j!= cY) {
+//					Land l = new Land(this, i, j);
+//					element[i][j] = l;
+//					l.setIsInGrid(true);
+//				}
+//			}
+//		}
+		
+		//fill with land
+		element[0][8] = new Land(this, 0, 8);
+		element[0][8].setIsInGrid(true);
+		element[1][4] = new Land(this, 1, 4);
+		element[1][4].setIsInGrid(true);
+		element[1][5] = new Land(this, 1, 5);
+		element[1][5].setIsInGrid(true);
+		
+		for(int i = 8; i<= 11; i++) {
+			Land l = new Land(this, 1, i);
+			element[1][i] = l;
+			l.setIsInGrid(true);
+		}
+		for(int i = 3; i<=5; i++) {
+			Land l = new Land(this, 2, i);
+			element[2][i] = l;
+			l.setIsInGrid(true);
+		}
+		for(int i = 7; i<=11; i++) {
+			Land l = new Land(this, 2, i);
+			element[2][i] = l;
+			l.setIsInGrid(true);
+		}
+		for(int i = 3; i<=12; i++) {
+			Land l = new Land(this, 3, i);
+			element[3][i] = l;
+			l.setIsInGrid(true);
+		}
+		for(int i = 3; i<=13; i++) {
+			Land l = new Land(this, 4, i);
+			element[4][i] = l;
+			l.setIsInGrid(true);
+		}
+		for(int i = 2; i<=13; i++) {
+			Land l = new Land(this, 5, i);
+			element[5][i] = l;
+			l.setIsInGrid(true);
+		}
+		for(int i = 6; i<=9; i++) {
+			for(int j = 1; j<=6; j++) {
+				Land l = new Land(this, i, j);
+				element[i][j] = l;
+				l.setIsInGrid(true);
+			}
+		}
+		for(int i = 6; i<=7; i++) {
+			for(int j = 7; j<=13; j++) {
+				Land l = new Land(this, i, j);
+				element[i][j] = l;
+				l.setIsInGrid(true);
+			}
+		}
+		for(int i = 9; i<=13; i++) {
+			Land l = new Land(this, 8, i);
+			element[8][i] = l;
+			l.setIsInGrid(true);
+		}
+		for(int i = 9; i<=12; i++) {
+			Land l = new Land(this, 9, i);
+			element[9][i] = l;
+			l.setIsInGrid(true);
+		}
+		
+		element[10][3] = new Land(this, 10, 3);
+		element[10][3].setIsInGrid(true);
+		
+		element[10][4] = new Land(this, 10, 4);
+		element[10][4].setIsInGrid(true);
+		
+		element[10][6] = new Land(this, 10, 6);
+		element[10][6].setIsInGrid(true);
+		
+		element[10][9] = new Land(this, 10, 9);
+		element[10][9].setIsInGrid(true);
+		
+		element[11][6] = new Land(this, 11, 6);
+		element[11][6].setIsInGrid(true);
+		element[11][9] = new Land(this, 11, 9);
+		element[11][9].setIsInGrid(true);
+		
+		for(int i = 6; i<=10; i++) {
+			Land l = new Land(this, 11, i);
+			element[12][i] = l;
+			l.setIsInGrid(true);
+		}
+		
+		element[13][7] = new Land(this, 13, 7);
+		element[13][7].setIsInGrid(true);
+		element[13][8] = new Land(this, 13, 8);
+		element[13][8].setIsInGrid(true);
 	}
 	
 	

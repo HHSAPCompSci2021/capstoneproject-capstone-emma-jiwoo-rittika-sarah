@@ -20,4 +20,7 @@ public class Land extends Element{
 		surface.pop();
 	}
 
+	public String toString() {
+		return "LAND  " + super.toString();
+	}
 }
