@@ -141,7 +141,6 @@ public class DrawingSurface extends PApplet {
 	}
 	
 	public void keyPressed() {
-		System.out.println("pressed key");
 		System.out.println(key);
 		currentScreen.processKey(key);
 	}

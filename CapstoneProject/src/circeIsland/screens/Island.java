@@ -65,11 +65,13 @@ public class Island extends Screen{
 	public void draw() {
 		super.draw();
 		
-		float cellWidth = (surface.width - 11) / element[0].length;
-		float cellHeight = (surface.height - 17) / element.length;
+		int borderX = 12;
+		int borderY = 18;
+		float cellWidth = (surface.width - borderX) / element[0].length;
+		float cellHeight = (surface.height - borderY) / element.length;
 		
 		surface.strokeWeight(0);
-		surface.image(islandImage, 0, 0, 800, 600);
+		surface.image(islandImage, 0, 0, surface.width, surface.height);
 		
 		//drawing grid of elements
 		for(int i = 0; i<element.length; i++) { //x
@@ -77,12 +79,12 @@ public class Island extends Screen{
 				if(element[i][j] == null) {
 					//surface.fill(15, 163, 189); //the ocean around the island
 					surface.noFill();
-					surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
+					surface.rect(6 + (j * cellWidth), 9 + (i*cellHeight), cellWidth, cellHeight);
 				}
 				else {
 					surface.noFill();
 					if(element[i][j] instanceof Land) {
-						surface.rect(10 + (j * cellWidth), 10 + (i*cellHeight), cellWidth, cellHeight);
+						surface.rect(6 + (j * cellWidth), 9 + (i*cellHeight), cellWidth,cellHeight);
 					}
 					else {
 						element[i][j].draw(surface, cellWidth, cellHeight);
@@ -104,16 +106,15 @@ public class Island extends Screen{
 			landElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
-			GDropList list = new GDropList(surface, 13 + (selectedSpot[0] * cellWidth), 13 + (selectedSpot[1]*cellHeight), cellWidth-6, cellHeight*4 - 10, 0);  
+			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2) + (selectedSpot[1]*cellHeight), cellWidth, cellHeight, 0);  
 			list.setItems(new String[] {"Choose", "House", "Garden", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
 		if(gardenElementSelected) {
-			System.out.println("gardening now");
 			gardenElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
-			GDropList list = new GDropList(surface, 13 + (selectedSpot[0] * cellWidth), 13 + (selectedSpot[1]*cellHeight), cellWidth-6, cellHeight*4 - 10, 0);  
+			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight, 0);  
 			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
 			list.addEventHandler(this,  "handlePlantChange");
 		}
@@ -126,7 +127,7 @@ public class Island extends Screen{
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
 		for(Creature c : creatures) {
-			c.act();
+			//c.act();
 			c.draw(surface);
 			//c.act();
 		}
@@ -163,29 +164,29 @@ public class Island extends Screen{
 			return;
 		}
 		
-		float cellWidth = (surface.width - 11) / element[0].length;
-		float cellHeight = (surface.height - 17) / element.length;
+		float cellWidth = (surface.width - 12) / element[0].length;
+		float cellHeight = (surface.height - 18) / element.length;
 		
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 
 		//System.out.println("IMPORTANT : " + clickedElement.toString());
 		
-		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
-			System.out.println("at circe's");
-			surface.switchScreen(0);
-		}
-		else if(element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
+//		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
+//			System.out.println("at circe's");
+//			surface.switchScreen(0);
+//		}
+		if(element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
 			gardenElementSelected = true;
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
 		}
 		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
-			System.out.println("info");
+			//System.out.println("info");
 			surface.switchScreen(1);
 		}
 		else if(clickedElement != null && clickedElement instanceof Land){
-			System.out.println("here");
+			//System.out.println("here");
 			landElementSelected = true;
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
@@ -204,24 +205,19 @@ public class Island extends Screen{
 	public void processKey(char key) {
 		
 		if(key == 'w' || key == 'W') {
-			System.out.println("ww");
 			circe.moveY(Creature.UP);
 		}
 		if(key == 'a' || key == 'A') {
-			System.out.println("aa");
 			circe.moveX(Creature.LEFT);
 		}
 		if(key == 's' || key == 'S') {
-			System.out.println("ss");
 			circe.moveY(Creature.DOWN);
 		}
 		if(key == 'd' || key == 'D') {
-			System.out.println("dd");
 			circe.moveX(Creature.RIGHT);
 		}
 		
 		if(key == '\n') {
-			System.out.println("ENTER");
 			float cellWidth = (surface.width - 11) / element[0].length;
 			float cellHeight = (surface.height - 17) / element.length;
 			
@@ -241,15 +237,17 @@ public class Island extends Screen{
 	 * @return int array with the the specific indexes in element[][] at which the given coordinate point occurs.
 	 */
 	public int[] coorToGrid(double xCoor, double yCoor) {
-		float cellWidth = (surface.width - 11) / element[0].length;
-		float cellHeight = (surface.height - 17) / element.length;
+		float cellWidth = (surface.width - 12) / element[0].length;
+		float cellHeight = (surface.height - 18) / element.length;
 		
-		int xGrid = (int)(xCoor/cellWidth);
-		int yGrid = (int)(yCoor/cellHeight);
+		int xGrid = (int)((xCoor-6)/cellWidth);
+		int yGrid = (int)((yCoor-9)/cellHeight);
 		
 		int[] grid = {xGrid, yGrid};
 		return grid;
 	}
+	
+	
 	
 	/**
 	 * Returns the Element at a given location in the 2D array of Elements
@@ -323,22 +321,18 @@ public class Island extends Screen{
 		int y = selectedSpot[1];
 		
 		if(text.equals("Grape")) {
-			System.out.println("GRAPE");
 			GardenLand gl = (GardenLand)element[x][y];
 			gl.plant("grape");
 		}
 		else if(text.equals("Barley")) {
-			System.out.println("BARLEY");
 			GardenLand gl = (GardenLand)element[x][y];
 			gl.plant("barley");
 		}
 		else if(text.equals("Marathos")) {
-			System.out.println("MARATHOS");
 			GardenLand gl = (GardenLand)element[x][y];
 			gl.plant("marathos");
 		}
 		else if(text.equals("Anithos")) {
-			System.out.println("ANITHOS");
 			GardenLand gl = (GardenLand)element[x][y];
 			gl.plant("barley");
 		}

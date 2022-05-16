@@ -131,21 +131,13 @@ public class WorkTable extends Screen{
 	
 	public void handleButtonClick(GButton b, GEvent event) {
 		String buttonName = b.getText();
-		System.out.println(buttonName);
-		System.out.println("CLICK");
 		if(buttonName.equals("Brew")) {
 			brew();
 		}
 		else if(buttonName.equals("Recipes")) {
-			System.out.println(showRecipes);
 			showRecipes = !showRecipes;
 		}
 		else if(buttonName.equals("X")) {
-			System.out.println("EXIT");
-//			brewer.setVisible(false);
-//			b.setOpaque(false);
-//			b.setEnabled(false);
-			//System.out.println("Visible: " + brewer.isVisible());
 			surface.switchScreen(0);
 		}
 	}
