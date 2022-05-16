@@ -65,7 +65,8 @@ public class DrawingSurface extends PApplet {
 		recipe.setVisible(false);
 		exit.setVisible(false);
 		
-		font = createFont("Files/DrakalligroOriginal.ttf", 128);
+		//font = createFont("Files/DrakalligroOriginal.ttf", 128);
+		font = createFont("Files/Libra-Normal.otf", 128);
 		cImage = loadImage("Files/CirceFrontStand.png");
 		iImage = loadImage("Files/IslandImg.png");
 		island = new Island(this, iImage, cImage, 300, 300, 10, 5);

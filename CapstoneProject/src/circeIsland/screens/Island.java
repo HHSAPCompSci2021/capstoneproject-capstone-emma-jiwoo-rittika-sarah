@@ -57,9 +57,6 @@ public class Island extends Screen{
 	}
 	
 	
-	
-
-
 
 	/**
 	 * Draws the island with all its elements and creatures to the screen.
@@ -72,7 +69,6 @@ public class Island extends Screen{
 		float cellHeight = (surface.height - 17) / element.length;
 		
 		surface.strokeWeight(0);
-		
 		surface.image(islandImage, 0, 0, 800, 600);
 		
 		//drawing grid of elements
@@ -129,16 +125,34 @@ public class Island extends Screen{
 		Nymph c2 = new Nymph(300, 100);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
-//		creatures.add(c1);
-//		creatures.add(c2);
 		for(Creature c : creatures) {
-//			c.putOnIsland(this);
+			c.act();
 			c.draw(surface);
+			//c.act();
 		}
-//		c1.putOnIsland(this);
-//		c1.draw(surface);
 		circe.draw(surface);
+		
+		checkNewVisitors();
+		
 	}
+	
+	private void checkNewVisitors() {
+		int days = super.getDays();
+		
+		if(days % 4 == 0 && days != 0) {
+			Nymph c = new Nymph(760, 350);
+			c.putOnIsland(this);
+		}
+		else if(days % 7 == 0 && days != 0) {
+			MaliciousVisitor c = new MaliciousVisitor(760, 350);
+			c.putOnIsland(this);
+		}
+		
+	}
+	
+	
+	
+	
 	
 	
 	public void processMouseClick(int mouseX, int mouseY) {
@@ -155,7 +169,7 @@ public class Island extends Screen{
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 
-		System.out.println("IMPORTANT : " + clickedElement.toString());
+		//System.out.println("IMPORTANT : " + clickedElement.toString());
 		
 		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
 			System.out.println("at circe's");
