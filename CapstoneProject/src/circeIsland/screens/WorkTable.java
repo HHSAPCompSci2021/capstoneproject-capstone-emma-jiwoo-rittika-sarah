@@ -9,6 +9,11 @@ import g4p_controls.GEvent;
 import circeIsland.creatures.Circe;
 import circeIsland.elements.Holdable;
 
+/**
+ * 
+ * @author Emma Yu, Rittika Saha
+ *
+ */
 public class WorkTable extends Screen{
 
 	//private DrawingSurface surface;
@@ -21,8 +26,9 @@ public class WorkTable extends Screen{
 	private ArrayList<String> recipes;
 	private ArrayList<Holdable> cauldronItems;
 	private boolean showRecipes;
-	private float curElementX;
-	private float curElementY;
+	private Holdable curHoldable;
+	private float curHoldableX;
+	private float curHoldableY;
 	private boolean locked; //to check whether something is being held or not
 	Circe circe;
 	
@@ -35,7 +41,7 @@ public class WorkTable extends Screen{
 		//circe = c;
 		cookButton = new Rectangle(100, 500, 100, 50);
 		recipeButton = new Rectangle(400, 500, 100, 50);
-		inventoryButton = new Rectangle(620, 30, 150, 500);		
+		inventoryButton = new Rectangle(620, 30, 150, 400);
 		recipes = new ArrayList<String>();
 		cauldronItems = new ArrayList<Holdable>();
 		addRecipes();
@@ -69,7 +75,7 @@ public class WorkTable extends Screen{
 		
 		if (locked) {
 			Holdable h = new Holdable(1);
-			h.draw(surface, curElementX, curElementY);
+			h.draw(surface, curHoldableX, curHoldableY);
 		}
 		
 		if(showRecipes) {
@@ -100,13 +106,13 @@ public class WorkTable extends Screen{
 		
 		
 		float cellWidth = 150 / inventory[0].length;
-		float cellHeight = 500 / inventory.length;
+		float cellHeight = 400 / inventory.length;
 		
 		int currentElement = 1;
 		for(int i = 0; i<inventory.length; i++) { //RECT coordinates (top left) : 620, 30
 			for(int j = 0; j<inventory[0].length; j++) {
 				float cellCenterX = (float)(boxX + (j*cellWidth) + (cellWidth/2.5));
-				float cellCenterY = (float)(boxY + (i*cellHeight) + (cellHeight/1.5));
+				float cellCenterY = (float)(boxY + (i*cellHeight) + (cellHeight/2.5));
 				
 				surface.push();
 				//draws the grid for the inventory
@@ -118,9 +124,9 @@ public class WorkTable extends Screen{
 				h.draw(surface, cellCenterX, cellCenterY);
 				
 				//writes inventory numbers to drawing surface
-				surface.textSize(25);
+				surface.textSize(15);
 				surface.fill(0);
-				surface.text("" + (inventory[i][j]), cellCenterX, cellCenterY);
+				surface.text("" + (inventory[i][j]), boxX + (j*cellWidth)+cellWidth-15, boxY + (i*cellHeight)+cellHeight-8);
 				surface.pop();
 				
 				currentElement++;
@@ -132,6 +138,18 @@ public class WorkTable extends Screen{
 	}
 	
 	public void drawCirceInventory() {
+		int[][] inventory = new int[2][3];
+		
+		int count = 0;
+		for (int i = 0; i<inventory.length; i++) {
+			for (int j = 0; j<inventory[0].length; j++) {
+				inventory[i][j] = circe.getInventory()[count];
+				count++;
+			}
+		}
+		
+		int boxX = 620;
+		int boxY = 540;
 		
 	}
 	
@@ -169,8 +187,8 @@ public class WorkTable extends Screen{
 	public void processMouseDrag(int mouseX, int mouseY) {
 		System.out.println("dragging");
 		if (locked) {
-			curElementX = mouseX;
-		curElementY = mouseY;
+			curHoldableX = mouseX;
+		curHoldableY = mouseY;
 		}
 	}
 	
@@ -188,11 +206,11 @@ public class WorkTable extends Screen{
 	
 	public void processMousePress(int mouseX, int mouseY) {
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
-	//	if (click.intersects(inventoryButton)) {
+		if (click.intersects(inventoryButton)) {
 			locked = true;
-			curElementX = mouseX;
-			curElementY = mouseY;
-	//	}
+			curHoldableX = mouseX;
+			curHoldableY = mouseY;
+		}
 	}
 	
 	public void processMouseRelease(int mouseX, int mouseY) {
