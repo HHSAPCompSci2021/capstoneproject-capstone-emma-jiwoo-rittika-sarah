@@ -1,6 +1,7 @@
 package circeIsland.creatures;
 
 import circeIsland.elements.House;
+import processing.core.PImage;
 
 /**
  * 
@@ -10,8 +11,8 @@ public class MaliciousVisitor extends Visitor{
 	
 	private boolean stealing;
 
-	public MaliciousVisitor(int x, int y) {
-		super(x, y);
+	public MaliciousVisitor(PImage img, int x, int y) {
+		super(img, x, y);
 		stealing = false;
 	}
 
