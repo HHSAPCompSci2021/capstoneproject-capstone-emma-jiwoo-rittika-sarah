@@ -61,13 +61,14 @@ public class Circe extends Creature{
 		}
 	}
 	
-	public void harvest() {
+	public boolean harvest() {
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
 		if(e instanceof GardenLand) {
-			if(((GardenLand) e).getLifeState() >= 3)
-				holdings[nextEmptySpace()] = new Holdable(Integer.parseInt(((GardenLand) e).getType()));
+			if(((GardenLand) e).getLifeState() >= 3 && nextEmptySpace() != -1)
+				addOnInventory(new Holdable(Integer.parseInt(((GardenLand) e).getType())));
 				((GardenLand) e).harvest();
 		}
+		return false;
 	}
 	
 	public void turnPig(MaliciousVisitor visitor) {
@@ -104,6 +105,15 @@ public class Circe extends Creature{
 	
 	public String getType() {
 		return "Circe";
+	}
+	
+	public boolean addOnInventory(Holdable h) {
+		int next= nextEmptySpace();
+		if(next != -1) {
+			holdings[next] = h;
+			return true;
+		}
+		return false;
 	}
 	
 	public Holdable[] getInventory() {
