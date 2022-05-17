@@ -10,8 +10,9 @@ import processing.core.PImage;
  */
 public class Circe extends Creature{
 
-	public static final int CIRCE_WIDTH = 20000;
-	public static final int CIRCE_HEIGHT = 33000;
+	public static final int CIRCE_WIDTH = 40000;
+	public static final int CIRCE_HEIGHT = 66000;
+	// 50 * 110
 	
 	private Holdable[] holdings;
 	private int currentHold;
@@ -64,7 +65,7 @@ public class Circe extends Creature{
 	public boolean harvest() {
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
 		if(e instanceof GardenLand) {
-			if(((GardenLand) e).getLifeState() >= 3 && nextEmptySpace() != -1)
+			if(((GardenLand) e).isMature() && nextEmptySpace() != -1)
 				addOnInventory(new Holdable(Integer.parseInt(((GardenLand) e).getType())));
 				((GardenLand) e).harvest();
 				return true;
