@@ -24,9 +24,10 @@ public class Island extends Screen{
 	private Circe circe;
 	private House circeHouse;
 	private Rectangle infoButton;
-	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected;
+	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone;
 	private int[] selectedSpot;
-	private PImage islandImage;	
+	private PImage islandImage, malImage, nymphImage;
+	GDropList list;
 	
 	/**
 	 * Creates a new island in the provided surface, given the location of Circe and her house.
@@ -106,24 +107,34 @@ public class Island extends Screen{
 			landElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
-			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2) + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
-			list.setItems(new String[] {"Choose", "House", "Garden", "None"}, 0);
+			list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2) + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
+			list.setItems(new String[] {"Choose", "House", "Garden", "Pig pen", "Land", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
 		if(gardenElementSelected) {
 			gardenElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
-			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
+			list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
 			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
 			list.addEventHandler(this,  "handlePlantChange");
+		}
+		if (dropDone) {
+			mouseClickEnabled = true;
+			
+			//list.setVisible(false);
+			list.dispose();
+			dropDone = false;
 		}
 		
 		
 		surface.textSize(10);
 		
-		Nymph c1 = new Nymph(450, 400);
-		Nymph c2 = new Nymph(300, 100);
+		
+		
+		
+		Nymph c1 = new Nymph(nymphImage, 450, 400);
+		Nymph c2 = new Nymph(malImage, 300, 100);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
 		for(Creature c : creatures) {
@@ -141,11 +152,11 @@ public class Island extends Screen{
 		int days = super.getDays();
 		
 		if(days % 4 == 0 && days != 0) {
-			Nymph c = new Nymph(760, 350);
+			Nymph c = new Nymph(nymphImage, 760, 350);
 			c.putOnIsland(this);
 		}
 		else if(days % 7 == 0 && days != 0) {
-			MaliciousVisitor c = new MaliciousVisitor(760, 350);
+			MaliciousVisitor c = new MaliciousVisitor(malImage, 760, 350);
 			c.putOnIsland(this);
 		}
 		
@@ -160,7 +171,7 @@ public class Island extends Screen{
 		//System.out.println("Processing click");
 		if(!mouseClickEnabled) {
 			//System.out.println("ENETERED FALSE CLICK");
-			mouseClickEnabled = true;
+			//mouseClickEnabled = true;
 			return;
 		}
 		
@@ -304,9 +315,10 @@ public class Island extends Screen{
 	
 	
 	public void handleElementChange(GDropList list, GEvent event) {
-		mouseClickEnabled = false;
 		String text = list.getSelectedText();
-		list.setVisible(false);
+		if(text.equals("Choose"))
+			return;
+		
 		if(text.equals("House")) {
 			int x = selectedSpot[0];
 			int y = selectedSpot[1];
@@ -317,6 +329,18 @@ public class Island extends Screen{
 			int y = selectedSpot[1];
 			element[x][y] = new GardenLand(this, x, y);
 		}
+		else if(text.equals("Pig pen")) {
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			element[x][y] = new PigPen(this, x, y);
+		}
+		else if(text.equals("Land")) {
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			element[x][y] = new Land(this, x, y);
+		}
+		
+		dropDone = true;
 	}
 	
 	
@@ -346,7 +370,10 @@ public class Island extends Screen{
 
 	}
 	
-	
+	public void setImages() {
+		nymphImage = surface.loadImage("Files/NymphFrontStand.png");
+		malImage = surface.loadImage("Files/NymphFrontStand.png");
+	}
 	
 	private void fillElements(int hX, int hY) {
 		circeHouse.putOnIsland(this);

@@ -2,6 +2,11 @@ package circeIsland.elements;
 
 import circeIsland.main.DrawingSurface;
 
+/**
+ * 
+ * @author Emma Yu
+ *
+ */
 public class Holdable {
 	int type;
 	public static final int GRAPE_SEED = 1;
@@ -28,7 +33,7 @@ public class Holdable {
 		return type;
 	}
 	
-	public String getName() {
+	public String getName() { //dont use this for actual code, just to display names
 		switch(type) {
 		case 1:
 			return "Grape Seed";
