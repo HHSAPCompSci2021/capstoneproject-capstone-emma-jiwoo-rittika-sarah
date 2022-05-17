@@ -24,17 +24,17 @@ public class House extends Element{
 		if (type == "circe") {
 			surface.push();
 			surface.fill(191, 128, 111);
-			surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth*2, cellHeight*2);
+			surface.rect(6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight), cellWidth*2, cellHeight*2);
 			surface.fill(0);
-			surface.text("cHouse", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
+			surface.text("cHouse", 6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight)+cellHeight);
 			surface.pop();
 		}
 		if (type == "norm") {
 			surface.push();
 			surface.fill(191, 128, 111);
-			surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth, cellHeight);
+			surface.rect(6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight), cellWidth, cellHeight);
 			surface.fill(0);
-			surface.text("house", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
+			surface.text("house", 6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight)+cellHeight);
 			surface.pop();
 		}
 		

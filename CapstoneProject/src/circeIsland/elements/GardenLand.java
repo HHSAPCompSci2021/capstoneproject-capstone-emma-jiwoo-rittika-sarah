@@ -8,7 +8,7 @@ import circeIsland.screens.Island;
 public class GardenLand extends Element{	
 
 	private String type;//Plant types: grapes, barley, maratho, anithos
-	int hydrationLvl; //watering plants increases the hydration level to 5. it decreases by 1 daily so you must
+	int hydrationLvl; //watering plants increases the hydration level to 3. it decreases by 1 daily so you must
 					  //water your plants periodically for them to survive. watering brings it back to 5 
 	public int lifeState; //0 is unplanted, 1 is bud, 2 is sprout, 3 is ready to harvest, 4 is dead 
 	private static final int UNPLANTED = 0;
@@ -17,12 +17,16 @@ public class GardenLand extends Element{
 	private static final int GROWN = 3;
 	private static final int DEAD = 4;
 	
+	private int startDay;
+	private int currentDay;
 	
 	public GardenLand(Island i, int xInput, int yInput) {
 		super(i, xInput, yInput);
 		this.type = "";
 		lifeState = 0; 
 		setStandable(true);
+		startDay = 0;
+		currentDay = 0;
 	}
 	
 	public String getType() {
@@ -33,6 +37,7 @@ public class GardenLand extends Element{
 		this.type = type;
 		lifeState = BUD;
 		hydrationLvl = 5;
+		startDay = getIsland().getDays();
 	}
 	
 	public void water() {
@@ -41,13 +46,18 @@ public class GardenLand extends Element{
 	}
 	
 	public void grow() {
-		if (hydrationLvl > 3 && (lifeState == BUD || lifeState == SPROUT)) 
-			lifeState ++;
-		//some call to island.keepTime() in here somewhere probably
+		int daysPassed = getIsland().getDays()-startDay;
+		if (hydrationLvl > 2) {
+			if (lifeState == BUD && daysPassed == 3)
+				lifeState = SPROUT;
+			else if (lifeState == SPROUT && daysPassed == 5)
+				lifeState = GROWN;
+		}
+		
 	}
 	
 	public void harvest() {
-		
+		startDay = 0;
 		type = "";
 		hydrationLvl = 0;
 		lifeState = 0;
@@ -57,14 +67,20 @@ public class GardenLand extends Element{
 		act();
 		surface.push();
 		surface.fill(105, 67, 45);
-		surface.rect(10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight), cellWidth, cellHeight);
+		surface.rect(6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight), cellWidth, cellHeight);
 		surface.fill(0);
-		surface.text("garden", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
+		surface.text("garden", 6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight)+cellHeight);
 		surface.pop();
 	}
 	
-	public void act() {  
-		
+	public void act() { 
+		if (currentDay != getIsland().getDays() && isAlive()) {
+			hydrationLvl --;
+			currentDay = getIsland().getDays();
+		}
+		if (hydrationLvl <=0 && isAlive())
+			lifeState = DEAD;
+		grow();
 	}
 	
 	public int getLifeState() {

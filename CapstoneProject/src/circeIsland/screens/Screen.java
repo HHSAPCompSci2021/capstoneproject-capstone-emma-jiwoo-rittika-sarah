@@ -74,5 +74,22 @@ public class Screen{
 	public int getDays() {
 		return days;
 	}
+
+
+	public void processMouseDrag(int mouseX, int mouseY) {
+		
+	}
+
+
+	public void processMousePress(int mouseX, int mouseY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void processMouseRelease(int mouseX, int mouseY) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

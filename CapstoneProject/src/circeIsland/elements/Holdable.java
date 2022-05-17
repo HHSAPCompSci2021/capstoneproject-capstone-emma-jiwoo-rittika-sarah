@@ -4,36 +4,58 @@ import circeIsland.main.DrawingSurface;
 
 public class Holdable {
 	int type;
-	public static final int BREAD = 1;
-	public static final int WATER = 2;
-	public static final int SEED = 3;
-	public static final int PLANT = 4;
-	public static final int POTION = 5;
+	public static final int GRAPE_SEED = 1;
+	public static final int BARLEY_SEED = 2;
+	public static final int MARATHOS_SEED = 3;
+	public static final int ANITHOS_SEED = 4;
 	
-	String details; //only for seed and plant
-	public static final String GRAPE = "grape";
-	public static final String BARLEY = "barley";
-	public static final String MARATHOS = "marathos";
-	public static final String ANITHOS = "anithos";
+	public static final int GRAPE_PLANT = 5;
+	public static final int BARLEY_PLANT = 6;
+	public static final int MARATHOS_PLANT = 7;
+	public static final int ANITHOS_PLANT = 8;
+
+	public static final int WATER = 9;
+	public static final int WINE = 10;
+	public static final int BREAD = 11;
+	public static final int POTION = 12;
 	
 
 	public Holdable(int type) {
 		this.type = type;
-		details = "";
 	}
-	
-	public Holdable(int type, String details) {
-		this.type = type;
-		this.details = details;
-	}
-	
 	
 	public int getType() {
 		return type;
 	}
 	
-	public String getDetails() {
-		return details;
+	public String getName() {
+		switch(type) {
+		case 1:
+			return "Grape Seed";
+		case 2:
+			return "Barley Seed";
+		case 3:
+			return "Marathos Seed";
+		case 4:
+			return "Anithos Seed";
+		case 5:
+			return "Grape";
+		case 6:
+			return "Barley";
+		case 7:
+			return "Marathos";
+		case 8:
+			return "Anithos";
+		case 9:
+			return "Water";
+		case 10:
+			return "Wine";
+		case 11:
+			return "Bread";
+		case 12:
+			return "Potion";
+		}
+		return "";
 	}
 	
 	public void draw(DrawingSurface surface, float xCoor, float yCoor) {
@@ -41,11 +63,11 @@ public class Holdable {
 		surface.fill(176, 54, 83);
 		surface.rect(10 + xCoor, 10 +yCoor, 10, 10);
 		surface.fill(0);
-		surface.text(type+details, 10 + xCoor, 10 + yCoor);
+		surface.text(getName(), 10 + xCoor, 10 + yCoor);
 		surface.pop();
 	}
 	
 	public String toString() {
-		return "type:"+type+details;
+		return "type:"+type;
 	}
 }

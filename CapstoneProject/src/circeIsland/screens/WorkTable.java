@@ -2,7 +2,6 @@ package circeIsland.screens;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
-
 import circeIsland.main.*;
 import g4p_controls.G4P;
 import g4p_controls.GButton;
@@ -12,25 +11,34 @@ import circeIsland.elements.Holdable;
 public class WorkTable extends Screen{
 
 	//private DrawingSurface surface;
-	private ArrayList<Holdable> storage;
-	private Rectangle cookButton, recipeButton;
+	private ArrayList<ArrayList<Holdable>> storage;
+	//12 items: Grape seed, barley seed, marathos seed, anithos seed, grape, barley, marathos, anithos,
+	//			water, wine, bread, potion
+	
+	private Rectangle cookButton, recipeButton, inventoryButton;
 	//GButton brewer, recipe, exit;
 	private ArrayList<String> recipes;
 	private boolean showRecipes;
-	
+	private float curElementX;
+	private float curElementY;
+	private boolean locked;
 	
 	
 	public WorkTable(DrawingSurface surface) {
 		super(800,600, surface);
 		//this.surface = surface;
 		//cookButton = new Rectangle(800/2-100,600/2-50,200,100);
-		storage = new ArrayList<Holdable>();
+		storage = new ArrayList<ArrayList<Holdable>>();
 		
 		cookButton = new Rectangle(100, 500, 100, 50);
 		recipeButton = new Rectangle(400, 500, 100, 50);
+		inventoryButton = new Rectangle(620, 30, 150, 500);		
 		recipes = new ArrayList<String>();
 		addRecipes();
 		showRecipes = false;
+		
+		for (int i = 0; i<12; i++)
+			storage.add(new ArrayList<Holdable>());
 	}
 	
 
@@ -50,6 +58,12 @@ public class WorkTable extends Screen{
 
 		
 		drawInventory();
+		drawAlchemy();
+		
+		if (locked) {
+			Holdable h = new Holdable(1);
+			h.draw(surface, curElementX, curElementY);
+		}
 		
 		if(showRecipes) {
 			displayRecipes();
@@ -60,14 +74,15 @@ public class WorkTable extends Screen{
 	
 	
 	public void drawInventory(){
-		int[][] inventory = new int[10][2];
-		for(int k = 0; k<inventory.length; k++) {
-			inventory[k][0] = k;
-		}
-		for(int i = 0; i<storage.size(); i++) {
-			Holdable current = storage.get(i);
-			int currentType = current.getType();
-			inventory[currentType][1] = inventory[currentType][1] + 1;
+		
+		int currentNum = 0;
+		//draw grid and holdables for each grid
+		int[][] inventory = new int[6][2];
+		for (int i = 0; i<inventory.length; i++) {
+			for (int j = 0; j<inventory[0].length; j++) {
+				inventory[i][j] = storage.get(currentNum).size();
+				currentNum ++;
+			}
 		}
 		
 		//surface.fill(235, 213, 190);
@@ -80,30 +95,54 @@ public class WorkTable extends Screen{
 		float cellWidth = 150 / inventory[0].length;
 		float cellHeight = 500 / inventory.length;
 		
+		int currentElement = 1;
 		for(int i = 0; i<inventory.length; i++) { //RECT coordinates (top left) : 620, 30
 			for(int j = 0; j<inventory[0].length; j++) {
-				
 				float cellCenterX = (float)(boxX + (j*cellWidth) + (cellWidth/2.5));
 				float cellCenterY = (float)(boxY + (i*cellHeight) + (cellHeight/1.5));
 				
+				surface.push();
 				//draws the grid for the inventory
 				surface.fill(235, 213, 190);
 				surface.rect(620 + (j * cellWidth), 30 + (i*cellHeight), cellWidth, cellHeight);
 				
+				//draws element per grid
+				Holdable h = new Holdable(currentElement);
+				h.draw(surface, cellCenterX, cellCenterY);
 				
 				//writes inventory numbers to drawing surface
 				surface.textSize(25);
 				surface.fill(0);
-				surface.text("" + (inventory[i][j] + 1), cellCenterX, cellCenterY);
+				surface.text("" + (inventory[i][j]), cellCenterX, cellCenterY);
+				surface.pop();
+				
+				currentElement++;
 				
 			}
 		}
 		
+		
+	}
+	
+	public void drawElement(int num) {
+		switch(num) {
+		case 0:
+		}
+	}
+	
+	public void drawAlchemy() {
+		int bowlX = 200;
+		int bowlY = 200;
+		float bowlWidth = 300;
+		float bowlHeight = 200;
+				
+		surface.noFill();
+		surface.rect(bowlX, bowlY, bowlWidth, bowlHeight);
 	}
 	
 	
 	public void addToStorage(Holdable h) {
-		storage.add(h);
+		storage.get(h.getType()-1).add(h);
 	}
 	
 	
@@ -116,6 +155,13 @@ public class WorkTable extends Screen{
 		recipes.add(swinePotion);
 	}
 	
+	public void processMouseDrag(int mouseX, int mouseY) {
+		System.out.println("dragging");
+		if (locked) {
+			curElementX = mouseX;
+		curElementY = mouseY;
+		}
+	}
 	
 	public void processMouseClick(int mouseX, int mouseY) {
 //		//inside the brew button
@@ -127,6 +173,20 @@ public class WorkTable extends Screen{
 //			System.out.println(showRecipes);
 //			showRecipes = !showRecipes;
 //		}
+	}
+	
+	public void processMousePress(int mouseX, int mouseY) {
+		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
+	//	if (click.intersects(inventoryButton)) {
+			locked = true;
+			curElementX = mouseX;
+			curElementY = mouseY;
+	//	}
+	}
+	
+	public void processMouseRelease(int mouseX, int mouseY) {
+		locked = false;
+		
 	}
 	
 	public void handleButtonClick(GButton b, GEvent event) {

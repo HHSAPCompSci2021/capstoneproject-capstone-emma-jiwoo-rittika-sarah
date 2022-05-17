@@ -135,6 +135,18 @@ public class DrawingSurface extends PApplet {
 		//maybe zoom functionality??
 	}
 	
+	public void mouseDragged() {
+		currentScreen.processMouseDrag(mouseX, mouseY);
+	}
+	
+	public void mousePressed() {
+		currentScreen.processMousePress(mouseX, mouseY);
+	}
+	
+	public void mouseReleased() {
+		currentScreen.processMouseRelease(mouseX, mouseY);
+	}
+	
 	
 	public void mouseClicked() {
 		currentScreen.processMouseClick(mouseX, mouseY);
