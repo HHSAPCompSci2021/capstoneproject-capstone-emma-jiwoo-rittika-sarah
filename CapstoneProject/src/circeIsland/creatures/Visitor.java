@@ -1,16 +1,18 @@
 package circeIsland.creatures;
 
+import processing.core.PImage;
+
 /**
  * 
  * @author Jiwoo Kim
  */
 public abstract class Visitor extends Creature{
 	
-	public static final int VISITOR_WIDTH = 40;
-	public static final int VISITOR_HEIGHT = 60;
+	public static final int VISITOR_WIDTH = 6000;
+	public static final int VISITOR_HEIGHT = 8000;
 	
-	public Visitor(int x, int y) {
-		super(x, y, VISITOR_WIDTH, VISITOR_HEIGHT);
+	public Visitor(PImage img, int x, int y) {
+		super(img, x, y, VISITOR_WIDTH, VISITOR_HEIGHT);
 	}
 	
 	public void act() {

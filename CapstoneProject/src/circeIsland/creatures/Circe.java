@@ -19,10 +19,10 @@ public class Circe extends Creature{
 	
 	public Circe(PImage img, int x, int y) {
 		super(img, x, y, CIRCE_WIDTH, CIRCE_HEIGHT, 8);
-		holdings = new Holdable[5];
+		holdings = new Holdable[6];
 		greeting = true;
 		currentHold = 0;
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < holdings.length; i++) {
 			holdings[i] = null;
 		}
 	}
@@ -85,17 +85,17 @@ public class Circe extends Creature{
 		super.draw(g);
 		g.fill(255);
 		
-		float screenWidth = super.getIsland().WIDTH;
-		float screenHeight = super.getIsland().HEIGHT;
-		float cell = 20000/screenWidth;
-		float cellStartX =  (screenWidth - (holdings.length * cell))/2;
-		for(int i = 0; i<holdings.length; i++) {
-			g.rect(cellStartX, screenHeight-cell-20, cellStartX + cell, screenHeight-20);
-		}
+//		float screenWidth = super.getIsland().WIDTH;
+//		float screenHeight = super.getIsland().HEIGHT;
+//		float cell = 20000/screenWidth;
+//		float cellStartX =  (screenWidth - (holdings.length * cell))/2;
+//		for(int i = 0; i<holdings.length; i++) {
+//			g.rect(cellStartX, screenHeight-cell-20, cellStartX + cell, screenHeight-20);
+//		}
 	}
 	
 	public int nextEmptySpace() {
-		for (int i = 0; i<5; i++) {
+		for (int i = 0; i<holdings.length; i++) {
 			if (holdings[i] == null)
 				return i;
 		}
@@ -104,6 +104,10 @@ public class Circe extends Creature{
 	
 	public String getType() {
 		return "Circe";
+	}
+	
+	public Holdable[] getInventory() {
+		return holdings;
 	}
 	
 	

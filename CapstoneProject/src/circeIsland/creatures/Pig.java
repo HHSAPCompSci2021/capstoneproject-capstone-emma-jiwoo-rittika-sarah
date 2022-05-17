@@ -1,17 +1,23 @@
 package circeIsland.creatures;
 
 import circeIsland.elements.*;
+import processing.core.PImage;
 
 /**
  * 
  * @author Jiwoo Kim
  */
 public class Pig extends Creature{
-	public static final int PIG_WIDTH = 60;
-	public static final int PIG_HEIGHT = 40;
+	public static final int PIG_WIDTH = 7200;
+	public static final int PIG_HEIGHT = 7800;
 
 	public Pig(int x, int y) {
 		super(x, y, PIG_WIDTH, PIG_HEIGHT, 3);
+	}
+	
+	
+	public Pig(PImage img, int x, int y) {
+		super(img, x, y, PIG_WIDTH, PIG_HEIGHT, 3);
 	}
 	
 	public void act() {
