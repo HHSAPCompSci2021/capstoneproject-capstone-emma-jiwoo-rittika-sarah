@@ -124,6 +124,10 @@ public class WorkTable extends Screen{
 		
 	}
 	
+	public void drawCirceInventory() {
+		
+	}
+	
 	public void drawElement(int num) {
 		switch(num) {
 		case 0:
