@@ -71,6 +71,7 @@ public class WorkTable extends Screen{
 
 		
 		drawInventory();
+		drawCirceInventory();
 		drawAlchemy();
 		
 		if (locked) {
@@ -138,8 +139,7 @@ public class WorkTable extends Screen{
 	}
 	
 	public void drawCirceInventory() {
-		int[][] inventory = new int[2][3];
-		
+		Holdable[][]inventory = new Holdable[2][3];
 		int count = 0;
 		for (int i = 0; i<inventory.length; i++) {
 			for (int j = 0; j<inventory[0].length; j++) {
@@ -150,6 +150,25 @@ public class WorkTable extends Screen{
 		
 		int boxX = 620;
 		int boxY = 540;
+		
+		float cellWidth = 150 / inventory[0].length;
+		float cellHeight = 133 / inventory.length;
+		
+		for(int i = 0; i<inventory.length; i++) { 
+			for(int j = 0; j<inventory[0].length; j++) {
+				float cellCenterX = (float)(boxX + (j*cellWidth) + (cellWidth/2.5));
+				float cellCenterY = (float)(boxY + (i*cellHeight) + (cellHeight/2.5));
+				
+				surface.push();
+				//draws the grid for the inventory
+				surface.fill(235, 213, 190);
+				surface.rect(620 + (j * cellWidth), 30 + (i*cellHeight), cellWidth, cellHeight);
+				
+				//draws item
+				inventory[i][j].draw(surface, cellCenterX, cellCenterY);
+				surface.pop();
+			}
+		}
 		
 	}
 	
