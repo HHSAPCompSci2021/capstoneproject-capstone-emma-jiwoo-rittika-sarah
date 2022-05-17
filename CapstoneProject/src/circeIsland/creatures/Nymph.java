@@ -16,8 +16,12 @@ public class Nymph extends Visitor{
 	
 	public void act() {
 		int[] circeGrid = checkCirceNearby();
-		if(circeGrid == null ) {
+		int[] myGrid = coorToGrid(x,y);
+		if(circeGrid == null || !super.getIsland().getCirce().getGreeting()) {
 			super.act();
+			return;
+		}
+		if(circeGrid.equals(myGrid)) {
 			return;
 		}
 		

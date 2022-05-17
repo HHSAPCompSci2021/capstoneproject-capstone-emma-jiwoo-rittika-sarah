@@ -10,15 +10,17 @@ import processing.core.PImage;
  */
 public class Circe extends Creature{
 
-	public static final int CIRCE_WIDTH = 25;
-	public static final int CIRCE_HEIGHT = 55;
+	public static final int CIRCE_WIDTH = 20000;
+	public static final int CIRCE_HEIGHT = 33000;
 	
 	private Holdable[] holdings;
 	private int currentHold;
+	private boolean greeting;
 	
 	public Circe(PImage img, int x, int y) {
 		super(img, x, y, CIRCE_WIDTH, CIRCE_HEIGHT, 8);
 		holdings = new Holdable[5];
+		greeting = true;
 		currentHold = 0;
 		for(int i = 0; i < 5; i++) {
 			holdings[i] = null;
@@ -28,7 +30,7 @@ public class Circe extends Creature{
 	
 	//METHODS
 	public void act() {
-		
+	
 	}
 	
 	public void grab(int boxNum) {
@@ -37,9 +39,19 @@ public class Circe extends Creature{
 	
 	public void plant() {
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
-		if(e instanceof GardenLand && holdings[currentHold].getType() == Holdable.SEED) {
-			if(((GardenLand) e).getType().equals(holdings[currentHold].getDetails()));
+		if(e instanceof GardenLand && holdings[currentHold].getType() >= Holdable.GRAPE_SEED && holdings[currentHold].getType() <= Holdable.ANITHOS_SEED) {
+			Holdable p = new Holdable(holdings[currentHold].getType()+4);
+			GardenLand g = (GardenLand)e;
+			g.plant(Integer.toString(holdings[currentHold].getType()+4));
 		}
+	}
+	
+	public boolean getGreeting() {
+		return greeting;
+	}
+	
+	public void setGreeting() {
+		greeting = !greeting;
 	}
 	
 	public void water() {
@@ -53,7 +65,7 @@ public class Circe extends Creature{
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
 		if(e instanceof GardenLand) {
 			if(((GardenLand) e).getLifeState() >= 3)
-				holdings[nextEmptySpace()] = new Holdable(Holdable.SEED, ((GardenLand) e).getType());
+				holdings[nextEmptySpace()] = new Holdable(Integer.parseInt(((GardenLand) e).getType()));
 				((GardenLand) e).harvest();
 		}
 	}
@@ -71,7 +83,15 @@ public class Circe extends Creature{
 	
 	public void draw(PApplet g) {
 		super.draw(g);
+		g.fill(255);
 		
+		float screenWidth = super.getIsland().WIDTH;
+		float screenHeight = super.getIsland().HEIGHT;
+		float cell = 20000/screenWidth;
+		float cellStartX =  (screenWidth - (holdings.length * cell))/2;
+		for(int i = 0; i<holdings.length; i++) {
+			g.rect(cellStartX, screenHeight-cell-20, cellStartX + cell, screenHeight-20);
+		}
 	}
 	
 	public int nextEmptySpace() {

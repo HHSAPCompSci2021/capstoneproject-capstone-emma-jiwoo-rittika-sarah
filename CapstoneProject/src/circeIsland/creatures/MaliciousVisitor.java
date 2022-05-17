@@ -7,10 +7,12 @@ import circeIsland.elements.House;
  * @author Jiwoo Kim
  */
 public class MaliciousVisitor extends Visitor{
+	
+	private boolean stealing;
 
 	public MaliciousVisitor(int x, int y) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
+		stealing = false;
 	}
 
 	public String getType() {
@@ -18,9 +20,15 @@ public class MaliciousVisitor extends Visitor{
 	}
 	
 	public void act() {
+		int[] currentPos = super.coorToGrid(x,y);
+		if(super.getIsland().getElement(currentPos[0], currentPos[1]) instanceof House) {
+			stealing = true;
+			stealing();
+		}
+		
 		int[] circeGrid = checkCirceNearby();
 		int dir = -1;
-		if(circeGrid == null ) {
+		if(circeGrid == null) {
 			House circeHouse = super.getIsland().getCirceHouse();
 			int[] circeHouseCoor = {circeHouse.getXCoor(), circeHouse.getYCoor()};
 			dir = destinationDir(circeHouseCoor);
@@ -49,6 +57,10 @@ public class MaliciousVisitor extends Visitor{
 		if(diffX<0)
 			return Creature.LEFT;
 		return Creature.RIGHT;
+	}
+	
+	public void stealing() {
+		
 	}
 	
 
