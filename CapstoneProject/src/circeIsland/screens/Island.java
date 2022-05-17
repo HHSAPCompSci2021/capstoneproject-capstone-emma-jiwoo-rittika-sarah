@@ -24,9 +24,10 @@ public class Island extends Screen{
 	private Circe circe;
 	private House circeHouse;
 	private Rectangle infoButton;
-	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected;
+	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone;
 	private int[] selectedSpot;
-	private PImage islandImage;	
+	private PImage islandImage;
+	GDropList list;
 	
 	/**
 	 * Creates a new island in the provided surface, given the location of Circe and her house.
@@ -106,17 +107,24 @@ public class Island extends Screen{
 			landElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
-			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2) + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
-			list.setItems(new String[] {"Choose", "House", "Garden", "None"}, 0);
+			list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2) + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
+			list.setItems(new String[] {"Choose", "House", "Garden", "Pig pen", "Land", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
 		if(gardenElementSelected) {
 			gardenElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
-			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
+			list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
 			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
 			list.addEventHandler(this,  "handlePlantChange");
+		}
+		if (dropDone) {
+			mouseClickEnabled = true;
+			
+			//list.setVisible(false);
+			list.dispose();
+			dropDone = false;
 		}
 		
 		
@@ -160,7 +168,7 @@ public class Island extends Screen{
 		//System.out.println("Processing click");
 		if(!mouseClickEnabled) {
 			//System.out.println("ENETERED FALSE CLICK");
-			mouseClickEnabled = true;
+			//mouseClickEnabled = true;
 			return;
 		}
 		
@@ -304,9 +312,10 @@ public class Island extends Screen{
 	
 	
 	public void handleElementChange(GDropList list, GEvent event) {
-		mouseClickEnabled = false;
 		String text = list.getSelectedText();
-		list.setVisible(false);
+		if(text.equals("Choose"))
+			return;
+		
 		if(text.equals("House")) {
 			int x = selectedSpot[0];
 			int y = selectedSpot[1];
@@ -317,6 +326,18 @@ public class Island extends Screen{
 			int y = selectedSpot[1];
 			element[x][y] = new GardenLand(this, x, y);
 		}
+		else if(text.equals("Pig pen")) {
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			element[x][y] = new PigPen(this, x, y);
+		}
+		else if(text.equals("Land")) {
+			int x = selectedSpot[0];
+			int y = selectedSpot[1];
+			element[x][y] = new Land(this, x, y);
+		}
+		
+		dropDone = true;
 	}
 	
 	
