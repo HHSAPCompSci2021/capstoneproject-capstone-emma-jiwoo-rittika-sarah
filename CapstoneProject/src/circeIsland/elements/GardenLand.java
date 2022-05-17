@@ -48,12 +48,11 @@ public class GardenLand extends Element{
 	public void grow() {
 		int daysPassed = getIsland().getDays()-startDay;
 		if (hydrationLvl > 2) {
-			if (lifeState == BUD && daysPassed == 3)
+			if (lifeState == BUD && daysPassed == 2)
 				lifeState = SPROUT;
-			else if (lifeState == SPROUT && daysPassed == 5)
+			else if (lifeState == SPROUT && daysPassed == 4)
 				lifeState = GROWN;
 		}
-		
 	}
 	
 	public void harvest() {
@@ -87,8 +86,14 @@ public class GardenLand extends Element{
 		return lifeState;
 	}
 	
-	private boolean isAlive() {
+	public boolean isAlive() {
 		if (lifeState == BUD || lifeState == SPROUT || lifeState == GROWN)
+			return true;
+		return false;
+	}
+	
+	public boolean isMature() {
+		if (lifeState == GROWN)
 			return true;
 		return false;
 	}
