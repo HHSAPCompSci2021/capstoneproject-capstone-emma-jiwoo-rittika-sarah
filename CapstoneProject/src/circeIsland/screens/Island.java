@@ -26,7 +26,7 @@ public class Island extends Screen{
 	private Rectangle infoButton;
 	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone;
 	private int[] selectedSpot;
-	private PImage islandImage;
+	private PImage islandImage, malImage, nymphImage;
 	GDropList list;
 	
 	/**
@@ -130,8 +130,11 @@ public class Island extends Screen{
 		
 		surface.textSize(10);
 		
-		Nymph c1 = new Nymph(450, 400);
-		Nymph c2 = new Nymph(300, 100);
+		
+		
+		
+		Nymph c1 = new Nymph(nymphImage, 450, 400);
+		Nymph c2 = new Nymph(malImage, 300, 100);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
 		for(Creature c : creatures) {
@@ -149,11 +152,11 @@ public class Island extends Screen{
 		int days = super.getDays();
 		
 		if(days % 4 == 0 && days != 0) {
-			Nymph c = new Nymph(760, 350);
+			Nymph c = new Nymph(nymphImage, 760, 350);
 			c.putOnIsland(this);
 		}
 		else if(days % 7 == 0 && days != 0) {
-			MaliciousVisitor c = new MaliciousVisitor(760, 350);
+			MaliciousVisitor c = new MaliciousVisitor(malImage, 760, 350);
 			c.putOnIsland(this);
 		}
 		
@@ -367,7 +370,10 @@ public class Island extends Screen{
 
 	}
 	
-	
+	public void setImages() {
+		nymphImage = surface.loadImage("Files/NymphFrontStand.png");
+		malImage = surface.loadImage("Files/NymphFrontStand.png");
+	}
 	
 	private void fillElements(int hX, int hY) {
 		circeHouse.putOnIsland(this);

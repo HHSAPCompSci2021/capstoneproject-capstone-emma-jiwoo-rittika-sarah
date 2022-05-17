@@ -74,6 +74,7 @@ public class DrawingSurface extends PApplet {
 		circe = new Circe(cImage, 300, 300);
 		iImage = loadImage("Files/IslandImg.png");
 		island = new Island(this, iImage, circe, 10, 5);
+		island.setImages();
 		workshop.add(circe);
 		currentScreen = island;
 	}
