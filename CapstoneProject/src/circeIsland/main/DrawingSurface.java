@@ -24,7 +24,7 @@ public class DrawingSurface extends PApplet {
 	
 	private Island island;
 	private WorkTable workshop;
-	//private Circe circe;
+	private Circe circe;
 	private Information info;
 	private Screen currentScreen;
 	
@@ -44,7 +44,7 @@ public class DrawingSurface extends PApplet {
 		//island = new Island(this);
 		//island = new Island(this, 300, 300, 7, 10);
 		//circe = new Circe()
-		workshop = new WorkTable(this);
+		
 		info = new Information(this);
 		
 		
@@ -70,8 +70,10 @@ public class DrawingSurface extends PApplet {
 		//font = createFont("Files/DrakalligroOriginal.ttf", 128);
 		font = createFont("Files/Libra-Normal.otf", 128);
 		cImage = loadImage("Files/CirceFrontStand.png");
+		circe = new Circe(cImage, 300, 300);
 		iImage = loadImage("Files/IslandImg.png");
-		island = new Island(this, iImage, cImage, 300, 300, 10, 5);
+		island = new Island(this, iImage, circe, 10, 5);
+		workshop = new WorkTable(this, circe);
 		currentScreen = island;
 	}
 	

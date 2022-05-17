@@ -6,6 +6,7 @@ import circeIsland.main.*;
 import g4p_controls.G4P;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
+import circeIsland.creatures.Circe;
 import circeIsland.elements.Holdable;
 
 public class WorkTable extends Screen{
@@ -22,14 +23,15 @@ public class WorkTable extends Screen{
 	private float curElementX;
 	private float curElementY;
 	private boolean locked;
+	Circe circe;
 	
 	
-	public WorkTable(DrawingSurface surface) {
+	public WorkTable(DrawingSurface surface, Circe c) {
 		super(800,600, surface);
 		//this.surface = surface;
 		//cookButton = new Rectangle(800/2-100,600/2-50,200,100);
 		storage = new ArrayList<ArrayList<Holdable>>();
-		
+		circe = c;
 		cookButton = new Rectangle(100, 500, 100, 50);
 		recipeButton = new Rectangle(400, 500, 100, 50);
 		inventoryButton = new Rectangle(620, 30, 150, 500);		

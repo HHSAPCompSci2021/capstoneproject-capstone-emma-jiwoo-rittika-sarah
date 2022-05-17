@@ -38,13 +38,13 @@ public class Island extends Screen{
 	 * @param houseX the x coordinate of Circe's house
 	 * @param houseY the y coordinate of Circe's house
 	 */
-	public Island(DrawingSurface surface, PImage islandImage, PImage cImage, int circeX, int circeY, int houseX, int houseY) {
+	public Island(DrawingSurface surface, PImage islandImage, Circe c, int houseX, int houseY) {
 		super(800,600, surface);
 		this.islandImage = islandImage;
 		
 		element = new Element[15][15];
 		circeHouse = new House(this, houseX, houseX, "circe");
-		circe = new Circe(cImage, circeX, circeY);
+		circe = c;
 		creatures = new ArrayList<Creature>();
 		infoButton = new Rectangle(super.WIDTH-80, 20, super.WIDTH / element.length -10, super.HEIGHT /element[0].length - 10);
 		
@@ -53,7 +53,7 @@ public class Island extends Screen{
 		mouseClickEnabled = true;
 		selectedSpot = new int[2];
 		
-		fillElements(circeX, circeY, houseX, houseY);
+		fillElements(houseX, houseY);
 	}
 	
 	
@@ -177,9 +177,16 @@ public class Island extends Screen{
 //			surface.switchScreen(0);
 //		}
 		if(element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
-			gardenElementSelected = true;
-			selectedSpot[0] = clickInGrid[0];
-			selectedSpot[1] = clickInGrid[1];
+			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);
+			if(e.isAlive()) {
+				circe.harvest();
+			}
+			else {
+				gardenElementSelected = true;
+				selectedSpot[0] = clickInGrid[0];
+				selectedSpot[1] = clickInGrid[1];
+			}
+			
 		}
 		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
 			//System.out.println("info");
@@ -341,7 +348,7 @@ public class Island extends Screen{
 	
 	
 	
-	private void fillElements(int cX, int cY, int hX, int hY) {
+	private void fillElements(int hX, int hY) {
 		circeHouse.putOnIsland(this);
 		circe.putOnIsland(this);
 		

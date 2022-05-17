@@ -39,7 +39,7 @@ public class Screen{
 	public void draw() {
 		drawCount++;
 		
-		if(drawCount == 500) {
+		if(drawCount == 1800) {
 			drawCount = 0;
 			System.out.println("DAY UP");
 			days++;
