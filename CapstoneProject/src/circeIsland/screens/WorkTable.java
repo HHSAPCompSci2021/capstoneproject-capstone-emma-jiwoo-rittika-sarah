@@ -149,10 +149,11 @@ public class WorkTable extends Screen{
 		}
 		
 		int boxX = 620;
-		int boxY = 540;
+		int boxY = 450;
 		
 		float cellWidth = 150 / inventory[0].length;
-		float cellHeight = 133 / inventory.length;
+		float cellHeight = 100 / inventory.length;
+		
 		
 		for(int i = 0; i<inventory.length; i++) { 
 			for(int j = 0; j<inventory[0].length; j++) {
@@ -162,10 +163,11 @@ public class WorkTable extends Screen{
 				surface.push();
 				//draws the grid for the inventory
 				surface.fill(235, 213, 190);
-				surface.rect(620 + (j * cellWidth), 30 + (i*cellHeight), cellWidth, cellHeight);
+				surface.rect(boxX + (j * cellWidth), boxY + (i*cellHeight), cellWidth, cellHeight);
 				
 				//draws item
-				inventory[i][j].draw(surface, cellCenterX, cellCenterY);
+				if (inventory[i][j] != null)
+					inventory[i][j].draw(surface, cellCenterX, cellCenterY);
 				surface.pop();
 			}
 		}
@@ -198,6 +200,7 @@ public class WorkTable extends Screen{
 		String wine = "Wine: 3 grapes + 1 water";
 		String bread = "Bread: 5 barley + 2 water";
 		String swinePotion = "Potion: 2 maratho + 3 anithos + 1 water";
+		String seeds = "Seeds: 1 grape/barley/maratho/anithos for 4 seeds";
 		recipes.add(wine);
 		recipes.add(bread);
 		recipes.add(swinePotion);
