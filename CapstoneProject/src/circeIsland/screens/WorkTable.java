@@ -19,10 +19,11 @@ public class WorkTable extends Screen{
 	private Rectangle cookButton, recipeButton, inventoryButton;
 	//GButton brewer, recipe, exit;
 	private ArrayList<String> recipes;
+	private ArrayList<Holdable> cauldronItems;
 	private boolean showRecipes;
 	private float curElementX;
 	private float curElementY;
-	private boolean locked;
+	private boolean locked; //to check whether something is being held or not
 	Circe circe;
 	
 	
@@ -36,6 +37,7 @@ public class WorkTable extends Screen{
 		recipeButton = new Rectangle(400, 500, 100, 50);
 		inventoryButton = new Rectangle(620, 30, 150, 500);		
 		recipes = new ArrayList<String>();
+		cauldronItems = new ArrayList<Holdable>();
 		addRecipes();
 		showRecipes = false;
 		
