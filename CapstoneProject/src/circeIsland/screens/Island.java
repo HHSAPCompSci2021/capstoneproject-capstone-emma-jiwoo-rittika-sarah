@@ -170,7 +170,7 @@ public class Island extends Screen{
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 
-		//System.out.println("IMPORTANT : " + clickedElement.toString());
+		System.out.println("IMPORTANT : " + clickedElement.toString());
 		
 //		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
 //			System.out.println("at circe's");

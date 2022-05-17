@@ -26,12 +26,12 @@ public class WorkTable extends Screen{
 	Circe circe;
 	
 	
-	public WorkTable(DrawingSurface surface, Circe c) {
+	public WorkTable(DrawingSurface surface) {
 		super(800,600, surface);
 		//this.surface = surface;
 		//cookButton = new Rectangle(800/2-100,600/2-50,200,100);
 		storage = new ArrayList<ArrayList<Holdable>>();
-		circe = c;
+		//circe = c;
 		cookButton = new Rectangle(100, 500, 100, 50);
 		recipeButton = new Rectangle(400, 500, 100, 50);
 		inventoryButton = new Rectangle(620, 30, 150, 500);		
@@ -44,6 +44,9 @@ public class WorkTable extends Screen{
 	}
 	
 
+	public void add(Circe c) {
+		circe = c;
+	}
 	
 	public void draw() {
 
