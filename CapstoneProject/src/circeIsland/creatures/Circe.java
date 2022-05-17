@@ -67,6 +67,7 @@ public class Circe extends Creature{
 			if(((GardenLand) e).getLifeState() >= 3 && nextEmptySpace() != -1)
 				addOnInventory(new Holdable(Integer.parseInt(((GardenLand) e).getType())));
 				((GardenLand) e).harvest();
+				return true;
 		}
 		return false;
 	}
