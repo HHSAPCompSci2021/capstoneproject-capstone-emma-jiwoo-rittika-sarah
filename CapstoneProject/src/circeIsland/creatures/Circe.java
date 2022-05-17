@@ -10,9 +10,9 @@ import processing.core.PImage;
  */
 public class Circe extends Creature{
 
-	public static final int CIRCE_WIDTH = 40000;
-	public static final int CIRCE_HEIGHT = 66000;
-	// 50 * 110
+	public static final int CIRCE_WIDTH = 56000;
+	public static final int CIRCE_HEIGHT = 75000;
+	// 70 * 125
 	
 	private Holdable[] holdings;
 	private int currentHold;
