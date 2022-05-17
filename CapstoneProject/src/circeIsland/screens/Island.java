@@ -106,7 +106,7 @@ public class Island extends Screen{
 			landElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
-			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2) + (selectedSpot[1]*cellHeight), cellWidth, cellHeight, 0);  
+			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2) + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
 			list.setItems(new String[] {"Choose", "House", "Garden", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
@@ -114,7 +114,7 @@ public class Island extends Screen{
 			gardenElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
-			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight, 0);  
+			GDropList list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
 			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
 			list.addEventHandler(this,  "handlePlantChange");
 		}
