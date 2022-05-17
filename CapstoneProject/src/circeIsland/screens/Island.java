@@ -71,10 +71,10 @@ public class Island extends Screen{
 		float cellWidth = (surface.width - borderX) / element[0].length;
 		float cellHeight = (surface.height - borderY) / element.length;
 		
-		surface.strokeWeight(0);
 		surface.image(islandImage, 0, 0, surface.width, surface.height);
 		
 		//drawing grid of elements
+		surface.strokeWeight(0);
 		for(int i = 0; i<element.length; i++) { //x
 			for(int j = 0; j<element[0].length; j++) { //y
 				if(element[i][j] == null) {
@@ -94,6 +94,9 @@ public class Island extends Screen{
 				}
 			}
 		}
+		
+
+		surface.textSize(10);
 		
 		//info button
 		surface.fill(222, 139, 62);
@@ -121,14 +124,14 @@ public class Island extends Screen{
 		}
 		if (dropDone) {
 			mouseClickEnabled = true;
-			
-			//list.setVisible(false);
 			list.dispose();
 			dropDone = false;
 		}
 		
 		
-		surface.textSize(10);
+		
+		
+		
 		
 		
 		
@@ -181,7 +184,7 @@ public class Island extends Screen{
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 
-		System.out.println("IMPORTANT : " + clickedElement.toString());
+		//System.out.println("IMPORTANT : " + clickedElement.toString());
 		
 //		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
 //			System.out.println("at circe's");
@@ -201,6 +204,7 @@ public class Island extends Screen{
 		}
 		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
 			//System.out.println("info");
+			list.dispose();
 			surface.switchScreen(1);
 		}
 		else if(clickedElement != null && clickedElement instanceof Land){
@@ -247,6 +251,8 @@ public class Island extends Screen{
 		}
 		
 	}
+	
+	
 	
 	/**
 	 * Returns the indexes of the location in the 2DArray of elements, given the x and y coordinates on the screen, 
