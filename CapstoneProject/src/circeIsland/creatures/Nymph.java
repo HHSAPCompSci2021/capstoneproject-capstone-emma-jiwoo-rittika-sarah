@@ -1,13 +1,15 @@
 package circeIsland.creatures;
 
+import processing.core.PImage;
+
 /**
  * 
  * @author Jiwoo Kim
  */
 public class Nymph extends Visitor{
 
-	public Nymph(int x, int y) {
-		super(x, y);
+	public Nymph(PImage img, int x, int y) {
+		super(img, x, y);
 	}	
 	
 	public String getType() {
