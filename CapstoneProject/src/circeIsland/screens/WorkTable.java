@@ -230,11 +230,18 @@ public class WorkTable extends Screen{
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
 		if (click.intersects(inventoryButton)) {
 			locked = true;
+			curHoldable = toSpot(mouseX, mouseY);
 			curHoldableX = mouseX;
 			curHoldableY = mouseY;
 		}
 	}
 	
+	private Holdable toSpot(int mouseX, int mouseY) {
+		
+		return null;
+	}
+
+
 	public void processMouseRelease(int mouseX, int mouseY) {
 		locked = false;
 		
@@ -260,8 +267,6 @@ public class WorkTable extends Screen{
 			button.setVisible(b);
 		}
 	}
-	
-	
 	
 	private void brew() {
 		surface.text("BREWING",  100, 100);

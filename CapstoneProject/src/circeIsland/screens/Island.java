@@ -136,10 +136,10 @@ public class Island extends Screen{
 		
 		
 		
-		Nymph c1 = new Nymph(nymphImage, 450, 400);
-		Nymph c2 = new Nymph(malImage, 300, 100);
-		c1.putOnIsland(this);
-		c2.putOnIsland(this);
+//		Nymph c1 = new Nymph(nymphImage, 450, 400);
+//		Nymph c2 = new Nymph(malImage, 300, 100);
+//		c1.putOnIsland(this);
+//		c2.putOnIsland(this);
 		for(Creature c : creatures) {
 			//c.act();
 			c.draw(surface);
