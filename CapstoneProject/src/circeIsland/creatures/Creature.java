@@ -133,9 +133,13 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public void draw(PApplet g) {
 		if(isInGrid) {
-			if (image != null)
-				g.image(image,(float)x,(float)y,(float)width*myIsland.getWidth(),(float)height*myIsland.getHeight());
-			else {
+			if (image != null) {
+				double rateX = myIsland.getWidth()/800;
+				double rateY = myIsland.getHeight()/600;
+				x *= rateX;
+				y *= rateY;
+				g.image(image,(float)x,(float)y,(float)(width*rateX),(float)(height*rateY));
+			} else {
 				g.fill(100);
 				g.rect((float)x,(float)y,(float)width,(float)height);
 				g.fill(0);
@@ -160,8 +164,11 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	public boolean canStand(double xCoor, double yCoor) {
+		System.out.println("width:" + myIsland.WIDTH + ", height:" + myIsland.HEIGHT);
+		double rateX = myIsland.getWidth()/800;
+		double rateY = myIsland.getHeight()/600;
 		int[] gridTopLeft = coorToGrid(xCoor, yCoor );
-		int[] gridBottomRight = coorToGrid(xCoor + width*myIsland.getWidth(), yCoor + height*myIsland.getHeight());
+		int[] gridBottomRight = coorToGrid(xCoor + width*rateX, yCoor + height*rateY);
 		if(gridTopLeft[0] < 0 || gridBottomRight[0] > myIsland.getElements().length || 
 			gridTopLeft[1] < 0 || gridBottomRight[1] > myIsland.getElements()[0].length) {
 			return false;
