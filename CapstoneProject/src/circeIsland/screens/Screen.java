@@ -14,7 +14,8 @@ public class Screen{
 	public final int HEIGHT;
 	public final int WIDTH;
 	protected DrawingSurface surface;
-	private int drawCount, days, hours;
+	private int days, hours;
+	private double drawCount;
 	
 	//CONSTRUCTOR
 	/**
@@ -38,11 +39,11 @@ public class Screen{
 	 * Draws the screen to the provided DrawingSurface
 	 */
 	public void draw() {
-		drawCount++;
-		if(drawCount == 75) {
+		drawCount += 1/surface.frameRate;
+		if(drawCount >= 0.5) {
 			drawCount = 0;
 			hours ++;
-			System.out.println("HOUR UP : " + hours);
+			System.out.println("HOUR UP : " + hours + " " + surface.frameRate);
 		}
 		if(hours == 24) {
 			drawCount = 0;
