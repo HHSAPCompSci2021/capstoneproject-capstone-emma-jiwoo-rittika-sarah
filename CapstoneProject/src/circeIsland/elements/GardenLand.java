@@ -37,7 +37,7 @@ public class GardenLand extends Element{
 		this.type = type;
 		lifeState = BUD;
 		hydrationLvl = 5;
-		startDay = getIsland().getDays();
+		startDay = getIsland().getSurface().getDays();
 	}
 	
 	public void water() {
@@ -46,7 +46,7 @@ public class GardenLand extends Element{
 	}
 	
 	public void grow() {
-		int daysPassed = getIsland().getDays()-startDay;
+		int daysPassed = getIsland().getSurface().getDays()-startDay;
 		if (hydrationLvl > 2) {
 			if (lifeState == BUD && daysPassed == 2)
 				lifeState = SPROUT;
@@ -73,9 +73,9 @@ public class GardenLand extends Element{
 	}
 	
 	public void act() { 
-		if (currentDay != getIsland().getDays() && isAlive()) {
+		if (currentDay != getIsland().getSurface().getDays() && isAlive()) {
 			hydrationLvl --;
-			currentDay = getIsland().getDays();
+			currentDay = getIsland().getSurface().getDays();
 		}
 		if (hydrationLvl <=0 && isAlive())
 			lifeState = DEAD;

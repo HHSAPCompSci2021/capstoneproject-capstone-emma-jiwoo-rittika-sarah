@@ -33,8 +33,8 @@ public class DrawingSurface extends PApplet {
 	private PFont font;
 	
 	public float ratioX, ratioY;
-	public int drawCounter;
-	public int time;
+	public int drawCount;
+	public int days, hours;
 	
 	
 	/**
@@ -74,7 +74,6 @@ public class DrawingSurface extends PApplet {
 		circe = new Circe(cImage, 300, 300);
 		iImage = loadImage("Files/IslandImg.png");
 		island = new Island(this, iImage, circe, 10, 5);
-		island.setImages();
 		workshop.add(circe);
 		currentScreen = island;
 	}
@@ -83,7 +82,21 @@ public class DrawingSurface extends PApplet {
 	 * Draws the current screen to the PApplet
 	 */
 	public void draw() { 
-		drawCounter++;
+		drawCount++;
+		
+		//drawCount += 1/frameRate;
+		if(drawCount >= 90) {
+			drawCount = 0;
+			hours ++;
+			System.out.println("HOUR UP : " + hours + " " + frameRate);
+		}
+		if(hours == 24) {
+			drawCount = 0;
+			hours = 0;
+			System.out.println("DAY UP");
+			days++;
+		}
+		
 		textFont(font);
 //		ratioX = (float)width/currentScreen.WIDTH;
 //		ratioY = (float)height/currentScreen.HEIGHT;
@@ -172,9 +185,16 @@ public class DrawingSurface extends PApplet {
 		return buttons;
 	}
 	
-	//useless
-	public void handleButtonEvents(GButton button, GEvent event) { /* code */ }
 	
+	
+	
+	public int getDays() {
+		return days;
+	}
+	
+	public int getHours() {
+		return hours;
+	}
 	
 }
 

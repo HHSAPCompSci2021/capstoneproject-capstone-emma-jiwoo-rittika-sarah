@@ -14,8 +14,8 @@ public class Screen{
 	public final int HEIGHT;
 	public final int WIDTH;
 	protected DrawingSurface surface;
-	private int days, hours;
-	private double drawCount;
+	//private int days, hours;
+	//private double drawCount;
 	
 	//CONSTRUCTOR
 	/**
@@ -27,9 +27,9 @@ public class Screen{
 		this.HEIGHT = height;
 		this.WIDTH = width;
 		this.surface = surface;
-		drawCount = 0;
-		days = 0;
-		hours = 0;
+		//drawCount = 0;
+		//days = 0;
+		//hours = 0;
 	}
 	
 	
@@ -39,18 +39,7 @@ public class Screen{
 	 * Draws the screen to the provided DrawingSurface
 	 */
 	public void draw() {
-		drawCount += 1/surface.frameRate;
-		if(drawCount >= 0.5) {
-			drawCount = 0;
-			hours ++;
-			System.out.println("HOUR UP : " + hours + " " + surface.frameRate);
-		}
-		if(hours == 24) {
-			drawCount = 0;
-			hours = 0;
-			System.out.println("DAY UP");
-			days++;
-		}
+		
 //		if(drawCount == 1800) {
 //			drawCount = 0;
 //			hours = 0;
@@ -84,9 +73,9 @@ public class Screen{
 		return WIDTH;
 	}
 	
-	public int getDays() {
-		return days;
-	}
+//	public int getDays() {
+//		return days;
+//	}
 
 
 	public void processMouseDrag(int mouseX, int mouseY) {

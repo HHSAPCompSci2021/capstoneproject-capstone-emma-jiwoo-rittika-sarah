@@ -71,7 +71,20 @@ public class Island extends Screen{
 		float cellWidth = (surface.width - borderX) / element[0].length;
 		float cellHeight = (surface.height - borderY) / element.length;
 		
+		
+		surface.push();
+		int days = surface.getDays();
+		int hours = surface.getHours();
 		surface.image(islandImage, 0, 0, surface.width, surface.height);
+		if(hours >= 18) {
+			surface.fill(5, hours * 10);
+			surface.rect(0, 0, surface.width, surface.height);
+		}
+		
+		surface.pop();
+		
+		
+		
 		
 		//drawing grid of elements
 		surface.strokeWeight(0);
@@ -128,18 +141,7 @@ public class Island extends Screen{
 			dropDone = false;
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-//		Nymph c1 = new Nymph(nymphImage, 450, 400);
-//		Nymph c2 = new Nymph(malImage, 300, 100);
-//		c1.putOnIsland(this);
-//		c2.putOnIsland(this);
+
 		for(Creature c : creatures) {
 			//c.act();
 			c.draw(surface);
@@ -147,12 +149,12 @@ public class Island extends Screen{
 		}
 		circe.draw(surface);
 		
-		checkNewVisitors();
+		//checkNewVisitors();
 		
 	}
 	
 	private void checkNewVisitors() {
-		int days = super.getDays();
+		int days = surface.getDays();
 		
 		if(days % 4 == 0 && days != 0) {
 			Nymph c = new Nymph(nymphImage, 760, 350);
@@ -203,8 +205,8 @@ public class Island extends Screen{
 			
 		}
 		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
-			//System.out.println("info");
-			list.dispose();
+			System.out.println("info");
+			//list.dispose();
 			surface.switchScreen(1);
 		}
 		else if(clickedElement != null && clickedElement instanceof Land){
@@ -312,6 +314,10 @@ public class Island extends Screen{
 		return element;
 	}
 	
+	public DrawingSurface getSurface() {
+		return surface;
+	}
+	
 	//have to change to not include water outside island
 	public boolean isValid(int rowLoc, int colLoc) {
         if(element[colLoc][rowLoc] == null)
@@ -382,27 +388,14 @@ public class Island extends Screen{
 	}
 	
 	private void fillElements(int hX, int hY) {
+		setImages();
 		circeHouse.putOnIsland(this);
 		circe.putOnIsland(this);
+		Nymph c1 = new Nymph(nymphImage, 450, 400);
+		Nymph c2 = new Nymph(malImage, 300, 100);
+		c1.putOnIsland(this);
+		c2.putOnIsland(this);
 		
-//		new GardenLand(this, 12, 7).putOnIsland(this, 12, 7);
-//		new GardenLand(this, 10, 8).putOnIsland(this, 10, 9);
-//		new GardenLand(this, 10, 7).putOnIsland(this, 10, 7);
-//		new GardenLand(this, 12, 8).putOnIsland(this, 12, 8);
-////		element[15][7] = new GardenLand(this, 3, 2);
-////		element[3][2] = new GardenLand(this, 2, 3);
-////		element[3][3] = new GardenLand(this, 3, 3);
-//		
-//		
-//		for(int i = 1; i<element.length - 1; i++) {
-//			for(int j = 1; j<element.length - 1; j++) {
-//				if(element[i][j] == null) {  // && i != cX && j!= cY) {
-//					Land l = new Land(this, i, j);
-//					element[i][j] = l;
-//					l.setIsInGrid(true);
-//				}
-//			}
-//		}
 		
 		//fill with land
 		element[0][8] = new Land(this, 0, 8);
