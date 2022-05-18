@@ -8,9 +8,9 @@ import processing.core.PImage;
  */
 public abstract class Visitor extends Creature{
 	
-	public static final int VISITOR_WIDTH = 60000;
-	public static final int VISITOR_HEIGHT = 81000;
-	// 75*135
+	public static final double VISITOR_WIDTH = 0.0468;
+	public static final double VISITOR_HEIGHT = 0.1125;
+			// 75*135
 	
 	public Visitor(PImage img, int x, int y) {
 		super(img, x, y, VISITOR_WIDTH, VISITOR_HEIGHT);

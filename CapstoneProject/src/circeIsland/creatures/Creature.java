@@ -24,19 +24,19 @@ public abstract class Creature extends Rectangle2D.Double{
 
 	// CONSTRUCTOR
 	
-	public Creature (int xCoor, int yCoor, int width, int height) {
+	public Creature (int xCoor, int yCoor, double width, double height) {
 		this(null, xCoor, yCoor, width, height, 10);
 	}
 	
-	public Creature (PImage img, int xCoor, int yCoor, int width, int height) {
+	public Creature (PImage img, int xCoor, int yCoor, double width, double height) {
 		this(img, xCoor, yCoor, width, height, 10);
 	}
 	
-	public Creature (int xCoor, int yCoor, int width, int height, int vel) {
+	public Creature (int xCoor, int yCoor, double width, double height, int vel) {
 		this(null, xCoor, yCoor,width, height, vel);
 	}
 	
-	public Creature (PImage img, int xCoor, int yCoor, int width, int height, int vel) {
+	public Creature (PImage img, int xCoor, int yCoor, double width, double height, int vel) {
 		super(xCoor,yCoor, width, height);
 		velocity = vel;
 		image = img;
@@ -134,7 +134,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	public void draw(PApplet g) {
 		if(isInGrid) {
 			if (image != null)
-				g.image(image,(float)x,(float)y,(float)width/myIsland.getWidth(),(float)height/myIsland.getHeight());
+				g.image(image,(float)x,(float)y,(float)width*myIsland.getWidth(),(float)height*myIsland.getHeight());
 			else {
 				g.fill(100);
 				g.rect((float)x,(float)y,(float)width,(float)height);
@@ -161,7 +161,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public boolean canStand(double xCoor, double yCoor) {
 		int[] gridTopLeft = coorToGrid(xCoor, yCoor );
-		int[] gridBottomRight = coorToGrid(xCoor + width/myIsland.getWidth(), yCoor + height/myIsland.getHeight());
+		int[] gridBottomRight = coorToGrid(xCoor + width*myIsland.getWidth(), yCoor + height*myIsland.getHeight());
 		if(gridTopLeft[0] < 0 || gridBottomRight[0] > myIsland.getElements().length || 
 			gridTopLeft[1] < 0 || gridBottomRight[1] > myIsland.getElements()[0].length) {
 			return false;

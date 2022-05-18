@@ -8,8 +8,8 @@ import processing.core.PImage;
  * @author Jiwoo Kim
  */
 public class Pig extends Creature{
-	public static final int PIG_WIDTH = 72000;
-	public static final int PIG_HEIGHT = 78000;
+	public static final double PIG_WIDTH = 0.056;
+	public static final double PIG_HEIGHT = 0.108;
 	// 90*130
 
 	public Pig(int x, int y) {
