@@ -62,19 +62,17 @@ public class Circe extends Creature{
 		}
 	}
 	
-	public boolean harvest() {
-		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
-		if(e instanceof GardenLand) {
-			if(((GardenLand) e).isMature() && nextEmptySpace() != -1)
-				addOnInventory(new Holdable(Integer.parseInt(((GardenLand) e).getType())));
-				((GardenLand) e).harvest();
+	public boolean harvest(GardenLand g) {
+		if(g.isMature() && nextEmptySpace() != -1) {
+				addOnInventory(new Holdable(Integer.parseInt((g).getType())));
+				g.harvest();
 				return true;
 		}
 		return false;
 	}
 	
 	public void turnPig(MaliciousVisitor visitor) {
-		Pig pig = new Pig((int)visitor.getX(), (int)visitor.getY());
+		Pig pig = new Pig(super.getIsland().getImage("pig"),(int)visitor.getX(), (int)visitor.getY());
 		pig.putOnIsland(visitor.getIsland());
 		visitor.removeFromIsland(visitor.getIsland());
 	}
@@ -112,7 +110,6 @@ public class Circe extends Creature{
 		}
 		return false;
 	}
-	
 	
 	public Holdable[] getInventory() {
 		return holdings;
