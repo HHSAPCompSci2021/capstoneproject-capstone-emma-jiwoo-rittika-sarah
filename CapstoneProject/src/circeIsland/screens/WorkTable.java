@@ -90,7 +90,7 @@ public class WorkTable extends Screen{
 		circe.setInventory(1, new Holdable(3));
 		circe.setInventory(3, new Holdable(10));
 		circe.setInventory(4, new Holdable(12));
-		circe.setInventory(5, new Holdable(4));
+		circe.setInventory(5, new Holdable(11));
 
 	}
 	
@@ -388,7 +388,6 @@ public class WorkTable extends Screen{
 
 
 	public void processMouseRelease(int mouseX, int mouseY) {
-		System.out.println(curHoldable.getName());
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
 		if (click.intersects(cauldron))
 			cauldronItems.add(curHoldable);
