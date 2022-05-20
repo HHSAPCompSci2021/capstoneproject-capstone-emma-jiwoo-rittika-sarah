@@ -74,14 +74,9 @@ public class Circe extends Creature{
 	}
 	
 	public void turnPig(MaliciousVisitor visitor) {
-		int diffX = Math.abs(visitor.getXGrid() - this.getXGrid());
-		int diffY =Math.abs(visitor.getYGrid() - this.getYGrid());
-		if(diffX < 3 && diffY < 3) {
-			Pig pig = new Pig((int)visitor.getX(), (int)visitor.getY());
-			pig.putOnIsland(visitor.getIsland());
-			visitor.removeFromIsland(visitor.getIsland());
-
-		}
+		Pig pig = new Pig((int)visitor.getX(), (int)visitor.getY());
+		pig.putOnIsland(visitor.getIsland());
+		visitor.removeFromIsland(visitor.getIsland());
 	}
 	
 	public void draw(PApplet g) {
