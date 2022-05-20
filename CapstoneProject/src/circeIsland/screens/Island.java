@@ -45,8 +45,11 @@ public class Island extends Screen{
 	public Island(DrawingSurface surface, PImage islandImage, Circe c, int houseX, int houseY) {
 		super(800,600, surface);
 		this.islandImage = islandImage;
-		circeHouse = new House(this, houseImage, houseX, houseY, "circe");
+		
 		element = new Element[15][15];
+		
+		circeHouse = new House(this, null, houseX, houseY, "circe");
+		
 		circe = c;
 		creatures = new ArrayList<Creature>();
 		infoButton = new Rectangle(surface.width-80, 20, surface.width / element.length -10, surface.height /element[0].length - 10);
@@ -549,8 +552,18 @@ public class Island extends Screen{
 	private void setupIsland(int hX, int hY) {
 		setImages(); // creates all the required images
 		
-		circeHouse.setImage(houseImage);
-		circeHouse.putOnIsland(this);
+		//circeHouse.setImage(houseImage);
+		
+		
+		System.out.println("1");
+		for(int i = 0; i<element.length; i++) {
+			for(int j = 0; j<element[0].length; j++) {
+				if(element[i][j] instanceof House) {
+					System.out.println("SUCCESS " + i + " " + j);
+				}
+			}
+		}
+		
 		
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 400);
@@ -568,13 +581,7 @@ public class Island extends Screen{
 		//circe.getInventory()[1] = new Holdable(Holdable.BREAD);
 		
 		
-		//fill with water
-		for(int i = 7; i<=8; i++) {
-			for(int j = 7; j<= 10; j++) {
-				element[j][i] = new Pond(this, j, i);
-				element[j][i].setIsInGrid(true);
-			}
-		}
+		
 		
 //		element[8][7] = new Pond(this, 0, 8);
 //		element[0][8].setIsInGrid(true);
@@ -670,6 +677,30 @@ public class Island extends Screen{
 		element[13][7].setIsInGrid(true);
 		element[13][8] = new Land(this, 13, 8);
 		element[13][8].setIsInGrid(true);
+		
+		
+		
+		
+		//fill with water
+		for(int i = 7; i<=8; i++) {
+			for(int j = 8; j<= 11; j++) {
+				element[i][j] = new Pond(this, i, j);
+				element[i][j].setIsInGrid(true);
+			}
+		}
+		
+		
+		circeHouse.putOnIsland(this);
+		System.out.println("2");
+		for(int i = 0; i<element.length; i++) {
+			for(int j = 0; j<element[0].length; j++) {
+				if(element[i][j] instanceof House) {
+					System.out.println("SUCCESS " + i + " " + j);
+				}
+			}
+		}
+		
+		
 	}
 	
 	/**
