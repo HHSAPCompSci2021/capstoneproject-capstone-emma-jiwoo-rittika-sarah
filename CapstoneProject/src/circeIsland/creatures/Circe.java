@@ -1,6 +1,7 @@
 package circeIsland.creatures;
 
 import circeIsland.elements.*;
+import circeIsland.main.DrawingSurface;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -78,35 +79,35 @@ public class Circe extends Creature{
 		visitor.removeFromIsland(visitor.getIsland());
 	}
 	
-	public void draw(PApplet g) {
-		g.push();
+	public void draw(DrawingSurface g) {
 		super.draw(g);
+		g.push();
 		g.fill(255);
 		
 		float screenWidth = super.getIsland().WIDTH;
 		float screenHeight = super.getIsland().HEIGHT;
-		float cell = screenHeight/16;
-		float cellStartY =  (screenHeight - (holdings.length * cell))/2;
+		float cell = screenWidth/20;
+		float cellStartX =  (screenWidth - (holdings.length * cell))*9/10;
 		g.strokeWeight(7);
 		g.stroke(110,110,110);
 		for(int i = 0; i<holdings.length; i++) {
-			g.rect(screenWidth-cell-50,cellStartY + cell*i, cell, cell);
-//			if(holdings[i] != null)
-//				holdings[i].draw(g, screenWidth-cell-50,cellStartY + cell*i);
+			g.rect(cellStartX + cell*i,screenHeight-cell-60, cell, cell);
+			if(holdings[i] != null)
+				holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell-60);
 		}
 		g.stroke(255,205,0);
-		g.rect(screenWidth-cell-50,cellStartY + cell*currentHold, cell, cell);
+		g.rect(cellStartX + cell*currentHold, screenHeight-cell-60,cell, cell);
 		g.pop();
 	}
 	
 	public int getInventoryByCoor (int x, int y) {
 		float screenWidth = super.getIsland().WIDTH;
 		float screenHeight = super.getIsland().HEIGHT;
-		float cell = screenHeight/20;
-		float cellStartY =  (screenHeight - (holdings.length * cell))/2;
-		if(screenWidth-cell-50 < x && x < screenWidth-50 &&
-				cellStartY < y && cellStartY + holdings.length * cell > y) {
-			return (int)((y-cellStartY)/cell);
+		float cell = screenWidth/20;
+		float cellStartX =  (screenWidth - (holdings.length * cell))*9/10;
+		if(screenHeight-cell-60 < y && y < screenHeight-60 &&
+				cellStartX < x && cellStartX + holdings.length * cell > x) {
+			return (int)((x-cellStartX)/cell);
 		}
 		return -1;
 	}

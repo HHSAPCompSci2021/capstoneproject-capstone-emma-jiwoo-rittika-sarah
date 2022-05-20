@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import processing.core.PApplet;
 import processing.core.PImage;
 import circeIsland.elements.Land;
+import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
 
@@ -133,7 +134,7 @@ public abstract class Creature extends Rectangle2D.Double{
 		return coor;	
 	}
 	
-	public void draw(PApplet g) {
+	public void draw(DrawingSurface g) {
 		if(isInGrid) {
 			if (image != null) {
 				double rateX = myIsland.getWidth()/800;
@@ -155,7 +156,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public void act(int dir) {
 		if(isInGrid) {
-			if(dir == -1 && count%10 == 0) 
+			if(dir == -1 && (count%10 == 0 || count%11 == 0 || count% 9 == 0)) 
 				dir = (int)(Math.random() * 30);
 			
 			
