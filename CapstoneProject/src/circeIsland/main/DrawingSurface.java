@@ -95,6 +95,9 @@ public class DrawingSurface extends PApplet {
 			hours = 0;
 			System.out.println("DAY UP" + days + " " + frameRate);
 			days++;
+			if(days % 5 == 0) {
+				island.addNymph();
+			}
 		}
 		
 		textFont(font);

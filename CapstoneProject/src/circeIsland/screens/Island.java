@@ -23,8 +23,8 @@ public class Island extends Screen{
 	private ArrayList<Creature> creatures;
 	private Circe circe;
 	private House circeHouse;
-	private Nymph newVisitor;
-	private MaliciousVisitor newMalVisitor;
+//	private Nymph newVisitor;
+//	private MaliciousVisitor newMalVisitor;
 	
 	private Rectangle infoButton, warningBox, inventoryRect;
 	
@@ -185,40 +185,17 @@ public class Island extends Screen{
 		
 	}
 	
-	private void drawInventory() {
-		surface.push();
-		surface.fill(171, 237, 234);
-		inventoryRect.setBounds(surface.width - 300, surface.height - 50, 96, 40);
-		surface.rect(inventoryRect.x, inventoryRect.y, inventoryRect.width, inventoryRect.height);
-		
-		float cellWidth = (float)inventoryRect.getWidth() / 2;
-		float cellHeight = inventoryRect.height;
-		
-		for(int i = 0; i<circe.getInventory().length; i++) {
-			surface.rect(inventoryRect.x + (i*cellWidth), inventoryRect.y, cellWidth,  cellHeight);
-			float cellCenterX = (float)(inventoryRect.x + (i*cellWidth) + (cellWidth/2.5));
-			float cellCenterY = (float)(inventoryRect.y + cellHeight/2.5);
-			
-			if (circe.getInventory()[i] != null)
-				circe.getInventory()[i].draw(surface, cellCenterX, cellCenterY, cellWidth, cellHeight);
-		}
-		
-		surface.pop();
+
+	
+	
+	public void addNymph() {
+		Nymph newVisitor = new Nymph(nymphImage, 200, 200);
+		newVisitor.putOnIsland(this);
 	}
 	
-	
-	private void checkNewVisitors() {
-		int days = surface.getDays();
-		
-		if(days % 4 == 0 && days != 0) {
-			newVisitor = new Nymph(nymphImage, 200, 200);
-			newVisitor.putOnIsland(this);
-		}
-		else if(days % 7 == 0 && days != 0) {
-			newMalVisitor = new MaliciousVisitor(malImage, 200, 200);
-			newMalVisitor.putOnIsland(this);
-		}
-		
+	public void addMaliciousVisitor() {
+		MaliciousVisitor newVisitor = new MaliciousVisitor(malImage, 200, 200);
+		newVisitor.putOnIsland(this);
 	}
 	
 	
@@ -662,7 +639,7 @@ public class Island extends Screen{
 		circeHouse.setImage(cHImage);
 		
 		circe.putOnIsland(this);
-		Nymph c1 = new Nymph(nymphImage, 450, 400);
+		Nymph c1 = new Nymph(nymphImage, 450, 150);
 		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 300, 100);
 		Pig c3 = new Pig(pigImage, 200, 250);
 		c1.putOnIsland(this);
