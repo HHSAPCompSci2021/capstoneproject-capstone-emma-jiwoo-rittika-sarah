@@ -32,7 +32,7 @@ public class House extends Element{
 					float y = cellHeight*getYCoor();
 					x *= rateX;
 					y *= rateY;
-					surface.image(getImage(),(float)x + 6,(float)y + 9,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
+					surface.image(getImage(),(float)x + 6,(float)y + 9,(float)(2*cellWidth*rateX),(float)(2*cellHeight*rateY));
 				}
 			}
 //			surface.fill(191, 128, 111);

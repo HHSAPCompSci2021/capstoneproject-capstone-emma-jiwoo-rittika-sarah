@@ -43,8 +43,13 @@ public class GardenLand extends Element{
 	public String getType() {
 		return type;
 	}
-	
-	public void plant(String type) {
+		
+	public void plant(String type, PImage[] images) {
+		budImage = images[0];
+		sproutImage = images[1];
+		grownImage = images[2];
+		deadImage = images[3];
+		
 		this.type = type;
 		lifeState = BUD;
 		hydrationLvl = 5;
@@ -63,6 +68,8 @@ public class GardenLand extends Element{
 				lifeState = SPROUT;
 			else if (lifeState == SPROUT && daysPassed == 4)
 				lifeState = GROWN;
+			else if (lifeState == GROWN && daysPassed == 6)
+				lifeState = DEAD;
 		}
 	}
 	
@@ -77,14 +84,27 @@ public class GardenLand extends Element{
 		act();
 		surface.push();
 		if(getIsInGrid()) {
-			if (getImage() != null) {
+			PImage toBeUsed;
+			if (lifeState == UNPLANTED) {
+				toBeUsed = getImage();
+			if (lifeState == BUD)
+				toBeUsed = budImage;
+			if (lifeState == SPROUT)
+				toBeUsed = sproutImage;
+			if (lifeState == GROWN)
+				toBeUsed = grownImage;
+			if (lifeState == DEAD)
+				toBeUsed = deadImage;
+			
+			if (toBeUsed != null) {
 				double rateX = getIsland().getWidth()/800;
 				double rateY = getIsland().getHeight()/600;
 				float x = cellWidth*getXCoor();
 				float y = cellHeight*getYCoor();
 				x *= rateX;
 				y *= rateY;
-				surface.image(getImage(),(float)x + 6,(float)y + 9,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
+				surface.image(toBeUsed,(float)x + 6,(float)y + 9,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
+			}
 			}
 		}
 		

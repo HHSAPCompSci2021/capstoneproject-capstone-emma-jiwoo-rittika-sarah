@@ -1,6 +1,7 @@
 package circeIsland.elements;
 
 import circeIsland.main.DrawingSurface;
+import processing.core.PImage;
 
 /**
  * 
@@ -25,6 +26,8 @@ public class Holdable {
 	public static final int POTION = 12;
 	
 	public static final int PLACEHOLDER = 13;
+	
+	private PImage image;
 	
 
 	public Holdable(int type) {
@@ -65,12 +68,15 @@ public class Holdable {
 		return "";
 	}
 	
-	public void draw(DrawingSurface surface, float xCoor, float yCoor) {
+	public void draw(DrawingSurface surface, float xCoor, float yCoor, float cellWidth, float cellHeight) {
 		surface.push();
-		surface.fill(176, 54, 83);
-		surface.rect(10 + xCoor, 10 +yCoor, 10, 10);
-		surface.fill(0);
-		surface.text(getName(), 10 + xCoor, 10 + yCoor);
+		if (image != null) {
+			surface.image(image, xCoor,yCoor,cellWidth,cellHeight);
+		}
+//		surface.fill(176, 54, 83);
+//		surface.rect(10 + xCoor, 10 +yCoor, 10, 10);
+//		surface.fill(0);
+//		surface.text(getName(), 10 + xCoor, 10 + yCoor);
 		surface.pop();
 	}
 	
