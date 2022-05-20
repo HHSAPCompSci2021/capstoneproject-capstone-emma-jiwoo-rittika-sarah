@@ -24,6 +24,8 @@ public class Holdable {
 	public static final int BREAD = 11;
 	public static final int POTION = 12;
 	
+	public static final int PLACEHOLDER = 13;
+	
 
 	public Holdable(int type) {
 		this.type = type;
