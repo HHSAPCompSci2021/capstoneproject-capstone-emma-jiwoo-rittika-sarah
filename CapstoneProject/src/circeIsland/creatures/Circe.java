@@ -95,6 +95,7 @@ public class Circe extends Creature{
 			if(holdings[i] != null)
 				holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell-60, cell/2, cell/2);
 		}
+		g.noFill();
 		g.stroke(255,205,0);
 		g.rect(cellStartX + cell*currentHold, screenHeight-cell-60,cell, cell);
 		g.pop();
@@ -106,7 +107,7 @@ public class Circe extends Creature{
 		float cell = screenWidth/20;
 		float cellStartX =  (screenWidth - (holdings.length * cell))*9/10;
 		if(screenHeight-cell-60 < y && y < screenHeight-60 &&
-				cellStartX < x && cellStartX + holdings.length * cell > x) {
+			cellStartX < x && cellStartX + holdings.length * cell > x) {
 			return (int)((x-cellStartX)/cell);
 		}
 		return -1;
