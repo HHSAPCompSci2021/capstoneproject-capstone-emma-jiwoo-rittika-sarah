@@ -79,6 +79,7 @@ public class Circe extends Creature{
 	}
 	
 	public void draw(PApplet g) {
+		g.push();
 		super.draw(g);
 		g.fill(255);
 		
@@ -95,6 +96,7 @@ public class Circe extends Creature{
 		}
 		g.stroke(255,205,0);
 		g.rect(screenWidth-cell-50,cellStartY + cell*currentHold, cell, cell);
+		g.pop();
 	}
 	
 	public int getInventoryByCoor (int x, int y) {
