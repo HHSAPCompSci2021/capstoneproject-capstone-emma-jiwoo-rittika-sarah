@@ -26,7 +26,7 @@ public class Island extends Screen{
 	private Rectangle infoButton, warningBox;
 	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone, showWarning;
 	private int[] selectedSpot;
-	private PImage islandImage, malImage, nymphImage, pigImg;
+	private PImage islandImage, malImage, nymphImage, pigImage;
 	GDropList list;
 	
 	/**
@@ -54,7 +54,7 @@ public class Island extends Screen{
 		mouseClickEnabled = true;
 		selectedSpot = new int[2];
 		
-		fillElements(houseX, houseY);
+		setupIsland(houseX, houseY);
 	}
 	
 	
@@ -224,6 +224,7 @@ public class Island extends Screen{
 	}
 	
 	
+	
 	public void processMouseClick(int mouseX, int mouseY) {
 		//System.out.println("Processing click");
 		if(!mouseClickEnabled) {
@@ -250,8 +251,9 @@ public class Island extends Screen{
 			System.out.println("IT IS GARDEN");
 			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);
 			if(e.isAlive()) {
+				System.out.println(e.getLifeState());
 				System.out.println("HERE To HARVEST");
-				circe.harvest();
+				circe.harvest(e);
 			}
 			else {
 				System.out.println("let's add a plant");
@@ -289,7 +291,13 @@ public class Island extends Screen{
 	 * @param key the key pressed
 	 */
 	public void processKey(char key) {
-		
+		for(int i = 0; i<6; i++) {
+			if(circe.getInventory()[i] == null) {
+				break;
+			}
+			System.out.println(circe.getInventory()[i].getName());
+		}
+		System.out.println();
 		if(key == 'w' || key == 'W') {
 			circe.moveY(Creature.UP);
 		}
@@ -375,35 +383,67 @@ public class Island extends Screen{
 		return element[y][x];
 	}
 	
+	
+	/**
+	 * Puts the given element into the given location in the 2D array of elements
+	 * @param e the element to be places
+	 * @param x the x-coordinate of the element in the array
+	 * @param y the y-coordinate of the element in the array
+	 */
 	public void setElement(Element e, int x, int y) {
 		element[y][x] = e;
 	}
 	
+	/**
+	 * Adds the given Creature to the ArrayList of creatures on this Island
+	 * @param c the Creature to be added
+	 */
 	public void addCreature(Creature c) {
 		creatures.add(c);
 	}
 	
+	
+	/**
+	 * Removes the given creature from the ArrayList of Creatures on this Island
+	 * @param c the Creature to be removed
+	 */
 	public void removeCreature(Creature c) {
 		for(int i = 0; i<creatures.size(); i++) {
 			if(creatures.get(i).equals(c)) {
 				creatures.remove(i);
-				break;
+				return;
 			}
 		}
 	}
 	
+	/**
+	 * Returns this Island's circe
+	 * @return circe
+	 */
 	public Circe getCirce() {
 		return circe;
 	}
 	
+	/**
+	 * Returns Circe's House on this Island
+	 * @return circe's house
+	 */
 	public House getCirceHouse() {
 		return circeHouse;
 	}
 	
+	/**
+	 * Returns the ArrayList of Elements representing all the locations on this Island
+	 * @return the ArrayList of Elements
+	 */
 	public Element[][] getElements(){
 		return element;
 	}
 	
+	/**
+	 * Returns the DrawingSurface on which this Island is displayed
+	 * @return
+	 */
 	public DrawingSurface getSurface() {
 		return surface;
 	}
@@ -416,6 +456,11 @@ public class Island extends Screen{
     }
 	
 	
+	/**
+	 * Changes the element at the given location to the Element type chosen from the drop down list
+	 * @param list the list of options in the drop-down menu
+	 * @param event
+	 */
 	public void handleElementChange(GDropList list, GEvent event) {
 		String text = list.getSelectedText();
 		if(text.equals("Choose"))
@@ -445,7 +490,11 @@ public class Island extends Screen{
 		dropDone = true;
 	}
 	
-	
+	/**
+	 * Changes the growing plant at the garden land selected by the user to the plant option selected by the user
+	 * @param list the list of options in the drop-down menu
+	 * @param event
+	 */
 	public void handlePlantChange(GDropList list, GEvent event) {
 		System.out.println("plant change handle");
 		//mouseClickEnabled = false;
@@ -475,19 +524,19 @@ public class Island extends Screen{
 	}
 	
 	
-	public void setImages() {
+	private void setImages() {
 		nymphImage = surface.loadImage("Files/NymphFrontStand.png");
 		malImage = surface.loadImage("Files/MaliciousFrontStand.png");
-		pigImg = surface.loadImage("Files/PigFrontStand.png");
+		pigImage = surface.loadImage("Files/PigFrontStand.png");
 	}
 	
-	private void fillElements(int hX, int hY) {
+	private void setupIsland(int hX, int hY) {
 		setImages(); // creates all the required images
 		circeHouse.putOnIsland(this);
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 400);
 		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 300, 100);
-		Pig c3 = new Pig(pigImg, 200, 250);
+		Pig c3 = new Pig(pigImage, 200, 250);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
 		c3.putOnIsland(this);
@@ -495,8 +544,9 @@ public class Island extends Screen{
 		
 		circe.addOnInventory(new Holdable(Holdable.BREAD));
 		circe.addOnInventory(new Holdable(Holdable.POTION));
-		circe.addOnInventory(new Holdable(Holdable.ANITHOS_SEED));
-		circe.addOnInventory(new Holdable(Holdable.WATER));
+		//circe.addOnInventory(new Holdable(Holdable.ANITHOS_SEED));
+		//circe.addOnInventory(new Holdable(Holdable.WATER));
+		//circe.getInventory()[1] = new Holdable(Holdable.BREAD);
 		
 		
 		//fill with water
@@ -603,5 +653,22 @@ public class Island extends Screen{
 		element[13][8].setIsInGrid(true);
 	}
 	
-	
+	/**
+	 * Returns the PImage of the given type of element or creature.
+	 * The types include: "pig"; "nymph"; "malicious visitor"
+	 * @param type the type of element/creature whose image is to be returned
+	 * @return the PImage of the given type
+	 * @pre types must be one of the specified types above
+	 */
+	public PImage getImage(String type) {
+		switch(type) {
+		case "pig":
+			return pigImage;
+		case "nymph":
+			return nymphImage;
+		case "malicious visitor":
+			return malImage;
+		}
+		return null;
+	}
 }
