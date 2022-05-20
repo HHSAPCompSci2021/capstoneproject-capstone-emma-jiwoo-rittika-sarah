@@ -152,6 +152,10 @@ public class Circe extends Creature{
 		return temp;
 	}
 	
+	public int getCurrentHold() {
+		return currentHold;
+	}
+	
 	public int inventoryContains(int type) {
         for(int i = 0; i<holdings.length; i++) {
             if(holdings[i] != null && holdings[i].getType() == type) {
