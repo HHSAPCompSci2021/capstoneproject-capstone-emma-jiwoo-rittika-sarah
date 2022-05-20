@@ -122,5 +122,29 @@ public class Circe extends Creature{
 		return holdings;
 	}
 	
+	public void removeFromInventory(int i) {
+		holdings[i] = null;
+	}
 	
+	public void rearrangeInventory(int i, int j) {
+		Holdable temp = holdings[i];
+		holdings[i] = holdings[j];
+		holdings[j] = temp;
+	}
+	
+	public Holdable setInventory(int i, Holdable h) {
+		Holdable temp = holdings[i];
+		holdings[i] = h;
+		return temp;
+	}
+	
+	public int inventoryContains(int type) {
+        for(int i = 0; i<holdings.length; i++) {
+            if(holdings[i] != null && holdings[i].getType() == type) {
+                return i;
+            }
+        }
+        return -1;
+
+    }
 }
