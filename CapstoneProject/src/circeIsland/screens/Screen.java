@@ -54,11 +54,11 @@ public class Screen{
 	}
 	
 	public int getHeight() {
-		return HEIGHT;
+		return HEIGHT;//surface.width;
 	}
 	
 	public int getWidth() {
-		return WIDTH;
+		return WIDTH;//surface.height;
 	}
 	
 //	public int getDays() {
