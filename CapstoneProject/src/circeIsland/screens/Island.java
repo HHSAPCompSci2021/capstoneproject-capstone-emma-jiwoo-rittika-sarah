@@ -44,7 +44,7 @@ public class Island extends Screen{
 	public Island(DrawingSurface surface, PImage islandImage, Circe c, int houseX, int houseY) {
 		super(800,600, surface);
 		this.islandImage = islandImage;
-		
+		circeHouse = new House(this, houseImage, houseX, houseY, "circe");
 		element = new Element[15][15];
 		circe = c;
 		creatures = new ArrayList<Creature>();
@@ -547,7 +547,8 @@ public class Island extends Screen{
 	
 	private void setupIsland(int hX, int hY) {
 		setImages(); // creates all the required images
-		circeHouse = new House(this, houseImage, hX, hY, "circe");
+		
+		circeHouse.setImage(houseImage);
 		circeHouse.putOnIsland(this);
 		
 		circe.putOnIsland(this);
