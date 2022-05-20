@@ -48,6 +48,13 @@ public class GardenLand extends Element{
 	public int getType() {
 		return type;
 	}
+	
+	public void plant(int type) {
+		this.type = type;
+		lifeState = BUD;
+		hydrationLvl = 5;
+		startDay = getIsland().getSurface().getDays();
+	}
 		
 	public void plant(int type, PImage[] images) {
 		budImage = images[0];
