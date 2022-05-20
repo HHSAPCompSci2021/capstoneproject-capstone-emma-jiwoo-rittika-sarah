@@ -52,8 +52,10 @@ public abstract class Element {
 		island = null;
 	}
 	
+
 	public abstract void draw(DrawingSurface surface, float cellWidth, float cellHeight);
-	
+
+
 	public boolean intersects(Creature c, float cellWidth, float cellHeight) {
 		Rectangle r = new Rectangle((int)(10 + (getXCoor() * cellWidth)), (int)(10 + (getYCoor()*cellHeight)), (int)cellWidth, (int)cellHeight);
 		if (c.intersects(r))

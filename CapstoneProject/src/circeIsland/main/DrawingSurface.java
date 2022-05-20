@@ -85,7 +85,7 @@ public class DrawingSurface extends PApplet {
 		drawCount++;
 		
 		//drawCount += 1/frameRate;
-		if(drawCount >= 10) {
+		if(drawCount >=90) {
 			drawCount = 0;
 			hours ++;
 	//		System.out.println("HOUR UP : " + hours + " " + frameRate);
