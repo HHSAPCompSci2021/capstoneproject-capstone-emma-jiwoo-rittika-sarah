@@ -389,7 +389,7 @@ public class WorkTable extends Screen{
 
 	public void processMouseRelease(int mouseX, int mouseY) {
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
-		if (click.intersects(recipeButton) || click.intersects(cookButton)){}
+		if (curHoldable == null){}
 		else if (click.intersects(cauldron))
 			cauldronItems.add(curHoldable);
 		
@@ -402,7 +402,7 @@ public class WorkTable extends Screen{
 
 		}
 		
-		else if (click.intersects(holdingsButton) && isEmptyHoldingsSpot(mouseX, mouseY)) {
+		else if (click.intersects(holdingsButton) && toElementCir(mouseX, mouseY) > -1) {
 			circe.addOnInventory(curHoldable);
 		}
 		else {
@@ -442,7 +442,7 @@ public class WorkTable extends Screen{
 		return null;
 	}
 	
-	private boolean isEmptyHoldingsSpot(int mouseX, int mouseY) {
+	private int toElementCir(int mouseX, int mouseY) {
 		Holdable[][]inventory = new Holdable[2][3];
 		int count = 0;
 		for (int i = 0; i<inventory.length; i++) {
@@ -459,16 +459,14 @@ public class WorkTable extends Screen{
 			for (int j = 0; j<3; j++) {
 				if (holdingsButton.y+cellHeight*i <= mouseY && mouseY <= holdingsButton.y + cellHeight*i +cellHeight)
 					if (holdingsButton.x+cellWidth*j <= mouseX && mouseX <= holdingsButton.x+cellWidth*j + cellWidth) {
-//						System.out.println(inventory[i][j].getName());
-						if (inventory[i][j] != null)
-							circe.setInventory(i*3+j, null);
-	//					return inventory[i][j];
+						if (inventory[i][j] == null)
+							return i*3+j;
 					}
 			}
 		}
 		
 		
-		return false;
+		return -1;
 	}
 
 
