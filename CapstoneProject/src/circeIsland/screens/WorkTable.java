@@ -389,7 +389,8 @@ public class WorkTable extends Screen{
 
 	public void processMouseRelease(int mouseX, int mouseY) {
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
-		if (click.intersects(cauldron))
+		if (click.intersects(recipeButton) || click.intersects(cookButton)){}
+		else if (click.intersects(cauldron))
 			cauldronItems.add(curHoldable);
 		
 		//check if the current holding type is the same as the inventory type. if so, add to that
@@ -442,6 +443,31 @@ public class WorkTable extends Screen{
 	}
 	
 	private boolean isEmptyHoldingsSpot(int mouseX, int mouseY) {
+		Holdable[][]inventory = new Holdable[2][3];
+		int count = 0;
+		for (int i = 0; i<inventory.length; i++) {
+			for (int j = 0; j<inventory[0].length; j++) {
+				inventory[i][j] = circe.getInventory()[count];
+				count++;
+			}
+		}
+		
+		float cellWidth = holdingsButton.width / inventory[0].length;
+		float cellHeight = holdingsButton.height / inventory.length;
+		
+		for (int i = 0; i<2; i++) {
+			for (int j = 0; j<3; j++) {
+				if (holdingsButton.y+cellHeight*i <= mouseY && mouseY <= holdingsButton.y + cellHeight*i +cellHeight)
+					if (holdingsButton.x+cellWidth*j <= mouseX && mouseX <= holdingsButton.x+cellWidth*j + cellWidth) {
+//						System.out.println(inventory[i][j].getName());
+						if (inventory[i][j] != null)
+							circe.setInventory(i*3+j, null);
+	//					return inventory[i][j];
+					}
+			}
+		}
+		
+		
 		return false;
 	}
 
@@ -468,12 +494,14 @@ public class WorkTable extends Screen{
 	}
 	
 	private void brew() {
-		for (Holdable h: cauldronItems)
-	//		System.out.println(h.getName() + " ");
 		if (matchesRecipe()[0].getType() != 13) {
 			System.out.println("Success");
 			cauldronItems.clear();
 			brewedItem = new Holdable(matchesRecipe()[0].getType());
+		}
+		else {
+			for (Holdable h: cauldronItems)
+				addToStorage(h);
 		}
 		surface.text("BREWING",  100, 100);
 	}
