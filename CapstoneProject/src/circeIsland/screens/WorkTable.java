@@ -29,6 +29,7 @@ public class WorkTable extends Screen{
 	private Holdable curHoldable;
 	private float curHoldableX;
 	private float curHoldableY;
+	private int gainSpot; //1 is inventory, 2 is personal, 3 is cauldron creation
 	private Holdable brewedItem;
 	private boolean locked; //to check whether something is being held or not
 	Circe circe;
@@ -238,7 +239,8 @@ public class WorkTable extends Screen{
 	
 	
 	public void addToStorage(Holdable h) {
-	//	storage.get(h.getType()-1).remove(new Holdable(13));
+		if (storage.get(h.getType()-1).size() == 1)
+			storage.get(h.getType()-1).remove(0);
 		storage.get(h.getType()-1).add(new Holdable(h.getType()));
 	}
 	
@@ -318,12 +320,14 @@ public class WorkTable extends Screen{
 			curHoldable = toSpotInv(mouseX, mouseY);
 			curHoldableX = mouseX;
 			curHoldableY = mouseY;
+			gainSpot = 1;
 		}
 		if (click.intersects(holdingsButton)) {
 			locked = true;
 			curHoldable = toSpotCir(mouseX, mouseY);
 			curHoldableX = mouseX;
 			curHoldableY = mouseY;
+			gainSpot = 2;
 		}
 	}
 	
@@ -384,17 +388,28 @@ public class WorkTable extends Screen{
 
 
 	public void processMouseRelease(int mouseX, int mouseY) {
+		System.out.println(curHoldable.getName());
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
 		if (click.intersects(cauldron))
 			cauldronItems.add(curHoldable);
 		
-		if (click.intersects(inventoryButton)) {
-			Holdable h = toSpotInv(mouseX, mouseY);
-			addToStorage(h);
+		//check if the current holding type is the same as the inventory type. if so, add to that
+		//if intersecting with holdingsButton and empty space, move into that space
+		//otherwise, return to where it came from
+		
+		else if (click.intersects(inventoryButton) && toElementInv(mouseX, mouseY).getType() == curHoldable.getType()) { 
+			storage.get(curHoldable.getType()-1).add(curHoldable);
+
 		}
 		
-		if (click.intersects(holdingsButton)) {
-//			Holdable h = toElementCir(mouseX, mouseY);
+		else if (click.intersects(holdingsButton) && isEmptyHoldingsSpot(mouseX, mouseY)) {
+			circe.addOnInventory(curHoldable);
+		}
+		else {
+			if (gainSpot == 1)
+				addToStorage(curHoldable);
+			if (gainSpot == 2)
+				circe.addOnInventory(curHoldable);
 		}
 		
 		locked = false;
@@ -402,6 +417,35 @@ public class WorkTable extends Screen{
 		curHoldableX = 0;
 		curHoldableY = 0;
 	}
+
+	private Holdable toElementInv(int mouseX, int mouseY) {
+		int currentType = 1;
+		Holdable[][] inventory = new Holdable[6][2];
+		for (int i = 0; i<inventory.length; i++) {
+			for (int j = 0; j<inventory[0].length; j++) {
+				inventory[i][j] = new Holdable(currentType);
+				currentType ++;
+			}
+		}
+		
+		float cellWidth = inventoryButton.width / 2;
+		float cellHeight = inventoryButton.height / 6;
+		for (int i = 0; i<6; i++) {
+			for (int j = 0; j<2; j++) {
+				if (inventoryButton.y+cellHeight*i <= mouseY && mouseY <= inventoryButton.y + cellHeight*i +cellHeight)
+					if (inventoryButton.x+cellWidth*j <= mouseX && mouseX <= inventoryButton.x+cellWidth*j + cellWidth) {
+				//		System.out.println(inventory[i][j].getName());
+						return inventory[i][j];
+					}
+			}
+		}
+		return null;
+	}
+	
+	private boolean isEmptyHoldingsSpot(int mouseX, int mouseY) {
+		return false;
+	}
+
 
 	public void handleButtonClick(GButton b, GEvent event) {
 		String buttonName = b.getText();
