@@ -251,8 +251,9 @@ public class Island extends Screen{
 			System.out.println("IT IS GARDEN");
 			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);
 			if(e.isAlive()) {
+				System.out.println(e.getLifeState());
 				System.out.println("HERE To HARVEST");
-				circe.harvest();
+				circe.harvest(e);
 			}
 			else {
 				System.out.println("let's add a plant");
