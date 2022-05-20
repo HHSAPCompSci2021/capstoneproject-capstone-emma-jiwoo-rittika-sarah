@@ -23,10 +23,10 @@ public class Island extends Screen{
 	private ArrayList<Creature> creatures;
 	private Circe circe;
 	private House circeHouse;
-	private Rectangle infoButton;
-	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone;
+	private Rectangle infoButton, warningBox;
+	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone, showWarning;
 	private int[] selectedSpot;
-	private PImage islandImage, malImage, nymphImage;
+	private PImage islandImage, malImage, nymphImage, pigImg;
 	GDropList list;
 	
 	/**
@@ -47,7 +47,7 @@ public class Island extends Screen{
 		circeHouse = new House(this, houseX, houseX, "circe");
 		circe = c;
 		creatures = new ArrayList<Creature>();
-		infoButton = new Rectangle(super.WIDTH-80, 20, super.WIDTH / element.length -10, super.HEIGHT /element[0].length - 10);
+		infoButton = new Rectangle(surface.width-80, 20, surface.width / element.length -10, surface.height /element[0].length - 10);
 		
 		landElementSelected = false;
 		gardenElementSelected = false;
@@ -73,16 +73,21 @@ public class Island extends Screen{
 		
 		
 		surface.push();
-		int days = surface.getDays();
+		//int days = surface.getDays();
 		int hours = surface.getHours();
+		int factor = 1;
 		surface.image(islandImage, 0, 0, surface.width, surface.height);
-		if(hours >= 18) {
-			surface.fill(5, hours * 10);
+		if(hours >= 16 && hours <= 19) {
+			surface.fill(5, (hours - 7) * 10/factor);
 			surface.rect(0, 0, surface.width, surface.height);
+			factor++;
 		}
-		
+		if(hours > 19) {
+			surface.fill(5, (10 + factor)* 10);
+			surface.rect(0, 0, surface.width, surface.height);
+			factor--;
+		}
 		surface.pop();
-		
 		
 		
 		
@@ -128,6 +133,7 @@ public class Island extends Screen{
 			list.addEventHandler(this,  "handleElementChange");
 		}
 		if(gardenElementSelected) {
+			System.out.println("garden drop down");
 			gardenElementSelected = false;
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(4);
@@ -137,7 +143,8 @@ public class Island extends Screen{
 		}
 		if (dropDone) {
 			mouseClickEnabled = true;
-			list.dispose();
+			list.setVisible(false);
+			//list.dispose();
 			dropDone = false;
 		}
 		
@@ -146,10 +153,18 @@ public class Island extends Screen{
 			//c.act();
 			c.draw(surface);
 			//c.act();
+			//c.act();
 		}
 		circe.draw(surface);
 		
-		//checkNewVisitors();
+		//show any required warning every four days
+		if(surface.getDays() % 4 == 0) {
+			int numHouses = getNumHouses();
+			int numNymphs = getNumCreature('n');
+			if(numNymphs - numHouses >= 4)
+				drawWarningMessage(1);
+		}
+		
 		
 	}
 	
@@ -157,19 +172,56 @@ public class Island extends Screen{
 		int days = surface.getDays();
 		
 		if(days % 4 == 0 && days != 0) {
-			Nymph c = new Nymph(nymphImage, 760, 350);
+			Nymph c = new Nymph(nymphImage, 200, 200);
 			c.putOnIsland(this);
 		}
 		else if(days % 7 == 0 && days != 0) {
-			MaliciousVisitor c = new MaliciousVisitor(malImage, 760, 350);
+			MaliciousVisitor c = new MaliciousVisitor(malImage, 200, 200);
 			c.putOnIsland(this);
 		}
 		
 	}
 	
 	
+	private int getNumHouses(){
+		int count = 0;
+		for(Element[] arr : element) {
+			for(Element e : arr) {
+				if(e instanceof House && e.getXCoor() != circeHouse.getXCoor() && e.getYCoor() != circeHouse.getYCoor())
+					count ++;
+			}
+		}
+		//System.out.println(count);
+		return count;
+	}
 	
 	
+	private int getNumCreature(char code) {
+		int count = 0;
+		for(Creature c : creatures) {
+			if(code == 'n') {
+				if(c instanceof Nymph)
+					count++;
+			}
+			else {
+				if(c instanceof MaliciousVisitor)
+					count++;
+			}
+		}
+		return count;
+	}
+	
+	
+	
+	private void drawWarningMessage(int code) {
+		surface.rect(60,  50,  surface.width - 120,  surface.height - 120);
+		String msg;
+		
+		switch(code) {
+		case 1: //too many nymphs
+		}
+		
+	}
 	
 	
 	public void processMouseClick(int mouseX, int mouseY) {
@@ -186,23 +238,32 @@ public class Island extends Screen{
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 
-		//System.out.println("IMPORTANT : " + clickedElement.toString());
+		System.out.println("IMPORTANT : " + clickedElement.toString());
 		
-//		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
-//			System.out.println("at circe's");
-//			surface.switchScreen(0);
-//		}
-		if(element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
+		 
+		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
+			System.out.println("at circe's");
+			surface.switchScreen(0);
+		}
+		
+		else if(element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand){//clickedElement != null && clickedElement instanceof GardenLand){//element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
+			System.out.println("IT IS GARDEN");
 			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);
 			if(e.isAlive()) {
+				System.out.println("HERE To HARVEST");
 				circe.harvest();
 			}
 			else {
+				System.out.println("let's add a plant");
 				gardenElementSelected = true;
 				selectedSpot[0] = clickInGrid[0];
 				selectedSpot[1] = clickInGrid[1];
 			}
 			
+		}
+		else if(element[clickInGrid[0]][clickInGrid[1]] instanceof Pond) {
+			System.out.println("ADDING WATER TO INVENTORY");
+			circe.addOnInventory(new Holdable(9));
 		}
 		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
 			System.out.println("info");
@@ -211,6 +272,7 @@ public class Island extends Screen{
 		}
 		else if(clickedElement != null && clickedElement instanceof Land){
 			//System.out.println("here");
+			System.out.println("LAND HO");
 			landElementSelected = true;
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
@@ -250,11 +312,37 @@ public class Island extends Screen{
 				System.out.println("switching?");
 				surface.switchScreen(0);
 			}
+			
+			//checking if she is near the malicious visitor
+			for(int i = 0; i<creatures.size(); i++) {
+				if(creatures.get(i) instanceof MaliciousVisitor) {
+					MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
+					boolean isNear = Math.abs(mv.getXGrid() - circe.getXGrid()) < 3 && Math.abs(mv.getYGrid() - circe.getYGrid()) < 3;
+					//near enough, has food and wine
+					if(isNear && circeInventoryContains(11) && circeInventoryContains(12)) {
+						circe.turnPig(mv);
+						circe.removeFromInventory(Holdable.BREAD);
+						circe.removeFromInventory(Holdable.POTION);
+						break; //can only turn one at a time
+					}
+					
+				}
+			}
 		}
 		
 	}
 	
 	
+	private boolean circeInventoryContains(int type) { //should be in circe
+		for(int i = 0; i<circe.getInventory().length; i++) {
+			if(circe.getInventory()[i] != null && circe.getInventory()[i].getType() == type) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
 	
 	/**
 	 * Returns the indexes of the location in the 2DArray of elements, given the x and y coordinates on the screen, 
@@ -357,7 +445,8 @@ public class Island extends Screen{
 	
 	
 	public void handlePlantChange(GDropList list, GEvent event) {
-		mouseClickEnabled = false;
+		System.out.println("plant change handle");
+		//mouseClickEnabled = false;
 		String text = list.getSelectedText();
 		list.setVisible(false);
 		int x = selectedSpot[0];
@@ -380,21 +469,37 @@ public class Island extends Screen{
 			gl.plant("barley");
 		}
 
+		dropDone = true;
 	}
+	
 	
 	public void setImages() {
 		nymphImage = surface.loadImage("Files/NymphFrontStand.png");
 		malImage = surface.loadImage("Files/NymphFrontStand.png");
+		pigImg = surface.loadImage("Files/PigFrontStand.png");
 	}
 	
 	private void fillElements(int hX, int hY) {
-		setImages();
+		setImages(); // creates all the required images
 		circeHouse.putOnIsland(this);
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 400);
 		Nymph c2 = new Nymph(malImage, 300, 100);
+		Pig c3 = new Pig(pigImg, 200, 250);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
+		c3.putOnIsland(this);
+		
+		//fill with water
+		for(int i = 7; i<=8; i++) {
+			for(int j = 7; j<= 10; j++) {
+				element[j][i] = new Pond(this, j, i);
+				element[j][i].setIsInGrid(true);
+			}
+		}
+		
+//		element[8][7] = new Pond(this, 0, 8);
+//		element[0][8].setIsInGrid(true);
 		
 		
 		//fill with land

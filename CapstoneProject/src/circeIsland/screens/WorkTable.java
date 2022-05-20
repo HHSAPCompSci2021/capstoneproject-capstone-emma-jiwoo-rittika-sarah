@@ -238,7 +238,7 @@ public class WorkTable extends Screen{
 	
 	
 	public void addToStorage(Holdable h) {
-		storage.get(h.getType()-1).remove(new Holdable(13));
+	//	storage.get(h.getType()-1).remove(new Holdable(13));
 		storage.get(h.getType()-1).add(new Holdable(h.getType()));
 	}
 	
