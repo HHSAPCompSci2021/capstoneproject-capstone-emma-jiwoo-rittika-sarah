@@ -16,7 +16,6 @@ import circeIsland.elements.Holdable;
  */
 public class WorkTable extends Screen{
 
-	//private DrawingSurface surface;
 	private ArrayList<ArrayList<Holdable>> storage;
 	//12 items: Grape seed, barley seed, marathos seed, anithos seed, grape, barley, marathos, anithos,
 	//			water, wine, bread, potion
@@ -31,6 +30,7 @@ public class WorkTable extends Screen{
 	private float curHoldableY;
 	private int gainSpot; //1 is inventory, 2 is personal, 3 is cauldron creation
 	private Holdable brewedItem;
+	private int brewedItemNum;
 	private int brewStage; //0 is nothing in cauldron at first, 1 is adding to cauldron,
 						   //2 is after successful brew, 3 is after unsuccessful brew
 	private boolean locked; //to check whether something is being held or not
@@ -57,6 +57,7 @@ public class WorkTable extends Screen{
 		cauldron = new Rectangle(200, 200, 300, 200);
 		cauldronItems = new ArrayList<Holdable>();
 		brewedItem = null;
+		brewedItemNum = 0;
 		wineRecipe = new ArrayList<Holdable>();
 		breadRecipe = new ArrayList<Holdable>();
 		seedsRecipe = new ArrayList<Holdable>();
@@ -73,12 +74,11 @@ public class WorkTable extends Screen{
 		int i = 1;
 		for (ArrayList<Holdable> h: storage) {
 			h.add(new Holdable(i));
-			if (i == 5) {
+			if (i == 5 || i == 8 || i == 7) {
 				h.add(new Holdable(i));
 				h.add(new Holdable(i));
 				h.add(new Holdable(i));
 				h.add(new Holdable(i));
-
 			}
 				
 			i++;
@@ -114,9 +114,17 @@ public class WorkTable extends Screen{
 		drawCirceInventory();
 		drawAlchemy();
 		
+		float cellWidthInv = 150 / 2;
+		float cellHeightInv = 400 / 6;
+		float cellWidthCir = holdingsButton.width / 3;
+		float cellHeightCir = holdingsButton.height / 2;
+		
 		if (locked) {
 			if (curHoldable != null)
-				curHoldable.draw(surface, curHoldableX, curHoldableY);
+				if (gainSpot == 1)
+					curHoldable.draw(surface, curHoldableX, curHoldableY, cellWidthInv, cellHeightInv);
+				if (gainSpot == 2)
+					curHoldable.draw(surface, curHoldableX, curHoldableY, cellWidthCir, cellHeightCir);
 		}
 		
 		if(showRecipes) {
@@ -124,7 +132,7 @@ public class WorkTable extends Screen{
 		}
 		
 		if (brewedItem != null) {
-			brewedItem.draw(surface, cauldron.x + cauldron.width/2, cauldron.y + cauldron.height/2);
+			brewedItem.draw(surface, cauldron.x + cauldron.width/2, cauldron.y + cauldron.height/2, cellWidthInv, cellHeightInv);
 		}
 		
 	}
@@ -169,7 +177,7 @@ public class WorkTable extends Screen{
 				
 				//draws element per grid
 				Holdable h = new Holdable(currentElement);
-				h.draw(surface, cellCenterX, cellCenterY);
+				h.draw(surface, cellCenterX, cellCenterY, cellWidth, cellHeight);
 				
 				//writes inventory numbers to drawing surface
 				surface.textSize(15);
@@ -213,7 +221,7 @@ public class WorkTable extends Screen{
 				
 				//draws item
 				if (inventory[i][j] != null)
-					inventory[i][j].draw(surface, cellCenterX, cellCenterY);
+					inventory[i][j].draw(surface, cellCenterX, cellCenterY, cellWidth, cellHeight);
 				surface.pop();
 			}
 		}
@@ -247,7 +255,7 @@ public class WorkTable extends Screen{
 		if (h.getType() == 13)
 			return;
 		
-		if (storage.get(h.getType()-1).size() == 1)
+		if (storage.get(h.getType()-1).size() == 1 && storage.get(h.getType()-1).get(0).getType() != 13)
 			storage.get(h.getType()-1).add(new Holdable(13));
 		
 		storage.get(h.getType()-1).remove(0);
@@ -314,11 +322,12 @@ public class WorkTable extends Screen{
 	
 	public void processMousePress(int mouseX, int mouseY) {
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
-		if (click.intersects(inventoryButton)) {
+		if (click.intersects(inventoryButton) && toSpotInv(mouseX, mouseY).getType() != 13) {
 			locked = true;
 			curHoldable = toSpotInv(mouseX, mouseY);
 			curHoldableX = mouseX;
 			curHoldableY = mouseY;
+			removeFromStorage(toSpotInv(mouseX, mouseY));
 			gainSpot = 1;
 		}
 		if (click.intersects(holdingsButton)) {
@@ -332,6 +341,8 @@ public class WorkTable extends Screen{
 		Rectangle brewedItemRect = new Rectangle(cauldron.x + cauldron.width/2 - 5, cauldron.y + cauldron.height/2 - 5, cauldron.x + cauldron.width/2 + 5, cauldron.y + cauldron.height/2 + 5);
 		if (click.intersects(brewedItemRect) && brewedItem != null) {
 			locked = true;
+			if (brewedItem.getType() == 1 || brewedItem.getType() == 2 || brewedItem.getType() == 3 || brewedItem.getType() == 4)
+				brewedItemNum = 4;
 			curHoldable = brewedItem;
 			brewedItem = null;
 			curHoldableX = mouseX;
@@ -356,8 +367,8 @@ public class WorkTable extends Screen{
 			for (int j = 0; j<2; j++) {
 				if (inventoryButton.y+cellHeight*i <= mouseY && mouseY <= inventoryButton.y + cellHeight*i +cellHeight)
 					if (inventoryButton.x+cellWidth*j <= mouseX && mouseX <= inventoryButton.x+cellWidth*j + cellWidth) {
-						if (inventory[i][j].getType() != 13)
-							removeFromStorage(inventory[i][j]);
+					//	if (inventory[i][j].getType() != 13)
+					//		removeFromStorage(inventory[i][j]);
 						return inventory[i][j];
 					}
 			}
@@ -407,8 +418,12 @@ public class WorkTable extends Screen{
 		//if intersecting with holdingsButton and empty space, move into that space
 		//otherwise, return to where it came from
 		
-		else if (click.intersects(inventoryButton) && toElementInv(mouseX, mouseY).getType() == curHoldable.getType()) { 
-			System.out.println("adding to inventory" + curHoldable.getName());
+		else if (click.intersects(inventoryButton) && toElementInv(mouseX, mouseY).getType() == curHoldable.getType()) {
+			if (brewedItemNum ==4) {
+				for (int i = 0; i<3; i++)
+					addToStorage(curHoldable);
+				brewedItemNum = 0;
+			}
 			addToStorage(curHoldable);
 		}
 		
@@ -422,6 +437,7 @@ public class WorkTable extends Screen{
 				circe.addOnInventory(curHoldable);
 			if (gainSpot == 3) {
 				brewedItem = curHoldable;
+				
 			}
 		}
 		
@@ -506,10 +522,11 @@ public class WorkTable extends Screen{
 	}
 	
 	private void brew() {
-		if (matchesRecipe()[0].getType() != 13) {
-			System.out.println("Success");
+		if (matchesRecipe().getType() != 13) {
+			System.out.println("Success" + matchesRecipe().getName());
+			
 			cauldronItems.clear();
-			brewedItem = new Holdable(matchesRecipe()[0].getType());
+			brewedItem = new Holdable(matchesRecipe().getType());
 		}
 		else {
 			for (Holdable h: cauldronItems)
@@ -519,14 +536,9 @@ public class WorkTable extends Screen{
 		surface.text("BREWING",  100, 100);
 	}
 	
-	private Holdable[] matchesRecipe() {
+	private Holdable matchesRecipe() {
 		
-		Holdable[] thing = new Holdable[4];
-		thing[0] = new Holdable(13);
-		thing[1] = new Holdable(13);
-		thing[2] = new Holdable(13);
-		thing[3] = new Holdable(13);
-
+		Holdable thing = new Holdable(13);
 		
 		ArrayList<Holdable> w = new ArrayList<>(wineRecipe);
 		System.out.println(w.toString());
@@ -559,16 +571,16 @@ public class WorkTable extends Screen{
 		
 		if (size == wineRecipe.size() && w.size() == 0)
 			System.out.println("wine recipe successful");
-			thing[0] = new Holdable(10);
+			thing = new Holdable(10);
 		if (size == breadRecipe.size() && b.size() == 0)
-			thing[0] = new Holdable(11);
+			thing = new Holdable(11);
 		if (size == potionRecipe.size() && p.size() == 0)
-			thing[0] = new Holdable(12);
+			thing = new Holdable(12);
 		if (size == 1 && s.size() == 3) {
-			thing[0] = new Holdable(cauldronItems.get(0).getType()-4);
-			thing[1] = new Holdable(cauldronItems.get(0).getType()-4);
-			thing[2] = new Holdable(cauldronItems.get(0).getType()-4);
-			thing[3] = new Holdable(cauldronItems.get(0).getType()-4);
+			thing = new Holdable(cauldronItems.get(0).getType()-4);
+			thing = new Holdable(cauldronItems.get(0).getType()-4);
+			thing = new Holdable(cauldronItems.get(0).getType()-4);
+			thing = new Holdable(cauldronItems.get(0).getType()-4);
 		}
 		
 		return thing;
