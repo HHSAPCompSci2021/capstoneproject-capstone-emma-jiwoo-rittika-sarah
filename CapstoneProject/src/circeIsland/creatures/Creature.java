@@ -136,6 +136,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public void draw(DrawingSurface g) {
 		if(isInGrid) {
+			g.push();
 			if (image != null) {
 				double rateX = myIsland.getWidth()/800;
 				double rateY = myIsland.getHeight()/600;
@@ -149,6 +150,7 @@ public abstract class Creature extends Rectangle2D.Double{
 				g.fill(0);
 				g.text(getType(), (float)x, (float)y);
 			}
+			g.pop();
 		}
 	}
 	

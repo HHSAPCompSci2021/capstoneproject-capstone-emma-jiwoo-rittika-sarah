@@ -44,7 +44,7 @@ public class Circe extends Creature{
 		if(e instanceof GardenLand && holdings[currentHold].getType() >= Holdable.GRAPE_SEED && holdings[currentHold].getType() <= Holdable.ANITHOS_SEED) {
 			Holdable p = new Holdable(holdings[currentHold].getType()+4);
 			GardenLand g = (GardenLand)e;
-			g.plant(Integer.toString(holdings[currentHold].getType()+4));
+			g.plant(holdings[currentHold].getType()+4);
 		}
 	}
 	
@@ -66,7 +66,7 @@ public class Circe extends Creature{
 	public boolean harvest(GardenLand g) {
 		if(g.isMature() && nextEmptySpace() != -1) {
 			System.out.println("harvesting");
-				addOnInventory(new Holdable(Integer.parseInt((g).getType())));
+				addOnInventory(new Holdable(g.getType()));
 				g.harvest();
 				return true;
 		}
@@ -93,7 +93,7 @@ public class Circe extends Creature{
 		for(int i = 0; i<holdings.length; i++) {
 			g.rect(cellStartX + cell*i,screenHeight-cell-60, cell, cell);
 			if(holdings[i] != null)
-				holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell-60);
+				holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell-60, cell/2, cell/2);
 		}
 		g.stroke(255,205,0);
 		g.rect(cellStartX + cell*currentHold, screenHeight-cell-60,cell, cell);
