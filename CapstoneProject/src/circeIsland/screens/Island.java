@@ -27,7 +27,8 @@ public class Island extends Screen{
 	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone, showWarning;
 	private int[] selectedSpot;
 	private PImage islandImage, malImage, nymphImage, pigImage;
-	private PImage gardenEmpty, garden1, garden2, garden3, garden4, houseImage, penImage;
+	private PImage gardenEmpty, gardenA1, gardenA2, gardenA3, gardenA4, gardenM1, gardenM2, gardenM3, gardenM4, gardenB1, gardenB2, gardenB3, gardenB4, gardenG1, gardenG2, gardenG3, gardenG4;
+	private PImage houseImage, penImage;
 	private PImage[] allGarden;
 	GDropList list;
 	
@@ -530,18 +531,18 @@ public class Island extends Screen{
 		malImage = surface.loadImage("Files/MaliciousFrontStand.png");
 		pigImage = surface.loadImage("Files/PigFrontStand.png");
 		gardenEmpty = surface.loadImage("Files/GardenEmpty.png");
-		garden1 = surface.loadImage("Files/GardenEmpty.png"); 
-		garden2 = surface.loadImage("Files/GardenEmpty.png"); 
-		garden3 = surface.loadImage("Files/GardenEmpty.png");
-		garden4 = surface.loadImage("Files/GardenEmpty.png");
-		houseImage = surface.loadImage("Files/VisitorHouse.png");
+		gardenA1 = surface.loadImage("Files/AnithosBud.png"); 
+		gardenA2 = surface.loadImage("Files/AnithosSproud.png"); 
+		gardenA3 = surface.loadImage("Files/AnithosGrown.png");
+		gardenA4 = surface.loadImage("Files/AnithosDead.png");
+		houseImage = surface.loadImage("Files/HouseVisitor.png");
 		penImage = surface.loadImage("Files/GardenEmpty.png");
 		allGarden = new PImage[5];
 		allGarden[0] = gardenEmpty;
-		allGarden[1] = garden1;
-		allGarden[2] = garden2;
-		allGarden[3] =  garden3;
-		allGarden[4] =  garden4;
+		allGarden[1] = gardenA1;
+		allGarden[2] = gardenA2;
+		allGarden[3] =  gardenA3;
+		allGarden[4] =  gardenA4;
 		
 	}
 	
