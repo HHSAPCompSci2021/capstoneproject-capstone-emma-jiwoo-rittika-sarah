@@ -21,8 +21,18 @@ public class GardenLand extends Element{
 	private int startDay;
 	private int currentDay;
 	
+	private PImage budImage;
+	private PImage sproutImage;
+	private PImage grownImage;
+	private PImage deadImage;
+
+	
 	public GardenLand(Island i, PImage[] p, int xInput, int yInput) {
 		super(i, p[0], xInput, yInput);
+		budImage = p[1];
+		sproutImage = p[2];
+		grownImage = p[3];
+		deadImage = p[4];
 		this.type = "";
 		lifeState = 0; 
 		setStandable(true);
@@ -66,10 +76,22 @@ public class GardenLand extends Element{
 	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
 		act();
 		surface.push();
-		surface.fill(105, 67, 45);
-		surface.rect(6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight), cellWidth, cellHeight);
-		surface.fill(0);
-		surface.text("garden", 6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight)+cellHeight);
+		if(getIsInGrid()) {
+			if (getImage() != null) {
+				double rateX = getIsland().getWidth()/800;
+				double rateY = getIsland().getHeight()/600;
+				float x = cellWidth*getXCoor();
+				float y = cellHeight*getYCoor();
+				x *= rateX;
+				y *= rateY;
+				surface.image(getImage(),(float)x,(float)y,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
+			}
+		}
+		
+//		surface.fill(105, 67, 45);
+//		surface.rect(6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight), cellWidth, cellHeight);
+//		surface.fill(0);
+//		surface.text("garden", 6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight)+cellHeight);
 		surface.pop();
 	}
 	

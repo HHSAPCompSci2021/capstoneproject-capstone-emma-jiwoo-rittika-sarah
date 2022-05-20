@@ -18,6 +18,7 @@ public abstract class Element {
 
 	public Element(Island i, int xInput, int yInput) {
 		island = i;
+		image = null;
 		x = xInput;
 		y = yInput;
 		isInGrid = true;
@@ -26,13 +27,17 @@ public abstract class Element {
 	
 	public Element(Island i, PImage p, int xInput, int yInput) {
 		island = i;
-		image = p;
+		image = null;
 		x = xInput;
 		y = yInput;
 		isInGrid = true;
 		standable = false;
 	}
-	//METHOD
+
+	public void setImage(PImage p) {
+		image = p;
+	}
+	
 	
 	public void putOnIsland(Island i, int x, int y) { 
 		if (i.getElement(x,  y) == null)
@@ -68,6 +73,14 @@ public abstract class Element {
 	
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public PImage getImage() {
+		return image;
+	}
+	
+	public boolean getIsInGrid(){
+		return isInGrid;
 	}
 	
 	public void setIsInGrid(boolean b) {
