@@ -113,6 +113,7 @@ public class Circe extends Creature{
 		return false;
 	}
 	
+	
 	public Holdable[] getInventory() {
 		return holdings;
 	}
