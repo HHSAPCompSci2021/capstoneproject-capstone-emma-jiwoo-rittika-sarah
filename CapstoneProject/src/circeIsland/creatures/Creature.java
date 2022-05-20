@@ -113,11 +113,11 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	public int[] coorToGrid(double xCoor, double yCoor) {
-		double cellWidth = myIsland.getWidth()/myIsland.getElements()[0].length;
-		double cellHeight = myIsland.getHeight()/myIsland.getElements().length;
+		double cellWidth = (myIsland.getWidth()-12)/myIsland.getElements()[0].length;
+		double cellHeight = (myIsland.getHeight()-18)/myIsland.getElements().length;
 		int xGrid = (int) (xCoor/cellWidth);
 		int yGrid = (int) (yCoor/cellHeight);
-		System.out.println(xGrid + "," + yGrid);
+//		System.out.println(xGrid + "," + yGrid);
 		int[] grid = {xGrid, yGrid};
 		return grid;
 	}
@@ -139,6 +139,7 @@ public abstract class Creature extends Rectangle2D.Double{
 				double rateY = myIsland.getHeight()/600;
 				x *= rateX;
 				y *= rateY;
+//				g.rect((float)x,(float)y,(float)(width*rateX),(float)(height*rateY));
 				g.image(image,(float)x,(float)y,(float)(width*rateX),(float)(height*rateY));
 			} else {
 				g.fill(100);
@@ -154,7 +155,8 @@ public abstract class Creature extends Rectangle2D.Double{
 	public void act(int dir) {
 		if(isInGrid) {
 			if(dir == -1) 
-				dir = (int)Math.random() * 4;
+				dir = (int)(Math.random() * 50);
+			
 			
 			if(dir == LEFT || dir == RIGHT) {
 				moveX(dir);
@@ -165,11 +167,11 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	public boolean canStand(double xCoor, double yCoor) {
-		System.out.println("width:" + myIsland.WIDTH + ", height:" + myIsland.HEIGHT);
+//		System.out.println(xCoor + "," + yCoor );
 		double rateX = myIsland.getWidth()/800;
 		double rateY = myIsland.getHeight()/600;
-		int[] gridTopLeft = coorToGrid(xCoor, yCoor );
-		int[] gridBottomRight = coorToGrid(xCoor + width*rateX, yCoor + height*rateY);
+		int[] gridTopLeft = coorToGrid(xCoor-2, yCoor + 4 );
+		int[] gridBottomRight = coorToGrid(xCoor-2 + width*rateX, yCoor +11+ height*rateY);
 		if(gridTopLeft[0] < 0 || gridBottomRight[0] > myIsland.getElements().length || 
 			gridTopLeft[1] < 0 || gridBottomRight[1] > myIsland.getElements()[0].length) {
 			return false;
