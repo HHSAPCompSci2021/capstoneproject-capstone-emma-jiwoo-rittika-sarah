@@ -31,7 +31,9 @@ public class Nymph extends Visitor{
 		int dir = destinationDir(circeGrid);
 		super.act(dir);
 
+		
 	}
+	
 	
 	
 	
