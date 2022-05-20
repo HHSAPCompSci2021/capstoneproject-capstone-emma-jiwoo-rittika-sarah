@@ -72,14 +72,11 @@ public class Screen{
 
 
 	public void processMousePress(int mouseX, int mouseY) {
-		// TODO Auto-generated method stub
 		
 	}
 
 
 	public void processMouseRelease(int mouseX, int mouseY) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

@@ -23,14 +23,20 @@ public class Island extends Screen{
 	private ArrayList<Creature> creatures;
 	private Circe circe;
 	private House circeHouse;
+	private Nymph newVisitor;
+	private MaliciousVisitor newMalVisitor;
+	
 	private Rectangle infoButton, warningBox;
+	
 	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone, showWarning;
 	private int[] selectedSpot;
+	private GDropList list;
+	
 	private PImage islandImage, malImage, nymphImage, pigImage;
 	private PImage gardenEmpty, gardenA1, gardenA2, gardenA3, gardenA4, gardenM1, gardenM2, gardenM3, gardenM4, gardenB1, gardenB2, gardenB3, gardenB4, gardenG1, gardenG2, gardenG3, gardenG4;
-	private PImage houseImage, penImage;
-	private PImage[] allGarden;
-	GDropList list;
+	private PImage houseImage, cHImage, penImage;
+	private PImage[] allAGarden, allBGarden, allGGarden, allMGarden;
+	
 	
 	/**
 	 * Creates a new island in the provided surface, given the location of Circe and her house.
@@ -66,10 +72,13 @@ public class Island extends Screen{
 
 	/**
 	 * Draws the island with all its elements and creatures to the screen.
-	 * @post The properties of the provided PApplet provided will be modified
+	 * @post The properties of the provided PApplet provided may be modified
 	 */
 	public void draw() {
 		super.draw();
+		
+		infoButton.setBounds(surface.width-80, 20, surface.width / element.length -10, surface.height /element[0].length - 10);
+		
 		
 		int borderX = 12;
 		int borderY = 18;
@@ -155,7 +164,7 @@ public class Island extends Screen{
 		
 
 		for(Creature c : creatures) {
-			//c.act();
+			c.act();
 			c.draw(surface);
 			//c.act();
 			//c.act();
@@ -177,12 +186,12 @@ public class Island extends Screen{
 		int days = surface.getDays();
 		
 		if(days % 4 == 0 && days != 0) {
-			Nymph c = new Nymph(nymphImage, 200, 200);
-			c.putOnIsland(this);
+			newVisitor = new Nymph(nymphImage, 200, 200);
+			newVisitor.putOnIsland(this);
 		}
 		else if(days % 7 == 0 && days != 0) {
-			MaliciousVisitor c = new MaliciousVisitor(malImage, 200, 200);
-			c.putOnIsland(this);
+			newMalVisitor = new MaliciousVisitor(malImage, 200, 200);
+			newMalVisitor.putOnIsland(this);
 		}
 		
 	}
@@ -293,6 +302,7 @@ public class Island extends Screen{
 	 * In the event that a key is pressed, takes in the key that is pressed and executes the correct response
 	 * - if the key is W,A, S, D, then moves Circe in the corresponding direction
 	 * - if the key is enter and Circe is at her house, then switches the DrawingSurface screen
+	 * - if the key is enter andCirce is near a creature, processes interactions.
 	 * @param key the key pressed
 	 */
 	public void processKey(char key) {
@@ -347,17 +357,6 @@ public class Island extends Screen{
 		
 	}
 	
-	
-//	private boolean circeInventoryContains(int type) { //should be in circe
-//		for(int i = 0; i<circe.getInventory().length; i++) {
-//			if(circe.getInventory()[i] != null && circe.getInventory()[i].getType() == type) {
-//				return true;
-//			}
-//		}
-//		
-//		return false;
-//		
-//	}
 	
 	/**
 	 * Returns the indexes of the location in the 2DArray of elements, given the x and y coordinates on the screen, 
@@ -453,12 +452,12 @@ public class Island extends Screen{
 		return surface;
 	}
 	
-	//have to change to not include water outside island
-	public boolean isValid(int rowLoc, int colLoc) {
-        if(element[colLoc][rowLoc] == null)
-        	return false;
-        return true;
-    }
+//	//have to change to not include water outside island
+//	public boolean isValid(int rowLoc, int colLoc) {
+//        if(element[colLoc][rowLoc] == null)
+//        	return false;
+//        return true;
+//    }
 	
 	
 	/**
@@ -479,7 +478,7 @@ public class Island extends Screen{
 		else if(text.equals("Garden")) {
 			int x = selectedSpot[0];
 			int y = selectedSpot[1];
-			element[x][y] = new GardenLand(this, allGarden, x, y);
+			element[x][y] = new GardenLand(this, allAGarden, x, y);
 		}
 		else if(text.equals("Pig pen")) {
 			int x = selectedSpot[0];
@@ -529,41 +528,88 @@ public class Island extends Screen{
 	}
 	
 	
+	/**
+	 * Returns the PImage of the given type of element or creature.
+	 * The types include: "pig"; "nymph"; "malicious visitor"
+	 * @param type the type of element/creature whose image is to be returned
+	 * @return the PImage of the given type
+	 * @pre types must be one of the specified types above
+	 */
+	public PImage getImage(String type) {
+		switch(type) {
+		case "pig":
+			return pigImage;
+		case "nymph":
+			return nymphImage;
+		case "malicious visitor":
+			return malImage;
+		}
+		return null;
+	}
+	
+	
+	
 	private void setImages() {
 		nymphImage = surface.loadImage("Files/NymphFrontStand.png");
 		malImage = surface.loadImage("Files/MaliciousFrontStand.png");
 		pigImage = surface.loadImage("Files/PigFrontStand.png");
+		
 		gardenEmpty = surface.loadImage("Files/GardenEmpty.png");
 		gardenA1 = surface.loadImage("Files/GardenAnithosBud.png"); 
-		gardenA2 = surface.loadImage("Files/GardenAnithosSproud.png"); 
+		gardenA2 = surface.loadImage("Files/GardenAnithosSprout.png"); 
 		gardenA3 = surface.loadImage("Files/GardenAnithosGrown.png");
 		gardenA4 = surface.loadImage("Files/GardenAnithosDead.png");
+		allAGarden = new PImage[5];
+		allAGarden[0] = gardenEmpty;
+		allAGarden[1] = gardenA1;
+		allAGarden[2] = gardenA2;
+		allAGarden[3] =  gardenA3;
+		allAGarden[4] =  gardenA4;
+		
+		gardenB1 = surface.loadImage("Files/GardenBarleyBud.png"); 
+		gardenB2 = surface.loadImage("Files/GardenBarleySprout.png"); 
+		gardenB3 = surface.loadImage("Files/GardenBarleyGrown.png");
+		gardenB4 = surface.loadImage("Files/GardenBarleyDead.png");
+		allBGarden = new PImage[5];
+		allBGarden[0] = gardenEmpty;
+		allBGarden[1] = gardenB1;
+		allBGarden[2] = gardenB2;
+		allBGarden[3] = gardenB3;
+		allBGarden[4] = gardenB4;
+		
+		gardenG1 = surface.loadImage("Files/GardenGrapeBud.png"); 
+		gardenG2 = surface.loadImage("Files/GardenGrapeSprout.png"); 
+		gardenG3 = surface.loadImage("Files/GardenGrapeGrown.png");
+		gardenG4 = surface.loadImage("Files/GardenGrapeDead.png");
+		allGGarden = new PImage[5];
+		allGGarden[0] = gardenEmpty;
+		allGGarden[1] = gardenG1;
+		allGGarden[2] = gardenG2;
+		allGGarden[3] = gardenG3;
+		allGGarden[4] = gardenG4;
+		
+		gardenM1 = surface.loadImage("Files/GardenMarathosBud.png"); 
+		gardenM2 = surface.loadImage("Files/GardenMarathosSprout.png"); 
+		gardenM3 = surface.loadImage("Files/GardenMarathosGrown.png");
+		gardenM4 = surface.loadImage("Files/GardenMarathosDead.png");
+		allMGarden = new PImage[5];
+		allMGarden[0] = gardenEmpty;
+		allMGarden[1] = gardenM1;
+		allMGarden[2] = gardenM2;
+		allMGarden[3] = gardenM3;
+		allMGarden[4] = gardenM4;
+		
+		
 		houseImage = surface.loadImage("Files/HouseVisitor.png");
+		cHImage = surface.loadImage("Files/HouseCirce.png");
 		penImage = surface.loadImage("Files/GardenEmpty.png");
-		allGarden = new PImage[5];
-		allGarden[0] = gardenEmpty;
-		allGarden[1] = gardenA1;
-		allGarden[2] = gardenA2;
-		allGarden[3] =  gardenA3;
-		allGarden[4] =  gardenA4;
+		
 		
 	}
 	
 	private void setupIsland(int hX, int hY) {
 		setImages(); // creates all the required images
-		
-		//circeHouse.setImage(houseImage);
-		
-		
-		System.out.println("1");
-		for(int i = 0; i<element.length; i++) {
-			for(int j = 0; j<element[0].length; j++) {
-				if(element[i][j] instanceof House) {
-					System.out.println("SUCCESS " + i + " " + j);
-				}
-			}
-		}
-		
+		circeHouse.setImage(cHImage);
 		
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 400);
@@ -573,19 +619,8 @@ public class Island extends Screen{
 		c2.putOnIsland(this);
 		c3.putOnIsland(this);
 		
-		
 		circe.addOnInventory(new Holdable(Holdable.BREAD));
 		circe.addOnInventory(new Holdable(Holdable.POTION));
-		//circe.addOnInventory(new Holdable(Holdable.ANITHOS_SEED));
-		//circe.addOnInventory(new Holdable(Holdable.WATER));
-		//circe.getInventory()[1] = new Holdable(Holdable.BREAD);
-		
-		
-		
-		
-//		element[8][7] = new Pond(this, 0, 8);
-//		element[0][8].setIsInGrid(true);
-		
 		
 		//fill with land
 		element[0][8] = new Land(this, 0, 8);
@@ -703,22 +738,5 @@ public class Island extends Screen{
 		
 	}
 	
-	/**
-	 * Returns the PImage of the given type of element or creature.
-	 * The types include: "pig"; "nymph"; "malicious visitor"
-	 * @param type the type of element/creature whose image is to be returned
-	 * @return the PImage of the given type
-	 * @pre types must be one of the specified types above
-	 */
-	public PImage getImage(String type) {
-		switch(type) {
-		case "pig":
-			return pigImage;
-		case "nymph":
-			return nymphImage;
-		case "malicious visitor":
-			return malImage;
-		}
-		return null;
-	}
+
 }

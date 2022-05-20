@@ -52,7 +52,7 @@ public class DrawingSurface extends PApplet {
 	}
 	
 	/**
-	 * Sets up the buttons and the island screen
+	 * Sets up the buttons and the island and work table screens
 	 */
 	public void setup() {
 		G4P.setGlobalColorScheme(3);
@@ -79,7 +79,7 @@ public class DrawingSurface extends PApplet {
 	}
 	
 	/**
-	 * Draws the current screen to the PApplet
+	 * Draws the current screen to the PApplet, and keeps track of time
 	 */
 	public void draw() { 
 		drawCount++;
@@ -177,6 +177,10 @@ public class DrawingSurface extends PApplet {
 	}
 	
 	
+	/**
+	 * Returns the Buttons that this DrawingSurface has, namely the brewer, recipe, and exit button
+	 * @return
+	 */
 	public ArrayList<GButton> getButtons(){
 		ArrayList<GButton> buttons = new ArrayList<GButton>();
 		buttons.add(brewer);
@@ -187,11 +191,18 @@ public class DrawingSurface extends PApplet {
 	
 	
 	
-	
+	/**
+	 * Returns the number of days that have passed since the beginning of the program
+	 * @return number of days
+	 */
 	public int getDays() {
 		return days;
 	}
 	
+	/**
+	 * Returns the number of hours that have passed in the current day
+	 * @return the number of hours
+	 */
 	public int getHours() {
 		return hours;
 	}

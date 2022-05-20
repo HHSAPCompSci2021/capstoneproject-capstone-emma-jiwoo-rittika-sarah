@@ -33,21 +33,29 @@ public class Information extends Screen{
 	public void draw() {
 		surface.background(15, 163, 189);
 		
+		
+		surface.push();
+		exitButton.setBounds(surface.width/2-25, surface.height-100,  50,  30);
+		
+		//white box
 		surface.strokeWeight(2);
 		surface.fill(255);
-		surface.rect(20, 20,  super.WIDTH - 40,  super.HEIGHT -60);
+		surface.rect(20, 20,  surface.width - 40,  surface.height -60);
 		
+		//exit button
 		surface.fill(222, 139, 62);
 		surface.rect(exitButton.x,  exitButton.y,  exitButton.width,  exitButton.height);
 		surface.fill(0);
 		surface.textSize(25);
 		surface.text('X', exitButton.x + (exitButton.width / 2) - 7, exitButton.y + (exitButton.height / 2) + 10);
 		
+		//text
 		surface.textSize(20);
 		surface.stroke(0);
 		surface.fill(0);
 		surface.text(info,  50,  100);
 		
+		surface.pop();
 	}
 	
 	
