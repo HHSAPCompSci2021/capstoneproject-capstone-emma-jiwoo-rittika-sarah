@@ -21,7 +21,7 @@ public class WorkTable extends Screen{
 	//12 items: Grape seed, barley seed, marathos seed, anithos seed, grape, barley, marathos, anithos,
 	//			water, wine, bread, potion
 	
-	private Rectangle cookButton, recipeButton, inventoryButton;
+	private Rectangle cookButton, recipeButton, inventoryButton, holdingsButton, cauldron;
 	//GButton brewer, recipe, exit;
 	private ArrayList<String> recipes;
 	private ArrayList<Holdable> cauldronItems;
@@ -29,8 +29,15 @@ public class WorkTable extends Screen{
 	private Holdable curHoldable;
 	private float curHoldableX;
 	private float curHoldableY;
+	private Holdable brewedItem;
 	private boolean locked; //to check whether something is being held or not
 	Circe circe;
+	
+	public static ArrayList<Holdable> wineRecipe;
+	public static ArrayList<Holdable> breadRecipe;
+	public static ArrayList<Holdable> seedsRecipe;
+	public static ArrayList<Holdable> potionRecipe;
+
 	
 	
 	public WorkTable(DrawingSurface surface) {
@@ -42,18 +49,48 @@ public class WorkTable extends Screen{
 		cookButton = new Rectangle(100, 500, 100, 50);
 		recipeButton = new Rectangle(400, 500, 100, 50);
 		inventoryButton = new Rectangle(620, 30, 150, 400);
+		holdingsButton = new Rectangle(620, 450, 150, 100);
 		recipes = new ArrayList<String>();
+		cauldron = new Rectangle(200, 200, 300, 200);
 		cauldronItems = new ArrayList<Holdable>();
+		brewedItem = null;
+		wineRecipe = new ArrayList<Holdable>();
+		breadRecipe = new ArrayList<Holdable>();
+		seedsRecipe = new ArrayList<Holdable>();
+		potionRecipe = new ArrayList<Holdable>();
+
+		declareRecipes();
 		addRecipes();
 		showRecipes = false;
 		
 		for (int i = 0; i<12; i++)
 			storage.add(new ArrayList<Holdable>());
+		
+		// for testing:
+		int i = 1;
+		for (ArrayList<Holdable> h: storage) {
+			h.add(new Holdable(i));
+			if (i == 5) {
+				h.add(new Holdable(i));
+				h.add(new Holdable(i));
+				h.add(new Holdable(i));
+				h.add(new Holdable(i));
+
+			}
+				
+			i++;
+		}
 	}
 	
 
 	public void add(Circe c) {
 		circe = c;
+		circe.setInventory(0, new Holdable(4));
+		circe.setInventory(1, new Holdable(3));
+		circe.setInventory(3, new Holdable(10));
+		circe.setInventory(4, new Holdable(12));
+		circe.setInventory(5, new Holdable(4));
+
 	}
 	
 	public void draw() {
@@ -75,8 +112,8 @@ public class WorkTable extends Screen{
 		drawAlchemy();
 		
 		if (locked) {
-			Holdable h = new Holdable(1);
-			h.draw(surface, curHoldableX, curHoldableY);
+			if (curHoldable != null)
+				curHoldable.draw(surface, curHoldableX, curHoldableY);
 		}
 		
 		if(showRecipes) {
@@ -94,7 +131,10 @@ public class WorkTable extends Screen{
 		int[][] inventory = new int[6][2];
 		for (int i = 0; i<inventory.length; i++) {
 			for (int j = 0; j<inventory[0].length; j++) {
-				inventory[i][j] = storage.get(currentNum).size();
+				if (storage.get(currentNum).get(0).getType() == 13)
+					inventory[i][j] = 0;
+				else
+					inventory[i][j] = storage.get(currentNum).size();
 				currentNum ++;
 			}
 		}
@@ -151,8 +191,8 @@ public class WorkTable extends Screen{
 		int boxX = 620;
 		int boxY = 450;
 		
-		float cellWidth = 150 / inventory[0].length;
-		float cellHeight = 100 / inventory.length;
+		float cellWidth = holdingsButton.width / inventory[0].length;
+		float cellHeight = holdingsButton.height / inventory.length;
 		
 		
 		for(int i = 0; i<inventory.length; i++) { 
@@ -188,13 +228,58 @@ public class WorkTable extends Screen{
 				
 		surface.noFill();
 		surface.rect(bowlX, bowlY, bowlWidth, bowlHeight);
+		
+		String contents = "";
+		for (Holdable h: cauldronItems) {
+			contents += h.getName()+" ";
+		}
+		surface.text(contents , bowlX, bowlY);
 	}
 	
 	
 	public void addToStorage(Holdable h) {
-		storage.get(h.getType()-1).add(h);
+		storage.get(h.getType()-1).remove(new Holdable(13));
+		storage.get(h.getType()-1).add(new Holdable(h.getType()));
 	}
 	
+	public void removeFromStorage(Holdable h) {
+		if (h.getType() == 13)
+			return;
+		
+		if (storage.get(h.getType()-1).size() == 1)
+			storage.get(h.getType()-1).add(new Holdable(13));
+		
+		storage.get(h.getType()-1).remove(0);
+	}
+	
+	private void declareRecipes() {
+		
+		wineRecipe.add(new Holdable(5));
+		wineRecipe.add(new Holdable(5));
+		wineRecipe.add(new Holdable(5));
+		wineRecipe.add(new Holdable(9));
+
+		breadRecipe.add(new Holdable(6));
+		breadRecipe.add(new Holdable(6));
+		breadRecipe.add(new Holdable(6));
+		breadRecipe.add(new Holdable(6));
+		breadRecipe.add(new Holdable(6));
+		breadRecipe.add(new Holdable(9));
+		breadRecipe.add(new Holdable(9));
+		
+		seedsRecipe.add(new Holdable(5));
+		seedsRecipe.add(new Holdable(6));
+		seedsRecipe.add(new Holdable(7));
+		seedsRecipe.add(new Holdable(8));
+		
+		potionRecipe.add(new Holdable(7));
+		potionRecipe.add(new Holdable(7));
+		potionRecipe.add(new Holdable(8));
+		potionRecipe.add(new Holdable(8));
+		potionRecipe.add(new Holdable(8));
+		potionRecipe.add(new Holdable(9));
+
+	}
 	
 	private void addRecipes() {
 		String wine = "Wine: 3 grapes + 1 water";
@@ -207,10 +292,10 @@ public class WorkTable extends Screen{
 	}
 	
 	public void processMouseDrag(int mouseX, int mouseY) {
-		System.out.println("dragging");
+//		System.out.println("dragging" + curHoldable.getName());
 		if (locked) {
 			curHoldableX = mouseX;
-		curHoldableY = mouseY;
+			curHoldableY = mouseY;
 		}
 	}
 	
@@ -230,23 +315,94 @@ public class WorkTable extends Screen{
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
 		if (click.intersects(inventoryButton)) {
 			locked = true;
-			curHoldable = toSpot(mouseX, mouseY);
+			curHoldable = toSpotInv(mouseX, mouseY);
+			curHoldableX = mouseX;
+			curHoldableY = mouseY;
+		}
+		if (click.intersects(holdingsButton)) {
+			locked = true;
+			curHoldable = toSpotCir(mouseX, mouseY);
 			curHoldableX = mouseX;
 			curHoldableY = mouseY;
 		}
 	}
 	
-	private Holdable toSpot(int mouseX, int mouseY) {
+	private Holdable toSpotInv(int mouseX, int mouseY) {
+		int currentNum = 0;
+		Holdable[][] inventory = new Holdable[6][2];
+		for (int i = 0; i<inventory.length; i++) {
+			for (int j = 0; j<inventory[0].length; j++) {
+				inventory[i][j] = new Holdable(storage.get(currentNum).get(0).getType());
+				currentNum ++;
+			}
+		}
+		
+		float cellWidth = inventoryButton.width / 2;
+		float cellHeight = inventoryButton.height / 6;
+		for (int i = 0; i<6; i++) {
+			for (int j = 0; j<2; j++) {
+				if (inventoryButton.y+cellHeight*i <= mouseY && mouseY <= inventoryButton.y + cellHeight*i +cellHeight)
+					if (inventoryButton.x+cellWidth*j <= mouseX && mouseX <= inventoryButton.x+cellWidth*j + cellWidth) {
+						if (inventory[i][j].getType() != 13)
+							removeFromStorage(inventory[i][j]);
+						return inventory[i][j];
+					}
+			}
+		}
+		return null;
+	}
+	
+	private Holdable toSpotCir(int mouseX, int mouseY) {
+		Holdable[][]inventory = new Holdable[2][3];
+		int count = 0;
+		for (int i = 0; i<inventory.length; i++) {
+			for (int j = 0; j<inventory[0].length; j++) {
+			//	if (circe.getInventory()[count] == null)
+			//		System.out.println("is null");
+				inventory[i][j] = circe.getInventory()[count];
+				count++;
+			}
+		}
+		
+		float cellWidth = holdingsButton.width / inventory[0].length;
+		float cellHeight = holdingsButton.height / inventory.length;
+		
+		for (int i = 0; i<2; i++) {
+			for (int j = 0; j<3; j++) {
+				if (holdingsButton.y+cellHeight*i <= mouseY && mouseY <= holdingsButton.y + cellHeight*i +cellHeight)
+					if (holdingsButton.x+cellWidth*j <= mouseX && mouseX <= holdingsButton.x+cellWidth*j + cellWidth) {
+//						System.out.println(inventory[i][j].getName());
+						if (inventory[i][j] != null)
+							circe.setInventory(i*3+j, null);
+						return inventory[i][j];
+					}
+			}
+		}
 		
 		return null;
 	}
 
 
 	public void processMouseRelease(int mouseX, int mouseY) {
-		locked = false;
+		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
+		if (click.intersects(cauldron))
+			cauldronItems.add(curHoldable);
 		
+		if (click.intersects(inventoryButton)) {
+			Holdable h = toSpotInv(mouseX, mouseY);
+			addToStorage(h);
+		}
+		
+		if (click.intersects(holdingsButton)) {
+//			Holdable h = toElementCir(mouseX, mouseY);
+		}
+		
+		locked = false;
+		curHoldable = null;
+		curHoldableX = 0;
+		curHoldableY = 0;
 	}
-	
+
 	public void handleButtonClick(GButton b, GEvent event) {
 		String buttonName = b.getText();
 		if(buttonName.equals("Brew")) {
@@ -269,7 +425,68 @@ public class WorkTable extends Screen{
 	}
 	
 	private void brew() {
+		for (Holdable h: cauldronItems)
+	//		System.out.println(h.getName() + " ");
+		if (matchesRecipe()[0].getType() != 13) {
+			System.out.println("Success");
+			cauldronItems.clear();
+			brewedItem = new Holdable(matchesRecipe()[0].getType());
+		}
 		surface.text("BREWING",  100, 100);
+	}
+	
+	private Holdable[] matchesRecipe() {
+		
+		Holdable[] thing = new Holdable[4];
+		thing[0] = new Holdable(13);
+		thing[1] = new Holdable(13);
+		thing[2] = new Holdable(13);
+		thing[3] = new Holdable(13);
+
+		
+		ArrayList<Holdable> w = new ArrayList<>(wineRecipe);
+		System.out.println(w.toString());
+		ArrayList<Holdable> b = new ArrayList<>(breadRecipe);
+		ArrayList<Holdable> s = new ArrayList<>(seedsRecipe);
+		ArrayList<Holdable> p = new ArrayList<>(potionRecipe);
+
+		for (Holdable h: cauldronItems) {
+			for (int i = 0; i<w.size(); i++) {
+				if (h.getType() == w.get(i).getType())
+					w.remove(i);
+			}
+			for (int i = 0; i<b.size(); i++) {
+				if (h.getType() == b.get(i).getType())
+					b.remove(i);
+			}
+			for (int i = 0; i<s.size(); i++) {
+				if (h.getType() == s.get(i).getType())
+					s.remove(i);
+			}
+			for (int i = 0; i<p.size(); i++) {
+				if (h.getType() == p.get(i).getType())
+					p.remove(i);
+			}
+		}
+		
+		System.out.println(w.toString());
+		
+		int size = cauldronItems.size();
+		
+		if (size == wineRecipe.size() && w.size() == 0)
+			thing[0] = new Holdable(10);
+		if (size == breadRecipe.size() && b.size() == 0)
+			thing[0] = new Holdable(11);
+		if (size == potionRecipe.size() && p.size() == 0)
+			thing[0] = new Holdable(12);
+		if (size == 1 && s.size() == 3) {
+			thing[0] = new Holdable(cauldronItems.get(0).getType()-4);
+			thing[1] = new Holdable(cauldronItems.get(0).getType()-4);
+			thing[2] = new Holdable(cauldronItems.get(0).getType()-4);
+			thing[3] = new Holdable(cauldronItems.get(0).getType()-4);
+		}
+		
+		return thing;
 	}
 	
 	private void displayRecipes() {
