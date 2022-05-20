@@ -84,7 +84,7 @@ public class GardenLand extends Element{
 				float y = cellHeight*getYCoor();
 				x *= rateX;
 				y *= rateY;
-				surface.image(getImage(),(float)x,(float)y,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
+				surface.image(getImage(),(float)x + 6,(float)y + 9,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
 			}
 		}
 		

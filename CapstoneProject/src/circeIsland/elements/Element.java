@@ -27,7 +27,7 @@ public abstract class Element {
 	
 	public Element(Island i, PImage p, int xInput, int yInput) {
 		island = i;
-		image = null;
+		image = p;
 		x = xInput;
 		y = yInput;
 		isInGrid = true;
@@ -52,9 +52,7 @@ public abstract class Element {
 		island = null;
 	}
 	
-	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
-		surface.image(null, cellWidth, cellHeight);
-	}
+	public abstract void draw(DrawingSurface surface, float cellWidth, float cellHeight);
 	
 	public boolean intersects(Creature c, float cellWidth, float cellHeight) {
 		Rectangle r = new Rectangle((int)(10 + (getXCoor() * cellWidth)), (int)(10 + (getYCoor()*cellHeight)), (int)cellWidth, (int)cellHeight);

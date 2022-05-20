@@ -24,10 +24,21 @@ public class House extends Element{
 	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
 		if (type == "circe") {
 			surface.push();
-			surface.fill(191, 128, 111);
-			surface.rect(6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight), cellWidth*2, cellHeight*2);
-			surface.fill(0);
-			surface.text("cHouse", 6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight)+cellHeight);
+			if(getIsInGrid()) {
+				if (getImage() != null) {
+					double rateX = getIsland().getWidth()/800;
+					double rateY = getIsland().getHeight()/600;
+					float x = cellWidth*getXCoor();
+					float y = cellHeight*getYCoor();
+					x *= rateX;
+					y *= rateY;
+					surface.image(getImage(),(float)x + 6,(float)y + 9,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
+				}
+			}
+//			surface.fill(191, 128, 111);
+//			surface.rect(6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight), cellWidth*2, cellHeight*2);
+//			surface.fill(0);
+//			surface.text("cHouse", 6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight)+cellHeight);
 			surface.pop();
 		}
 		if (type == "norm") {
