@@ -1,6 +1,7 @@
 package circeIsland.elements;
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
+import processing.core.PImage;
 
 public class House extends Element{
 	
@@ -9,8 +10,8 @@ public class House extends Element{
 	private int ySize;
 
 	
-	public House(Island i, int xInput, int yInput, String type) {
-		super(i, xInput, yInput);
+	public House(Island i,  PImage p, int xInput, int yInput, String type) {
+		super(i, p, xInput, yInput);
 		setStandable(false);
 		this.type = type;
 		if (type == "circe") {

@@ -1,11 +1,12 @@
 package circeIsland.elements;
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
+import processing.core.PImage;
 
 public class Pond extends Element{
 
-	public Pond(Island i, int xInput, int yInput) {
-		super(i, xInput, yInput);
+	public Pond(Island i, PImage p,  int xInput, int yInput) {
+		super(i, p, xInput, yInput);
 		setStandable(false);
 	}
 

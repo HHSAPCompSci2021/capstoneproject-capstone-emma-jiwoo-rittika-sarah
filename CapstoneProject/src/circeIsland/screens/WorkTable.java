@@ -31,6 +31,7 @@ public class WorkTable extends Screen{
 	private float curHoldableY;
 	private int gainSpot; //1 is inventory, 2 is personal, 3 is cauldron creation
 	private Holdable brewedItem;
+	private int brewStage; //0 is adding things to cauldron, 1 is after successful brew, 2 is after unsuccessful brew
 	private boolean locked; //to check whether something is being held or not
 	Circe circe;
 	
@@ -402,8 +403,8 @@ public class WorkTable extends Screen{
 
 		}
 		
-		else if (click.intersects(holdingsButton) && toElementCir(mouseX, mouseY) > -1) {
-			circe.addOnInventory(curHoldable);
+		else if (click.intersects(holdingsButton) && toIndexCir(mouseX, mouseY) > -1) {
+			circe.setInventory(toIndexCir(mouseX, mouseY), curHoldable);
 		}
 		else {
 			if (gainSpot == 1)
@@ -442,7 +443,7 @@ public class WorkTable extends Screen{
 		return null;
 	}
 	
-	private int toElementCir(int mouseX, int mouseY) {
+	private int toIndexCir(int mouseX, int mouseY) {
 		Holdable[][]inventory = new Holdable[2][3];
 		int count = 0;
 		for (int i = 0; i<inventory.length; i++) {

@@ -6,6 +6,7 @@ import circeIsland.creatures.Circe;
 import circeIsland.creatures.Creature;
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
+import processing.core.PImage;
 
 public abstract class Element {
 
@@ -13,9 +14,11 @@ public abstract class Element {
 	private int x, y;
 	private boolean isInGrid;
 	private boolean standable;
+	private PImage image;
 
-	public Element(Island i, int xInput, int yInput) {
+	public Element(Island i, PImage p, int xInput, int yInput) {
 		island = i;
+		image = p;
 		x = xInput;
 		y = yInput;
 		isInGrid = true;
@@ -36,7 +39,9 @@ public abstract class Element {
 		island = null;
 	}
 	
-	public abstract void draw(DrawingSurface surface, float cellWidth, float cellHeight);
+	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
+		surface.image(null, cellWidth, cellHeight);
+	}
 	
 	public boolean intersects(Creature c, float cellWidth, float cellHeight) {
 		Rectangle r = new Rectangle((int)(10 + (getXCoor() * cellWidth)), (int)(10 + (getYCoor()*cellHeight)), (int)cellWidth, (int)cellHeight);

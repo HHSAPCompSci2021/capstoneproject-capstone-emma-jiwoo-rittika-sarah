@@ -4,6 +4,7 @@ import java.util.Timer;
 
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
+import processing.core.PImage;
 
 public class GardenLand extends Element{	
 
@@ -20,8 +21,8 @@ public class GardenLand extends Element{
 	private int startDay;
 	private int currentDay;
 	
-	public GardenLand(Island i, int xInput, int yInput) {
-		super(i, xInput, yInput);
+	public GardenLand(Island i, PImage[] p, int xInput, int yInput) {
+		super(i, p[0], xInput, yInput);
 		this.type = "";
 		lifeState = 0; 
 		setStandable(true);
