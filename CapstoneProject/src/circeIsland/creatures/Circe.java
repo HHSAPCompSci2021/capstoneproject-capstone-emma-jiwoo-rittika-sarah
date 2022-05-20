@@ -64,6 +64,7 @@ public class Circe extends Creature{
 	
 	public boolean harvest(GardenLand g) {
 		if(g.isMature() && nextEmptySpace() != -1) {
+			System.out.println("harvesting");
 				addOnInventory(new Holdable(Integer.parseInt((g).getType())));
 				g.harvest();
 				return true;

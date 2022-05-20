@@ -27,6 +27,8 @@ public class Island extends Screen{
 	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone, showWarning;
 	private int[] selectedSpot;
 	private PImage islandImage, malImage, nymphImage, pigImage;
+	private PImage gardenEmpty, garden1, garden2, garden3, garden4, houseImage, penImage;
+	private PImage[] allGarden;
 	GDropList list;
 	
 	/**
@@ -44,7 +46,6 @@ public class Island extends Screen{
 		this.islandImage = islandImage;
 		
 		element = new Element[15][15];
-		circeHouse = new House(this, houseX, houseX, "circe");
 		circe = c;
 		creatures = new ArrayList<Creature>();
 		infoButton = new Rectangle(surface.width-80, 20, surface.width / element.length -10, surface.height /element[0].length - 10);
@@ -469,12 +470,12 @@ public class Island extends Screen{
 		if(text.equals("House")) {
 			int x = selectedSpot[0];
 			int y = selectedSpot[1];
-			element[x][y] = new House(this, x, y, "norm");
+			element[x][y] = new House(this, houseImage, x, y, "norm");
 		}
 		else if(text.equals("Garden")) {
 			int x = selectedSpot[0];
 			int y = selectedSpot[1];
-			element[x][y] = new GardenLand(this, x, y);
+			element[x][y] = new GardenLand(this, allGarden, x, y);
 		}
 		else if(text.equals("Pig pen")) {
 			int x = selectedSpot[0];
@@ -528,11 +529,27 @@ public class Island extends Screen{
 		nymphImage = surface.loadImage("Files/NymphFrontStand.png");
 		malImage = surface.loadImage("Files/MaliciousFrontStand.png");
 		pigImage = surface.loadImage("Files/PigFrontStand.png");
+		gardenEmpty = surface.loadImage("Files/GardenEmpty.png");
+		garden1 = surface.loadImage("Files/GardenEmpty.png"); 
+		garden2 = surface.loadImage("Files/GardenEmpty.png"); 
+		garden3 = surface.loadImage("Files/GardenEmpty.png");
+		garden4 = surface.loadImage("Files/GardenEmpty.png");
+		houseImage = surface.loadImage("Files/VisitorHouse.png");
+		penImage = surface.loadImage("Files/GardenEmpty.png");
+		allGarden = new PImage[5];
+		allGarden[0] = gardenEmpty;
+		allGarden[1] = garden1;
+		allGarden[2] = garden2;
+		allGarden[3] =  garden3;
+		allGarden[4] =  garden4;
+		
 	}
 	
 	private void setupIsland(int hX, int hY) {
 		setImages(); // creates all the required images
+		circeHouse = new House(this, houseImage, hX, hY, "circe");
 		circeHouse.putOnIsland(this);
+		
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 400);
 		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 300, 100);
