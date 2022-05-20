@@ -47,8 +47,6 @@ public class DrawingSurface extends PApplet {
 		
 		info = new Information(this);
 		workshop = new WorkTable(this);
-		
-		
 	}
 	
 	/**
@@ -68,8 +66,8 @@ public class DrawingSurface extends PApplet {
 		recipe.setVisible(false);
 		exit.setVisible(false);
 		
-		//font = createFont("Files/DrakalligroOriginal.ttf", 128);
-		font = createFont("Files/Libra-Normal.otf", 128);
+		font = createFont("Files/DrakalligroOriginal.ttf", 128);
+		//font = createFont("Files/Libra-Normal.otf", 128);
 		cImage = loadImage("Files/CirceFrontStand.png");
 		circe = new Circe(cImage, 300, 300);
 		iImage = loadImage("Files/IslandImg.png");
@@ -85,15 +83,15 @@ public class DrawingSurface extends PApplet {
 		drawCount++;
 		
 		//drawCount += 1/frameRate;
-		if(drawCount >= 90) {
+		if(drawCount >= 90) { //90
 			drawCount = 0;
 			hours ++;
-			System.out.println("HOUR UP : " + hours + " " + frameRate);
+			//System.out.println("HOUR UP : " + hours + " " + frameRate);
 		}
 		if(hours == 24) {
 			drawCount = 0;
 			hours = 0;
-			System.out.println("DAY UP");
+			//System.out.println("DAY UP");
 			days++;
 		}
 		
