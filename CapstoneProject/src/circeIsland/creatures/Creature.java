@@ -16,6 +16,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	private PImage image;
 	private Island myIsland;
 	private boolean isInGrid;
+	private int count;
 	
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
@@ -154,7 +155,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public void act(int dir) {
 		if(isInGrid) {
-			if(dir == -1) 
+			if(dir == -1 && count%10 == 0) 
 				dir = (int)(Math.random() * 30);
 			
 			
@@ -163,6 +164,7 @@ public abstract class Creature extends Rectangle2D.Double{
 			}else if(dir == UP || dir == DOWN) {
 				moveY(dir);
 			}
+			count++;
 		}
 	}
 	
