@@ -534,10 +534,10 @@ public class Island extends Screen{
 		malImage = surface.loadImage("Files/MaliciousFrontStand.png");
 		pigImage = surface.loadImage("Files/PigFrontStand.png");
 		gardenEmpty = surface.loadImage("Files/GardenEmpty.png");
-		gardenA1 = surface.loadImage("Files/AnithosBud.png"); 
-		gardenA2 = surface.loadImage("Files/AnithosSproud.png"); 
-		gardenA3 = surface.loadImage("Files/AnithosGrown.png");
-		gardenA4 = surface.loadImage("Files/AnithosDead.png");
+		gardenA1 = surface.loadImage("Files/GardenAnithosBud.png"); 
+		gardenA2 = surface.loadImage("Files/GardenAnithosSproud.png"); 
+		gardenA3 = surface.loadImage("Files/GardenAnithosGrown.png");
+		gardenA4 = surface.loadImage("Files/GardenAnithosDead.png");
 		houseImage = surface.loadImage("Files/HouseVisitor.png");
 		penImage = surface.loadImage("Files/GardenEmpty.png");
 		allGarden = new PImage[5];
