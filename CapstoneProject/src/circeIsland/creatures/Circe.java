@@ -82,13 +82,18 @@ public class Circe extends Creature{
 		super.draw(g);
 		g.fill(255);
 		
-//		float screenWidth = super.getIsland().WIDTH;
-//		float screenHeight = super.getIsland().HEIGHT;
-//		float cell = 20000/screenWidth;
-//		float cellStartX =  (screenWidth - (holdings.length * cell))/2;
-//		for(int i = 0; i<holdings.length; i++) {
-//			g.rect(cellStartX, screenHeight-cell-20, cellStartX + cell, screenHeight-20);
-//		}
+		float screenWidth = super.getIsland().WIDTH;
+		float screenHeight = super.getIsland().HEIGHT;
+		float cell = screenHeight/20;
+		float cellStartY =  (screenHeight - (holdings.length * cell))/2;
+		for(int i = 0; i<holdings.length; i++) {
+			g.rect(screenWidth-cell-50,cellStartY + cell*i, cell, cell);
+//			holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell-50);
+		}
+	}
+	
+	public int getInventoryByCoor (int x, int y) {
+		 return -1;
 	}
 	
 	public int nextEmptySpace() {
