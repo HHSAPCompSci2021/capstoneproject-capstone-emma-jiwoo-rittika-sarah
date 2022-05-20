@@ -238,7 +238,7 @@ public class Island extends Screen{
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
 
-		System.out.println("IMPORTANT : " + clickedElement.toString());
+		//System.out.println("IMPORTANT : " + clickedElement.toString());
 		
 		 
 		if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
@@ -319,10 +319,12 @@ public class Island extends Screen{
 					MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
 					boolean isNear = Math.abs(mv.getXGrid() - circe.getXGrid()) < 3 && Math.abs(mv.getYGrid() - circe.getYGrid()) < 3;
 					//near enough, has food and wine
-					if(isNear && circeInventoryContains(11) && circeInventoryContains(12)) {
+					int bread = circe.inventoryContains(Holdable.BREAD);
+					int potion = circe.inventoryContains(Holdable.POTION);
+					if(isNear && bread != -1 && potion != -1) {
 						circe.turnPig(mv);
-						circe.removeFromInventory(Holdable.BREAD);
-						circe.removeFromInventory(Holdable.POTION);
+						circe.removeFromInventory(bread);
+						circe.removeFromInventory(potion);
 						break; //can only turn one at a time
 					}
 					
@@ -333,16 +335,16 @@ public class Island extends Screen{
 	}
 	
 	
-	private boolean circeInventoryContains(int type) { //should be in circe
-		for(int i = 0; i<circe.getInventory().length; i++) {
-			if(circe.getInventory()[i] != null && circe.getInventory()[i].getType() == type) {
-				return true;
-			}
-		}
-		
-		return false;
-		
-	}
+//	private boolean circeInventoryContains(int type) { //should be in circe
+//		for(int i = 0; i<circe.getInventory().length; i++) {
+//			if(circe.getInventory()[i] != null && circe.getInventory()[i].getType() == type) {
+//				return true;
+//			}
+//		}
+//		
+//		return false;
+//		
+//	}
 	
 	/**
 	 * Returns the indexes of the location in the 2DArray of elements, given the x and y coordinates on the screen, 
@@ -475,7 +477,7 @@ public class Island extends Screen{
 	
 	public void setImages() {
 		nymphImage = surface.loadImage("Files/NymphFrontStand.png");
-		malImage = surface.loadImage("Files/NymphFrontStand.png");
+		malImage = surface.loadImage("Files/MaliciousFrontStand.png");
 		pigImg = surface.loadImage("Files/PigFrontStand.png");
 	}
 	
@@ -484,11 +486,18 @@ public class Island extends Screen{
 		circeHouse.putOnIsland(this);
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 400);
-		Nymph c2 = new Nymph(malImage, 300, 100);
+		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 300, 100);
 		Pig c3 = new Pig(pigImg, 200, 250);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
 		c3.putOnIsland(this);
+		
+		
+		circe.addOnInventory(new Holdable(Holdable.BREAD));
+		circe.addOnInventory(new Holdable(Holdable.POTION));
+		circe.addOnInventory(new Holdable(Holdable.ANITHOS_SEED));
+		circe.addOnInventory(new Holdable(Holdable.WATER));
+		
 		
 		//fill with water
 		for(int i = 7; i<=8; i++) {
