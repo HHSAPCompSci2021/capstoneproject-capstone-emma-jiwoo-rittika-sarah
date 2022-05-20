@@ -2,12 +2,11 @@ package circeIsland.elements;
 
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
-import processing.core.PImage;
 
 public class Land extends Element{
 
-	public Land(Island i,  PImage p, int xInput, int yInput) {
-		super(i, p, xInput, yInput);
+	public Land(Island i, int xInput, int yInput) {
+		super(i, xInput, yInput);
 		setStandable(true);
 	}
 

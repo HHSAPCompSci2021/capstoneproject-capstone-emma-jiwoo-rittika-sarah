@@ -16,6 +16,14 @@ public abstract class Element {
 	private boolean standable;
 	private PImage image;
 
+	public Element(Island i, int xInput, int yInput) {
+		island = i;
+		x = xInput;
+		y = yInput;
+		isInGrid = true;
+		standable = false;
+	}
+	
 	public Element(Island i, PImage p, int xInput, int yInput) {
 		island = i;
 		image = p;
