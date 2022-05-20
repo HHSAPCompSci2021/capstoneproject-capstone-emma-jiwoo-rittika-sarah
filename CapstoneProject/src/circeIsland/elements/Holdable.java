@@ -34,6 +34,11 @@ public class Holdable {
 		this.type = type;
 	}
 	
+	public Holdable(int type, PImage image) {
+		this.type = type;
+		this.image = image;
+	}
+	
 	public int getType() {
 		return type;
 	}

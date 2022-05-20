@@ -8,10 +8,15 @@ import processing.core.PImage;
 
 public class GardenLand extends Element{	
 
-	private String type;//Plant types: grapes, barley, maratho, anithos
+	private int type;//Plant types: grapes, barley, maratho, anithos
 	int hydrationLvl; //watering plants increases the hydration level to 3. it decreases by 1 daily so you must
 					  //water your plants periodically for them to survive. watering brings it back to 5 
 	public int lifeState; //0 is unplanted, 1 is bud, 2 is sprout, 3 is ready to harvest, 4 is dead 
+	public static final int GRAPE_SEED = 1;
+	public static final int BARLEY_SEED = 2;
+	public static final int MARATHOS_SEED = 3;
+	public static final int ANITHOS_SEED = 4;
+	
 	private static final int UNPLANTED = 0;
 	private static final int BUD = 1;
 	private static final int SPROUT = 2;
@@ -33,18 +38,18 @@ public class GardenLand extends Element{
 		sproutImage = p[2];
 		grownImage = p[3];
 		deadImage = p[4];
-		this.type = "";
+		this.type = 0;
 		lifeState = 0; 
 		setStandable(true);
 		startDay = 0;
 		currentDay = 0;
 	}
 	
-	public String getType() {
+	public int getType() {
 		return type;
 	}
 		
-	public void plant(String type, PImage[] images) {
+	public void plant(int type, PImage[] images) {
 		budImage = images[0];
 		sproutImage = images[1];
 		grownImage = images[2];
@@ -75,7 +80,7 @@ public class GardenLand extends Element{
 	
 	public void harvest() {
 		startDay = 0;
-		type = "";
+		type = 0;
 		hydrationLvl = 0;
 		lifeState = 0;
 	}
