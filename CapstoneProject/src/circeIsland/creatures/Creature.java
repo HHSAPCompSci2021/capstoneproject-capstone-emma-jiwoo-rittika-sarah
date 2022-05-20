@@ -155,7 +155,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	public void act(int dir) {
 		if(isInGrid) {
 			if(dir == -1) 
-				dir = (int)(Math.random() * 50);
+				dir = (int)(Math.random() * 30);
 			
 			
 			if(dir == LEFT || dir == RIGHT) {
