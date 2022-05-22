@@ -44,7 +44,7 @@ public class WorkTable extends Screen{
 	
 	
 	public WorkTable(DrawingSurface surface) {
-		super(800,600, surface);
+		super(1200,600, surface);
 		//this.surface = surface;
 		//cookButton = new Rectangle(800/2-100,600/2-50,200,100);
 		storage = new ArrayList<ArrayList<Holdable>>();

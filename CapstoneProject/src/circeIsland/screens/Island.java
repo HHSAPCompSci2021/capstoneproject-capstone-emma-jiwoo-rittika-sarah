@@ -26,7 +26,7 @@ public class Island extends Screen{
 //	private Nymph newVisitor;
 //	private MaliciousVisitor newMalVisitor;
 	
-	private Rectangle infoButton, warningBox, inventoryRect;
+	private Rectangle infoButton, inventoryRect;
 	
 	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone, showWarning;
 	private int[] selectedSpot;
@@ -49,10 +49,10 @@ public class Island extends Screen{
 	 * @param houseY the y coordinate of Circe's house
 	 */
 	public Island(DrawingSurface surface, PImage islandImage, Circe c, int houseX, int houseY) {
-		super(800,600, surface);
+		super(1200,900, surface);
 		this.islandImage = islandImage;
 		
-		element = new Element[15][15];
+		element = new Element[25][25];
 		
 		circeHouse = new House(this, null, houseX, houseY, "circe");
 		
@@ -65,7 +65,6 @@ public class Island extends Screen{
 		gardenElementSelected = false;
 		mouseClickEnabled = true;
 		selectedSpot = new int[2];
-		
 		setupIsland(houseX, houseY);
 	}
 	
@@ -79,7 +78,6 @@ public class Island extends Screen{
 		super.draw();
 		
 		infoButton.setBounds(surface.width-80, 20, surface.width / element.length -10, surface.height /element[0].length - 10);
-		
 		
 		int borderX = 12;
 		int borderY = 18;
@@ -110,18 +108,22 @@ public class Island extends Screen{
 		surface.strokeWeight(0);
 		for(int i = 0; i<element.length; i++) { //x
 			for(int j = 0; j<element[0].length; j++) { //y
-				if(element[i][j] == null) {
-					//surface.fill(15, 163, 189); //the ocean around the island
+//				surface.text("" + i + ", " + j, 6+ j*cellWidth + 5, 9 + i*cellHeight + 10);
+				if(element[j][i] == null) {
 					surface.noFill();
 					surface.rect(6 + (j * cellWidth), 9 + (i*cellHeight), cellWidth, cellHeight);
+					
+//					surface.fill(0);
+//					surface.text("null", 6+ j*cellWidth + 10, 9 + i*cellHeight + 15);
+					
 				}
 				else {
 					surface.noFill();
-					if(element[i][j] instanceof Land) {
+					if(element[j][i] instanceof Land) {
 						surface.rect(6 + (j * cellWidth), 9 + (i*cellHeight), cellWidth,cellHeight);
 					}
 					else {
-						element[i][j].draw(surface, cellWidth, cellHeight);
+						element[j][i].draw(surface, cellWidth, cellHeight);
 					}
 					//element[i][j].draw(surface, cellWidth, cellHeight);
 				}
@@ -159,7 +161,6 @@ public class Island extends Screen{
 		if (dropDone) {
 			mouseClickEnabled = true;
 			list.setVisible(false);
-			//list.dispose();
 			dropDone = false;
 		}
 		
@@ -167,8 +168,6 @@ public class Island extends Screen{
 		for(Creature c : creatures) {
 			c.act();
 			c.draw(surface);
-			//c.act();
-			//c.act();
 		}
 		circe.draw(surface);
 		
@@ -180,14 +179,9 @@ public class Island extends Screen{
 				drawWarningMessage(1);
 		}
 		
-		//drawInventory();
-		
-		
 	}
 	
 
-	
-	
 	public void addNymph() {
 		Nymph newVisitor = new Nymph(nymphImage, 200, 200);
 		newVisitor.putOnIsland(this);
@@ -230,11 +224,14 @@ public class Island extends Screen{
 	
 	
 	private void drawWarningMessage(int code) {
-		surface.rect(60,  50,  surface.width - 120,  surface.height - 120);
+		//surface.rect(60,  50,  surface.width - 120,  surface.height - 120);
 		String msg;
 		
 		switch(code) {
 		case 1: //too many nymphs
+			msg = "Build more houses to accommodate the nymphs!";
+		case 2:
+			
 		}
 		
 	}
@@ -254,23 +251,46 @@ public class Island extends Screen{
 		
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 
-//		if(clickInGrid[0] < 0 || clickInGrid[1] < 0 || clickInGrid[0] >= element[0].length || clickInGrid[1] >= element.length) {
-//			System.out.println("null");
-//			return;
+		
+		Element clickedElement = getElement(clickInGrid[1], clickInGrid[0]);
+		
+//		if(clickedElement != null) {
+//			System.out.println(clickedElement.toString());
+//		}
+//		else if(clickedElement == null) {
+//			System.out.println("NULL");
 //		}
 		
-		Element clickedElement = getElement(clickInGrid[0], clickInGrid[1]);
-
-		//System.out.println("IMPORTANT : " + clickedElement.toString());
+		for (int i = 0; i<creatures.size(); i++) {
+			if (creatures.get(i) instanceof MaliciousVisitor) {
+				MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
+				boolean isNear = Math.abs(mv.getXGrid() - circe.getXGrid()) < 3 && Math.abs(mv.getYGrid() - circe.getYGrid()) < 3;
+				int hold = circe.getInventory()[circe.getCurrentHold()].getType();
+				
+				
+				if(mv.contains(mouseX, mouseY) && isNear) {
+//					if(mv.isRunning() && (hold == Holdable.BREAD || hold == Holdable.WINE)){
+//						mv.stopRunning();
+//						circe.removeFromInventory(circe.getCurrentHold());
+//					}
+//					else if(!mv.isRunning() && hold == Holdable.POTION) {
+//						circe.turnPig(mv);
+//						circe.removeFromInventory(circe.getCurrentHold());
+//					}
+				}
+			}
+		}
+		
+		
+		
 		
 		if(circe.getInventoryByCoor(mouseX, mouseY) != -1) {
             circe.grab(circe.getInventoryByCoor(mouseX, mouseY));
 		} 
-		else if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
-			System.out.println("at circe's");
-			surface.switchScreen(0);
-		}
-		
+//		else if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
+//			System.out.println("at circe's");
+//			surface.switchScreen(0);
+//		}
 		else if(clickedElement instanceof GardenLand && circe.intersects(clickedElement.getXCoor() * cellWidth, clickedElement.getYCoor() * cellHeight, cellWidth, cellHeight)){//clickedElement != null && clickedElement instanceof GardenLand){//element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
 			System.out.println("IT IS GARDEN");
 			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);
@@ -284,23 +304,23 @@ public class Island extends Screen{
 				if(curr == Holdable.ANITHOS_SEED) {
 					System.out.println("let's add a");
 					e.plant(curr, allAGarden);
+					circe.removeFromInventory(circe.getCurrentHold());
 				}
 				else if(curr == Holdable.BARLEY_SEED) {
 					System.out.println("let's add b");
 					e.plant(curr, allBGarden);
+					circe.removeFromInventory(circe.getCurrentHold());
 				}
 				else if (curr == Holdable.GRAPE_SEED) {
 					System.out.println("let's add g");
 					e.plant(curr, allGGarden);
+					circe.removeFromInventory(circe.getCurrentHold());
 				}
 				else if(curr == Holdable.MARATHOS_SEED) {
 					System.out.println("let's add m");
 					e.plant(curr, allMGarden);
+					circe.removeFromInventory(circe.getCurrentHold());
 				}
-				
-//				gardenElementSelected = true;
-//				selectedSpot[0] = clickInGrid[0];
-//				selectedSpot[1] = clickInGrid[1];
 			}
 			
 		}
@@ -353,33 +373,39 @@ public class Island extends Screen{
 			circe.moveX(Creature.RIGHT);
 		}
 		
+		int[] coor = circe.coorToGrid(circe.getCenterX(), circe.getCenterY());
+		System.out.println("Circe grid : " + Arrays.toString(coor));
+		if(element[coor[0]][coor[1]] instanceof Land) {
+			System.out.println("She's at land");
+		}
+		
 		if(key == '\n') {
 			float cellWidth = (surface.width - 11) / element[0].length;
 			float cellHeight = (surface.height - 17) / element.length;
 			
-			Rectangle2D.Double cHouseRect = new Rectangle2D.Double(circeHouse.getXCoor() * cellWidth, circeHouse.getYCoor() * cellHeight, 2*cellWidth, 2*cellHeight);
+			Rectangle2D.Double cHouseRect = new Rectangle2D.Double(circeHouse.getXCoor() * cellWidth - 20, circeHouse.getYCoor() * cellHeight - 20, 2*cellWidth + 40, 2*cellHeight + 40);
 			if(circe.intersects(cHouseRect)) {
 				System.out.println("switching?");
 				surface.switchScreen(0);
 			}
 			
 			//checking if she is near the malicious visitor
-			for(int i = 0; i<creatures.size(); i++) {
-				if(creatures.get(i) instanceof MaliciousVisitor) {
-					MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
-					boolean isNear = Math.abs(mv.getXGrid() - circe.getXGrid()) < 3 && Math.abs(mv.getYGrid() - circe.getYGrid()) < 3;
-					//near enough, has food and wine
-					int bread = circe.inventoryContains(Holdable.BREAD);
-					int potion = circe.inventoryContains(Holdable.POTION);
-					if(isNear && bread != -1 && potion != -1) {
-						circe.turnPig(mv);
-						circe.removeFromInventory(bread);
-						circe.removeFromInventory(potion);
-						break; //can only turn one at a time
-					}
-					
-				}
-			}
+//			for(int i = 0; i<creatures.size(); i++) {
+//				if(creatures.get(i) instanceof MaliciousVisitor) {
+//					MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
+//					boolean isNear = Math.abs(mv.getXGrid() - circe.getXGrid()) < 3 && Math.abs(mv.getYGrid() - circe.getYGrid()) < 3;
+//					//near enough, has food and wine
+//					int bread = circe.inventoryContains(Holdable.BREAD);
+//					int potion = circe.inventoryContains(Holdable.POTION);
+//					if(isNear && bread != -1 && potion != -1) {
+//						circe.turnPig(mv);
+//						circe.removeFromInventory(bread);
+//						circe.removeFromInventory(potion);
+//						break; //can only turn one at a time
+//					}
+//					
+//				}
+//			}
 		}
 		
 	}
@@ -526,33 +552,33 @@ public class Island extends Screen{
 	 * @param list the list of options in the drop-down menu
 	 * @param event
 	 */
-	public void handlePlantChange(GDropList list, GEvent event) {
-		System.out.println("plant change handle");
-		//mouseClickEnabled = false;
-		String text = list.getSelectedText();
-		list.setVisible(false);
-		int x = selectedSpot[0];
-		int y = selectedSpot[1];
-		
-		if(text.equals("Grape")) {
-			GardenLand gl = (GardenLand)element[x][y];
-			//gl.plant("grape");
-		}
-		else if(text.equals("Barley")) {
-			GardenLand gl = (GardenLand)element[x][y];
-			//gl.plant("barley");
-		}
-		else if(text.equals("Marathos")) {
-			GardenLand gl = (GardenLand)element[x][y];
-			//gl.plant("marathos");
-		}
-		else if(text.equals("Anithos")) {
-			GardenLand gl = (GardenLand)element[x][y];
-			//gl.plant("barley");
-		}
-
-		dropDone = true;
-	}
+//	public void handlePlantChange(GDropList list, GEvent event) {
+//		System.out.println("plant change handle");
+//		//mouseClickEnabled = false;
+//		String text = list.getSelectedText();
+//		list.setVisible(false);
+//		int x = selectedSpot[0];
+//		int y = selectedSpot[1];
+//		
+//		if(text.equals("Grape")) {
+//			GardenLand gl = (GardenLand)element[x][y];
+//			//gl.plant("grape");
+//		}
+//		else if(text.equals("Barley")) {
+//			GardenLand gl = (GardenLand)element[x][y];
+//			//gl.plant("barley");
+//		}
+//		else if(text.equals("Marathos")) {
+//			GardenLand gl = (GardenLand)element[x][y];
+//			//gl.plant("marathos");
+//		}
+//		else if(text.equals("Anithos")) {
+//			GardenLand gl = (GardenLand)element[x][y];
+//			//gl.plant("barley");
+//		}
+//
+//		dropDone = true;
+//	}
 	
 	
 	/**
@@ -634,6 +660,7 @@ public class Island extends Screen{
 		
 	}
 	
+	
 	private void setupIsland(int hX, int hY) {
 		setImages(); // creates all the required images
 		circeHouse.setImage(cHImage);
@@ -649,109 +676,166 @@ public class Island extends Screen{
 		circe.addOnInventory(new Holdable(Holdable.BREAD));
 		circe.addOnInventory(new Holdable(Holdable.POTION));
 		
-		//fill with land
-		element[0][8] = new Land(this, 0, 8);
-		element[0][8].setIsInGrid(true);
-		element[1][4] = new Land(this, 1, 4);
-		element[1][4].setIsInGrid(true);
-		element[1][5] = new Land(this, 1, 5);
-		element[1][5].setIsInGrid(true);
 		
-		for(int i = 8; i<= 11; i++) {
+		//ALL LAND
+		element[14][1] = new Land(this, 14, 1);
+		element[14][1].setIsInGrid(true);
+		
+		element[13][2] = new Land(this, 13, 2);
+		element[13][2].setIsInGrid(true);
+		element[14][2] = new Land(this, 14, 2);
+		element[14][2].setIsInGrid(true);
+		element[15][2] = new Land(this, 15, 2);
+		element[15][2].setIsInGrid(true);
+		
+		element[7][3] = new Land(this, 7, 3);
+		element[7][3].setIsInGrid(true);
+		element[8][3] = new Land(this, 8, 3);
+		element[8][3].setIsInGrid(true);
+		element[9][3] = new Land(this, 9, 3);
+		element[9][3].setIsInGrid(true);
+		
+		for(int i = 13; i<=19; i++) {
+			Land l = new Land(this, i, 3);
+			element[i][3] = l;
+			l.setIsInGrid(true);
+		}
+		
+		for(int i = 6; i<=9; i++) {
+			Land l = new Land(this, i, 4);
+			element[i][4] = l;
+			l.setIsInGrid(true);
+		}
+		
+		for(int i = 13; i<=20; i++) {
+			Land l = new Land(this, i, 4);
+			element[i][4] = l;
+			l.setIsInGrid(true);
+		}
+		
+		for(int i = 5; i<=18; i++) {
+			for(int j = 3; j<=21; j++) {
+				Land l = new Land(this, j, i);
+				element[j][i] = l;
+				l.setIsInGrid(true);
+			}
+		}
+		
+		for(int i = 10; i<=12; i++) {
+			element[i][5].setIsInGrid(false);
+			element[i][5] = null;
+		}
+		element[11][6].setIsInGrid(false);
+		element[11][6] = null;
+		
+		element[21][5].setIsInGrid(false);
+		element[21][5] = null;
+		element[21][6].setIsInGrid(false);
+		element[21][6] = null;
+		
+		element[3][9].setIsInGrid(false);
+		element[3][9] = null;
+		element[4][9].setIsInGrid(false);
+		element[4][9] = null;
+		element[3][10].setIsInGrid(false);
+		element[3][10] = null;
+		
+		element[8][18].setIsInGrid(false);
+		element[8][18] = null;
+		element[9][18].setIsInGrid(false);
+		element[9][18] = null;
+		
+		element[21][17].setIsInGrid(false);
+		element[21][17] = null;
+		element[21][18].setIsInGrid(false);
+		element[21][18] = null;
+		
+		for(int i = 11; i<=17; i++) {
+			Land l = new Land(this, 2, i);
+			element[2][i] = l;
+			l.setIsInGrid(true);
+		}
+		for(int i = 12; i<=15; i++) {
 			Land l = new Land(this, 1, i);
 			element[1][i] = l;
 			l.setIsInGrid(true);
 		}
-		for(int i = 3; i<=5; i++) {
-			Land l = new Land(this, 2, i);
-			element[2][i] = l;
+		for(int i = 8; i<=15; i++) {
+			Land l = new Land(this, 22, i);
+			element[22][i] = l;
 			l.setIsInGrid(true);
 		}
-		for(int i = 7; i<=11; i++) {
-			Land l = new Land(this, 2, i);
-			element[2][i] = l;
+		element[23][8] = new Land(this, 23, 8);
+		element[23][8].setIsInGrid(true);
+		
+		for(int i = 12; i<=15; i++) {
+			Land l = new Land(this, 23, i);
+			element[23][i] = l;
 			l.setIsInGrid(true);
 		}
-		for(int i = 3; i<=12; i++) {
-			Land l = new Land(this, 3, i);
-			element[3][i] = l;
+		
+		element[6][19] = new Land(this, 6, 19);
+		element[6][19].setIsInGrid(true);
+		element[7][19] = new Land(this, 7, 19);
+		element[7][19].setIsInGrid(true);
+		
+		for(int i = 11; i<=20; i++) {
+			Land l = new Land(this, i, 19);
+			element[i][19] = l;
 			l.setIsInGrid(true);
 		}
-		for(int i = 3; i<=13; i++) {
-			Land l = new Land(this, 4, i);
-			element[4][i] = l;
-			l.setIsInGrid(true);
-		}
-		for(int i = 2; i<=13; i++) {
-			Land l = new Land(this, 5, i);
-			element[5][i] = l;
-			l.setIsInGrid(true);
-		}
-		for(int i = 6; i<=9; i++) {
-			for(int j = 1; j<=6; j++) {
-				Land l = new Land(this, i, j);
-				element[i][j] = l;
+		
+		for(int i = 20; i<=22; i++) {
+			for(int j = 11; j<=18; j++) {
+				Land l = new Land(this, j, i);
+				element[j][i] = l;
 				l.setIsInGrid(true);
 			}
 		}
-		for(int i = 6; i<=7; i++) {
-			for(int j = 7; j<=13; j++) {
-				Land l = new Land(this, i, j);
-				element[i][j] = l;
-				l.setIsInGrid(true);
+		
+		element[19][20] = new Land(this, 19, 20);
+		element[19][20].setIsInGrid(true);
+		element[20][20] = new Land(this, 20, 20);
+		element[20][20].setIsInGrid(true);
+		
+		for(int i = 12; i<=	15; i++) {
+			Land l = new Land(this, i, 23);
+			element[i][23] = l;
+			l.setIsInGrid(true);
+		}
+		
+		
+		//POND
+//		element[1][0] = new Pond(this, 1, 0);
+//		element[1][0].setIsInGrid(true);
+		element[16][5] = new Pond(this, 16, 5);
+		element[16][5].setIsInGrid(true);
+		element[17][5] = new Pond(this, 17, 5);
+		element[17][5].setIsInGrid(true);
+		
+		for(int i = 6; i<=8; i++) {
+			for(int j = 14; j<=18; j++) {
+				Pond p = new Pond(this, j, i);
+				element[j][i] = p;
+				p.setIsInGrid(true);
 			}
 		}
-		for(int i = 9; i<=13; i++) {
-			Land l = new Land(this, 8, i);
-			element[8][i] = l;
-			l.setIsInGrid(true);
-		}
-		for(int i = 9; i<=12; i++) {
-			Land l = new Land(this, 9, i);
-			element[9][i] = l;
-			l.setIsInGrid(true);
-		}
 		
-		element[10][3] = new Land(this, 10, 3);
-		element[10][3].setIsInGrid(true);
+		element[19][7] = new Pond(this, 19, 7);
+		element[19][7].setIsInGrid(true);
+		element[19][8] = new Pond(this, 19, 8);
+		element[19][8].setIsInGrid(true);
 		
-		element[10][4] = new Land(this, 10, 4);
-		element[10][4].setIsInGrid(true);
-		
-		element[10][6] = new Land(this, 10, 6);
-		element[10][6].setIsInGrid(true);
-		
-		element[10][9] = new Land(this, 10, 9);
-		element[10][9].setIsInGrid(true);
-		
-		element[11][6] = new Land(this, 11, 6);
-		element[11][6].setIsInGrid(true);
-		element[11][9] = new Land(this, 11, 9);
-		element[11][9].setIsInGrid(true);
-		
-		for(int i = 6; i<=10; i++) {
-			Land l = new Land(this, 11, i);
-			element[12][i] = l;
-			l.setIsInGrid(true);
-		}
-		
-		element[13][7] = new Land(this, 13, 7);
-		element[13][7].setIsInGrid(true);
-		element[13][8] = new Land(this, 13, 8);
-		element[13][8].setIsInGrid(true);
-		
-		
-		
-		
-		//fill with water
-		for(int i = 7; i<=8; i++) {
-			for(int j = 8; j<= 11; j++) {
-				element[i][j] = new Pond(this, i, j);
-				element[i][j].setIsInGrid(true);
+		for(int i = 14; i<=	18; i++) {
+			if(i != 16) {
+				Pond p = new Pond(this, i, 9);
+				element[i][9] = p;
+				p.setIsInGrid(true);
 			}
 		}
 		
 		
+		//Circe's House
 		circeHouse.putOnIsland(this);
 		System.out.println("2");
 		for(int i = 0; i<element.length; i++) {
@@ -762,8 +846,6 @@ public class Island extends Screen{
 			}
 		}
 		
-		
 	}
-	
 
 }

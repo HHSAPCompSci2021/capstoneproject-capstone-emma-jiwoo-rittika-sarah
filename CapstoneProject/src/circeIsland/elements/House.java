@@ -56,7 +56,7 @@ public class House extends Element{
 		if (type == "circe") {
 			for (int j = getYCoor(); j<getYCoor()+ySize; j++) {
 				for (int k = getXCoor(); k<getXCoor()+xSize; k++) {
-					i.setElement(this,  k,  j);
+					i.setElement(this,  j,  k);
 				}
 			}
 		}

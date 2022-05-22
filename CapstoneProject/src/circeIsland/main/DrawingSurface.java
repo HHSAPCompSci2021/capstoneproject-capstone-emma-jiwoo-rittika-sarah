@@ -72,9 +72,18 @@ public class DrawingSurface extends PApplet {
 		font = createFont("Files/Libra-Normal.otf", 128);
 		cImage = loadImage("Files/CirceFrontStand.png");
 		circe = new Circe(cImage, 300, 300);
+<<<<<<< Updated upstream
 		iImage = loadImage("Files/Island2.png");
 		island = new Island(this, iImage, circe, 10, 5);
+=======
+		iImage = loadImage("Files/Island.png");
+		island = new Island(this, iImage, circe, 4, 14);
+		
+		
+		
+>>>>>>> Stashed changes
 		workshop.add(circe);
+		circe.setIsland(island);
 		currentScreen = island;
 	}
 	
@@ -85,7 +94,7 @@ public class DrawingSurface extends PApplet {
 		drawCount++;
 		
 		//drawCount += 1/frameRate;
-		if(drawCount >=90) {
+		if(drawCount >=5) {
 			drawCount = 0;
 			hours ++;
 	//		System.out.println("HOUR UP : " + hours + " " + frameRate);
@@ -95,9 +104,9 @@ public class DrawingSurface extends PApplet {
 			hours = 0;
 			System.out.println("DAY UP" + days + " " + frameRate);
 			days++;
-			if(days % 5 == 0) {
-				island.addNymph();
-			}
+//			if(days % 5 == 0 && days != 0) {
+//				island.addNymph();
+//			}
 		}
 		
 		textFont(font);
@@ -108,7 +117,7 @@ public class DrawingSurface extends PApplet {
 //		
 //		scale(ratioX, ratioY);
 		
-		background(255);// Clear the screen with a white background
+		background(255);
 		
 		textSize(12);
 		fill(0);

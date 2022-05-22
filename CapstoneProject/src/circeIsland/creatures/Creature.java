@@ -204,6 +204,8 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public abstract String getType();
 	
-	
+	public void setIsland(Island island) {
+		myIsland = island;
+	}
 	
 }
