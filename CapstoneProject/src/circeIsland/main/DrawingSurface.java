@@ -46,9 +46,6 @@ public class DrawingSurface extends PApplet {
 		//circe = new Circe()
 		
 		
-		
-		
-		
 	}
 	
 	/**

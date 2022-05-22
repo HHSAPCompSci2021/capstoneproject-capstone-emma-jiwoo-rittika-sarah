@@ -2,6 +2,7 @@ package circeIsland.screens;
 
 import java.awt.Rectangle;
 import circeIsland.main.DrawingSurface;
+import processing.core.PImage;
 
 /**
  * 
@@ -11,6 +12,7 @@ public class Information extends Screen{
 
 	private Rectangle exitButton;
 	private String info;
+	private PImage island, circe, mal, nymph, potion;
 	
 	/**
 	 * Creates a new information screen on the given PApplet
@@ -21,9 +23,12 @@ public class Information extends Screen{
 		exitButton = new Rectangle(super.WIDTH/2 - 25, super.HEIGHT - 100, 50, 30);
 		info = "Welcome to Circe's Island!"
 				+ "\n- To move Circe, use the WASD keys."
-				+ "\n- To enter Circe's workspace and make potions,move Circe to her house\n and press RETURN"
+				+ "\n- To enter Circe's workspace and make potions, move Circe to her house\n and press RETURN"
 				+ "\n- To add elements to the Island, click on a location and select the desired element."
-				+ "\n- To plant the garden, move Circe to a garden plot, click on the plot,\n and select the desired plant.";
+				+ "\n- To plant the garden, first move Circe to a garden plot. Ensure Circe is\n holding the desired seed, then click on the plot to plant the seed"
+				+ "\n- When a Malicious Visitor enters the Island, turn them into pigs. First feed\n them with food "
+				+ "to stop them from running away. Then feed them with the potion to convert them to\n pigs. Don't forget to give them a pig pen!";
+		setupImages();
 	}
 	
 	
@@ -55,6 +60,12 @@ public class Information extends Screen{
 		surface.fill(0);
 		surface.text(info,  50,  100);
 		
+		//images!
+		surface.image(island,  surface.width / 2 + 80, 100, 450, 275);
+		//surface.image(island,  surface.width / 2 + 100, surface.height + 100);
+		
+		
+		
 		surface.pop();
 	}
 	
@@ -64,5 +75,15 @@ public class Information extends Screen{
 		if(mouseX > exitButton.x && mouseX <= exitButton.x + exitButton.width && mouseY > exitButton.y && mouseY <= exitButton.y + exitButton.height) {
 			surface.switchScreen(1);
 		}
+	}
+	
+	
+	private void setupImages() {
+		island = surface.loadImage("Files/Island2.png");
+		circe = surface.loadImage("Files/CirceFrontStand.png");
+		mal = surface.loadImage("Files/MaliciousFrontStand.png");
+		nymph = surface.loadImage("Files/NymphFrontStand.png");
+		potion = surface.loadImage("Files/HoldablePotion");
+		
 	}
 }

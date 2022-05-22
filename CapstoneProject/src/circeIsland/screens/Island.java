@@ -49,7 +49,7 @@ public class Island extends Screen{
 	 * @param houseY the y coordinate of Circe's house
 	 */
 	public Island(DrawingSurface surface, PImage islandImage, Circe c, int houseX, int houseY) {
-		super(1200,900, surface);
+		super(1200, 900, surface);
 		this.islandImage = islandImage;
 		
 		element = new Element[25][25];
@@ -239,10 +239,7 @@ public class Island extends Screen{
 	
 	
 	public void processMouseClick(int mouseX, int mouseY) {
-		//System.out.println("Processing click");
 		if(!mouseClickEnabled) {
-			//System.out.println("ENETERED FALSE CLICK");
-			//mouseClickEnabled = true;
 			return;
 		}
 		
@@ -251,6 +248,9 @@ public class Island extends Screen{
 		
 		int[] clickInGrid = coorToGrid(mouseX, mouseY);
 
+		if(clickInGrid[0] < 0 || clickInGrid[0] > element.length -1 || clickInGrid[1] < 0 || clickInGrid[1] > element[0].length - 1) {
+			return;
+		}
 		
 		Element clickedElement = getElement(clickInGrid[1], clickInGrid[0]);
 		
@@ -265,18 +265,25 @@ public class Island extends Screen{
 			if (creatures.get(i) instanceof MaliciousVisitor) {
 				MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
 				boolean isNear = Math.abs(mv.getXGrid() - circe.getXGrid()) < 3 && Math.abs(mv.getYGrid() - circe.getYGrid()) < 3;
-				int hold = circe.getInventory()[circe.getCurrentHold()].getType();
-				
-				
-				if(mv.contains(mouseX, mouseY) && isNear) {
-//					if(mv.isRunning() && (hold == Holdable.BREAD || hold == Holdable.WINE)){
-//						mv.stopRunning();
-//						circe.removeFromInventory(circe.getCurrentHold());
-//					}
-//					else if(!mv.isRunning() && hold == Holdable.POTION) {
-//						circe.turnPig(mv);
-//						circe.removeFromInventory(circe.getCurrentHold());
-//					}
+				Holdable holding = circe.getInventory()[circe.getCurrentHold()];
+				if(holding == null) {
+					
+				}
+				else{
+					int hold = holding.getType();
+					
+					if(mv.contains(mouseX, mouseY) && isNear) {
+						if(mv.isRunning() && (hold == Holdable.BREAD || hold == Holdable.WINE)){
+							mv.stopRunning();
+							circe.removeFromInventory(circe.getCurrentHold());
+							return;
+						}
+						else if(!mv.isRunning() && hold == Holdable.POTION) {
+							circe.turnPig(mv);
+							circe.removeFromInventory(circe.getCurrentHold());
+							return;
+						}
+					}
 				}
 			}
 		}
