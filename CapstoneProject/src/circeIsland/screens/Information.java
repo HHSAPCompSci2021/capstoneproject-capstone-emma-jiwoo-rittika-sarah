@@ -62,6 +62,9 @@ public class Information extends Screen{
 		
 		//images!
 		surface.image(island,  surface.width / 2 + 80, 100, 450, 275);
+		surface.image(circe, surface.width / 4, 2 * surface.height / 3 - 30, 50, 150);
+		surface.image(mal, 2 * (surface.width / 4), 2 * surface.height / 3 - 30, 50, 150);
+		surface.image(nymph, 3 * (surface.width / 4), 2 * surface.height / 3 - 30, 50, 150);
 		//surface.image(island,  surface.width / 2 + 100, surface.height + 100);
 		
 		
@@ -83,7 +86,7 @@ public class Information extends Screen{
 		circe = surface.loadImage("Files/CirceFrontStand.png");
 		mal = surface.loadImage("Files/MaliciousFrontStand.png");
 		nymph = surface.loadImage("Files/NymphFrontStand.png");
-		potion = surface.loadImage("Files/HoldablePotion");
+		potion = surface.loadImage("Files/HoldablePotion.png");
 		
 	}
 }
