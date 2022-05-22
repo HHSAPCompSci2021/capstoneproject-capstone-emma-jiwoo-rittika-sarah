@@ -58,7 +58,6 @@ public class DrawingSurface extends PApplet {
 		brewer = new GButton(this, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
 		recipe = new GButton(this, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
 		exit = new GButton(this, 25, 25, 25, 25, "X");
-		recipe.addEventHandler(workshop,  "handleButtonClick");
 		brewer.setVisible(false);
 		recipe.setVisible(false);
 		exit.setVisible(false);
@@ -75,6 +74,7 @@ public class DrawingSurface extends PApplet {
 		
 		workshop.add(circe);
 		brewer.addEventHandler(workshop,  "handleButtonClick");
+		recipe.addEventHandler(workshop,  "handleButtonClick");
 		
 		exit.addEventHandler(workshop,  "handleButtonClick");
 		
@@ -97,7 +97,7 @@ public class DrawingSurface extends PApplet {
 		}
 		
 		//drawCount += 1/frameRate;
-		if(drawCount >=10) {
+		if(drawCount >=5) {
 			drawCount = 0;
 			hours ++;
 			//System.out.println("HOUR UP : " + hours + " " + frameRate);
@@ -237,7 +237,7 @@ public class DrawingSurface extends PApplet {
 	}
 	
 	
-	public void handleButtonEvents(GButton button, GEvent event) {}
+//	public void handleButtonEvents(GButton button, GEvent event) {}
 }
 
 

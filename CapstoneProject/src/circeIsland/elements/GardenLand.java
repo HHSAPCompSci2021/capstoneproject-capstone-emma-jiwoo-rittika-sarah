@@ -95,18 +95,28 @@ public class GardenLand extends Element{
 	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
 		act();
 		surface.push();
+		//System.out.println(lifeState);
 		if(getIsInGrid()) {
-			PImage toBeUsed;
+			PImage toBeUsed = null;
 			if (lifeState == UNPLANTED) {
 				toBeUsed = getImage();
-			if (lifeState == BUD)
+			}
+			else if (lifeState == BUD) {
+				System.out.println("BUD");
 				toBeUsed = budImage;
-			if (lifeState == SPROUT)
+			}
+			else if (lifeState == SPROUT) {
+				System.out.println("Sprout");
 				toBeUsed = sproutImage;
-			if (lifeState == GROWN)
+			}
+			else if (lifeState == GROWN) {
+				System.out.println("GRown");
 				toBeUsed = grownImage;
-			if (lifeState == DEAD)
+			}
+			else if (lifeState == DEAD) {
+				System.out.println("Dead");
 				toBeUsed = deadImage;
+			}
 			
 			if (toBeUsed != null) {
 				double rateX = getIsland().getWidth()/800;
@@ -117,19 +127,24 @@ public class GardenLand extends Element{
 				y *= rateY;
 				surface.image(toBeUsed,(float)x + 6,(float)y + 9,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
 			}
+			else {
+				System.out.println("NO IMAGE????");
 			}
 		}
+		
+		surface.pop();
+	}
 		
 //		surface.fill(105, 67, 45);
 //		surface.rect(6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight), cellWidth, cellHeight);
 //		surface.fill(0);
 //		surface.text("garden", 6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight)+cellHeight);
-		surface.pop();
-	}
+		
+	
 	
 	public void act() { 
 		if (currentDay != getIsland().getSurface().getDays() && isAlive()) {
-			hydrationLvl --;
+			//hydrationLvl --;
 			currentDay = getIsland().getSurface().getDays();
 		}
 		if (hydrationLvl <=0 && isAlive())
@@ -149,6 +164,12 @@ public class GardenLand extends Element{
 	
 	public boolean isMature() {
 		if (lifeState == GROWN)
+			return true;
+		return false;
+	}
+	
+	public boolean isDead() {
+		if(lifeState == DEAD)
 			return true;
 		return false;
 	}
