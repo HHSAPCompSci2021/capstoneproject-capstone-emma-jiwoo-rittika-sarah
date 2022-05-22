@@ -46,7 +46,7 @@ public class DrawingSurface extends PApplet {
 		//circe = new Circe()
 		
 		
-		workshop = new WorkTable(this);
+		
 		
 		
 	}
@@ -76,6 +76,7 @@ public class DrawingSurface extends PApplet {
 		circe = new Circe(cImage, 300, 300);
 		island = new Island(this, iImage, circe, 4, 14);
 		info = new Information(this);
+		workshop = new WorkTable(this);
 		
 		workshop.add(circe);
 		circe.setIsland(island);
