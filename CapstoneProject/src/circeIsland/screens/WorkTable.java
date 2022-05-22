@@ -324,6 +324,7 @@ public class WorkTable extends Screen{
 		recipes.add(wine);
 		recipes.add(bread);
 		recipes.add(swinePotion);
+		recipes.add(seeds);
 	}
 	
 	public void processMouseDrag(int mouseX, int mouseY) {
@@ -337,13 +338,13 @@ public class WorkTable extends Screen{
 	public void processMouseClick(int mouseX, int mouseY) {
 //		//inside the brew button
 		System.out.println("processing");
-//		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){
-//			brew();
-//		}
-//		else if(mouseX>recipeButton.x && mouseX<recipeButton.x + recipeButton.width && mouseY>recipeButton.y && mouseY<recipeButton.y + recipeButton.height) {
-//			System.out.println(showRecipes);
-//			showRecipes = !showRecipes;
-//		}
+		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){
+			brew();
+		}
+		else if(mouseX>recipeButton.x && mouseX<recipeButton.x + recipeButton.width && mouseY>recipeButton.y && mouseY<recipeButton.y + recipeButton.height) {
+			System.out.println(showRecipes);
+			showRecipes = !showRecipes;
+		}
 	}
 	
 	public void processMousePress(int mouseX, int mouseY) {
@@ -374,6 +375,7 @@ public class WorkTable extends Screen{
 			curHoldableX = mouseX;
 			curHoldableY = mouseY;
 			gainSpot = 3;
+			brewStage = 1;
 		}
 	}
 	
