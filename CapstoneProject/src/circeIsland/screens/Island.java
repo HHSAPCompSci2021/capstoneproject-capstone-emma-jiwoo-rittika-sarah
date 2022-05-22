@@ -294,10 +294,10 @@ public class Island extends Screen{
 		if(circe.getInventoryByCoor(mouseX, mouseY) != -1) {
             circe.grab(circe.getInventoryByCoor(mouseX, mouseY));
 		} 
-//		else if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
-//			System.out.println("at circe's");
-//			surface.switchScreen(0);
-//		}
+		else if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
+			System.out.println("at circe's");
+			surface.switchScreen(0);
+		}
 		else if(clickedElement instanceof GardenLand && circe.intersects(clickedElement.getXCoor() * cellWidth, clickedElement.getYCoor() * cellHeight, cellWidth, cellHeight)){//clickedElement != null && clickedElement instanceof GardenLand){//element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
 			System.out.println("IT IS GARDEN");
 			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);

@@ -80,10 +80,10 @@ public class WorkTable extends Screen{
 		for (ArrayList<Holdable> h: storage) {
 			h.add(new Holdable(i));
 			if (i == 5 || i == 8 || i == 7) {
-				h.add(new Holdable(i));
-				h.add(new Holdable(i));
-				h.add(new Holdable(i));
-				h.add(new Holdable(i));
+				h.add(new Holdable(i, holdableImages[i-1]));
+				h.add(new Holdable(i, holdableImages[i-1]));
+				h.add(new Holdable(i, holdableImages[i-1]));
+				h.add(new Holdable(i, holdableImages[i-1]));
 			}
 				
 			i++;
@@ -92,11 +92,11 @@ public class WorkTable extends Screen{
 	
 	public void add(Circe c) {
 		circe = c;
-		circe.setInventory(0, new Holdable(4));
-		circe.setInventory(1, new Holdable(3));
-		circe.setInventory(3, new Holdable(10));
-		circe.setInventory(4, new Holdable(12));
-		circe.setInventory(5, new Holdable(11));
+		circe.setInventory(0, new Holdable(4, holdableImages[3]));
+		circe.setInventory(1, new Holdable(3, holdableImages[2]));
+		circe.setInventory(3, new Holdable(10, holdableImages[9]));
+		circe.setInventory(4, new Holdable(12, holdableImages[11]));
+		circe.setInventory(5, new Holdable(11, holdableImages[10]));
 
 	}
 	
@@ -105,6 +105,19 @@ public class WorkTable extends Screen{
 		cauldronNeutralFullImage = surface.loadImage("Files/CauldronNeutralFull.png");
 		cauldronHappyImage = surface.loadImage("Files/CauldronHappy.png");
 		cauldronSadImage = surface.loadImage("Files/CauldronSad.png");
+		holdableImages = new PImage[12];
+		holdableImages[0] = surface.loadImage("Files/HoldableSeedGrape.png");
+		holdableImages[1] = surface.loadImage("Files/HoldableSeedBarley.png");
+		holdableImages[2] = surface.loadImage("Files/HoldableSeedMarathos.png");
+		holdableImages[3] = surface.loadImage("Files/HoldableSeedAnithos.png");
+		holdableImages[4] = surface.loadImage("Files/HoldableGrape.png");
+		holdableImages[5] = surface.loadImage("Files/HoldableBarley.png");
+		holdableImages[6] = surface.loadImage("Files/HoldableAnithos.png");
+		holdableImages[7] = surface.loadImage("Files/HoldableMarathos.png");
+		holdableImages[8] = surface.loadImage("Files/HoldableWater.png");
+		holdableImages[9] = surface.loadImage("Files/HoldableWine.png");
+		holdableImages[10] = surface.loadImage("Files/HoldableBread.png");
+		holdableImages[11] = surface.loadImage("Files/HoldablePotion.png");
 		
 	}
 	
@@ -117,6 +130,7 @@ public class WorkTable extends Screen{
 		surface.background(255,255,255);
 		
 //		surface.image(cauldronNeutralEmptyImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
+	//	surface.image(holdableImages[5], 0, 0, 50, 50);
 
 		drawInventory();
 		drawCirceInventory();
@@ -233,7 +247,7 @@ public class WorkTable extends Screen{
 				
 				//draws item
 				if (inventory[i][j] != null)
-					inventory[i][j].draw(surface, cellCenterX, cellCenterY, cellWidth, cellHeight);
+					inventory[i][j].draw(surface, boxX+j*cellWidth, boxY + (i*cellHeight), cellWidth, cellHeight);
 				surface.pop();
 			}
 		}
@@ -338,13 +352,13 @@ public class WorkTable extends Screen{
 	public void processMouseClick(int mouseX, int mouseY) {
 //		//inside the brew button
 		System.out.println("processing");
-		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){
-			brew();
-		}
-		else if(mouseX>recipeButton.x && mouseX<recipeButton.x + recipeButton.width && mouseY>recipeButton.y && mouseY<recipeButton.y + recipeButton.height) {
-			System.out.println(showRecipes);
-			showRecipes = !showRecipes;
-		}
+//		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){
+//			brew();
+//		}
+//		else if(mouseX>recipeButton.x && mouseX<recipeButton.x + recipeButton.width && mouseY>recipeButton.y && mouseY<recipeButton.y + recipeButton.height) {
+//			System.out.println(showRecipes);
+//			showRecipes = !showRecipes;
+//		}
 	}
 	
 	public void processMousePress(int mouseX, int mouseY) {
@@ -359,7 +373,8 @@ public class WorkTable extends Screen{
 		}
 		if (click.intersects(holdingsButton)) {
 			locked = true;
-			curHoldable = toSpotCir(mouseX, mouseY);
+			Holdable spot = toSpotCir(mouseX, mouseY);
+			curHoldable = spot;
 		//	System.out.println("going in");
 			curHoldableX = mouseX;
 			curHoldableY = mouseY;
@@ -368,14 +383,11 @@ public class WorkTable extends Screen{
 		Rectangle brewedItemRect = new Rectangle(cauldron.x + cauldron.width/2 - 5, cauldron.y + cauldron.height/2 - 5, cauldron.x + cauldron.width/2 + 5, cauldron.y + cauldron.height/2 + 5);
 		if (click.intersects(brewedItemRect) && brewedItem != null) {
 			locked = true;
-			if (brewedItem.getType() == 1 || brewedItem.getType() == 2 || brewedItem.getType() == 3 || brewedItem.getType() == 4)
-				brewedItemNum = 4;
 			curHoldable = brewedItem;
 			brewedItem = null;
 			curHoldableX = mouseX;
 			curHoldableY = mouseY;
 			gainSpot = 3;
-			brewStage = 1;
 		}
 	}
 	
@@ -452,15 +464,15 @@ public class WorkTable extends Screen{
 		
 		else if (click.intersects(inventoryButton) && toElementInv(mouseX, mouseY).getType() == curHoldable.getType()) {
 			addToStorage(curHoldable);
-			if (brewedItem != null) {
+				if (brewedItemNum != 0 && gainSpot == 3) {
 				System.out.println(brewedItemNum);
-				if (brewedItemNum ==4) {
-					for (int i = 0; i<3; i++)
-						addToStorage(curHoldable);
-					brewedItemNum = 0;
+				addToStorage(curHoldable);
+				addToStorage(curHoldable);
+				addToStorage(curHoldable);
+
+				brewedItemNum = 0;
+			//	brewedItem = null;
 				}
-				brewedItem = null;
-			}
 		}
 		
 		else if (click.intersects(holdingsButton) && toIndexCir(mouseX, mouseY) > -1) {
@@ -564,9 +576,10 @@ public class WorkTable extends Screen{
 			
 			cauldronItems.clear();
 			brewedItem = h;
-			System.out.println(brewedItem.getType());
+		//	System.out.println(brewedItem.getType());
 			brewStage = 2;
-		}
+			if (brewedItem.getType() == 1 || brewedItem.getType() == 2 || brewedItem.getType() == 3 || brewedItem.getType() == 4)
+				brewedItemNum = 4;		}
 		else {
 			for (Holdable h: cauldronItems)
 				addToStorage(h);

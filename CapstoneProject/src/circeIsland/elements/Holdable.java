@@ -39,6 +39,10 @@ public class Holdable {
 		this.image = image;
 	}
 	
+	public void loadImage(PImage image) {
+		this.image = image;
+	}
+	
 	public int getType() {
 		return type;
 	}
@@ -75,13 +79,13 @@ public class Holdable {
 	
 	public void draw(DrawingSurface surface, float xCoor, float yCoor, float cellWidth, float cellHeight) {
 		surface.push();
-//		if (image != null) {
-//			surface.image(image, xCoor,yCoor,cellWidth,cellHeight);
-//		}
-		surface.fill(176, 54, 83);
-		surface.rect(10 + xCoor, 10 +yCoor, 10, 10);
-		surface.fill(0);
-		surface.text(getName(), 10 + xCoor, 10 + yCoor);
+		if (image != null) {
+			surface.image(image, xCoor,yCoor,cellWidth,cellHeight);
+		}
+//		surface.fill(176, 54, 83);
+//		surface.rect(10 + xCoor, 10 +yCoor, 10, 10);
+//		surface.fill(0);
+//		surface.text(getName(), 10 + xCoor, 10 + yCoor);
 		surface.pop();
 	}
 	
