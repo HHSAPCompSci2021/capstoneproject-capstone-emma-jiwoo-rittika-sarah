@@ -62,9 +62,9 @@ public class Information extends Screen{
 		
 		//images!
 		surface.image(island,  surface.width / 2 + 80, 100, 450, 275);
-		surface.image(circe, surface.width / 4, 2 * surface.height / 3 - 30, 50, 150);
-		surface.image(mal, 2 * (surface.width / 4), 2 * surface.height / 3 - 30, 50, 150);
-		surface.image(nymph, 3 * (surface.width / 4), 2 * surface.height / 3 - 30, 50, 150);
+		surface.image(circe, surface.width / 2 - 40, 2 * surface.height / 3 - 30, 80, 150);
+		surface.image(mal, surface.width / 2 - 150, 2 * surface.height / 3 - 30, 80, 150);
+		surface.image(nymph, surface.width / 2 + 150 , 2 * surface.height / 3 - 30, 80, 150);
 		//surface.image(island,  surface.width / 2 + 100, surface.height + 100);
 		
 		
