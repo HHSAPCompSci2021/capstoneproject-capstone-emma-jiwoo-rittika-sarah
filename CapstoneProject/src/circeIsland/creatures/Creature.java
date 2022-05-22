@@ -49,6 +49,9 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	// METHOD
 	
+	public boolean getIsInGrid() {
+		return isInGrid;
+	}
 	
 	public int getXGrid() {
 		return coorToGrid(x,y)[0];
@@ -108,6 +111,14 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public int getVel() {
 		return velocity;
+	}
+	
+	public int getCount() {
+		return count;
+	}
+	
+	public void increaseCount() {
+		count++;
 	}
 
 	public void setVel(int vel) {

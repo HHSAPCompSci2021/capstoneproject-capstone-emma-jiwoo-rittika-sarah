@@ -81,24 +81,26 @@ public class Circe extends Creature{
 	
 	public void draw(DrawingSurface g) {
 		super.draw(g);
-		g.push();
-		g.fill(255);
-		
-		float screenWidth = super.getIsland().WIDTH;
-		float screenHeight = super.getIsland().HEIGHT;
-		float cell = screenWidth/20;
-		float cellStartX =  (screenWidth - (holdings.length * cell))*9/10;
-		g.strokeWeight(7);
-		g.stroke(110,110,110);
-		for(int i = 0; i<holdings.length; i++) {
-			g.rect(cellStartX + cell*i,screenHeight-cell-60, cell, cell);
-			if(holdings[i] != null)
-				holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell-60, cell/2, cell/2);
+		if(super.getIsInGrid()) {
+			g.push();
+			g.fill(255);
+			
+			float screenWidth = super.getIsland().WIDTH;
+			float screenHeight = super.getIsland().HEIGHT;
+			float cell = screenWidth/20;
+			float cellStartX =  (screenWidth - (holdings.length * cell))*9/10;
+			g.strokeWeight(7);
+			g.stroke(110,110,110);
+			for(int i = 0; i<holdings.length; i++) {
+				g.rect(cellStartX + cell*i,screenHeight-cell-60, cell, cell);
+				if(holdings[i] != null)
+					holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell-60, cell/2, cell/2);
+			}
+			g.noFill();
+			g.stroke(255,205,0);
+			g.rect(cellStartX + cell*currentHold, screenHeight-cell-60,cell, cell);
+			g.pop();
 		}
-		g.noFill();
-		g.stroke(255,205,0);
-		g.rect(cellStartX + cell*currentHold, screenHeight-cell-60,cell, cell);
-		g.pop();
 	}
 	
 	public int getInventoryByCoor (int x, int y) {
