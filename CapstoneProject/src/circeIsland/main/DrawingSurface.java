@@ -72,7 +72,7 @@ public class DrawingSurface extends PApplet {
 		font = createFont("Files/Libra-Normal.otf", 128);
 		cImage = loadImage("Files/CirceFrontStand.png");
 		circe = new Circe(cImage, 300, 300);
-		iImage = loadImage("Files/IslandImg.png");
+		iImage = loadImage("Files/Island2.png");
 		island = new Island(this, iImage, circe, 10, 5);
 		workshop.add(circe);
 		currentScreen = island;
