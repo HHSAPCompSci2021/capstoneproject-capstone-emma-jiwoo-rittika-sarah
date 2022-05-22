@@ -32,9 +32,9 @@ public class DrawingSurface extends PApplet {
 	private PImage cImage, iImage;
 	private PFont font;
 	
-	public float ratioX, ratioY;
-	public int drawCount;
-	public int days, hours;
+	private float ratioX, ratioY;
+	private int drawCount, newCreatureCounter;
+	private int days, hours;
 	
 	
 	/**
@@ -87,12 +87,20 @@ public class DrawingSurface extends PApplet {
 	 */
 	public void draw() { 
 		drawCount++;
+		newCreatureCounter++;
+		
+		if(newCreatureCounter % 1000 == 0) {
+			island.addNymph();
+		}
+		if(newCreatureCounter % 3300 == 0) {
+			island.addMaliciousVisitor();
+		}
 		
 		//drawCount += 1/frameRate;
-		if(drawCount >=60) {
+		if(drawCount >=10) {
 			drawCount = 0;
 			hours ++;
-	//		System.out.println("HOUR UP : " + hours + " " + frameRate);
+			//System.out.println("HOUR UP : " + hours + " " + frameRate);
 		}
 		if(hours == 24) {
 			drawCount = 0;
@@ -104,7 +112,7 @@ public class DrawingSurface extends PApplet {
 //			}
 		}
 		
-		textFont(font);
+		
 //		ratioX = (float)width/currentScreen.WIDTH;
 //		ratioY = (float)height/currentScreen.HEIGHT;
 //
@@ -113,7 +121,7 @@ public class DrawingSurface extends PApplet {
 //		scale(ratioX, ratioY);
 		
 		background(255);
-		
+		textFont(font);
 		textSize(12);
 		fill(0);
 		
@@ -127,6 +135,24 @@ public class DrawingSurface extends PApplet {
 		}
 		if (currentScreen.equals(info)){
 			info.draw();
+		}
+		
+		drawTime();
+	}
+	
+	
+	private void drawTime() {
+		if(!currentScreen.equals(info)) {
+			push();
+			
+			float w = textWidth("Days : " + days + "   Time: " + hours + ":00");
+			
+			fill(222, 139, 62);
+			rect(20, 20, w + 30, 30);
+			
+			fill(0);
+			text("Days : " + days + "   Time: " + hours + ":00", 35, 40);
+			pop();
 		}
 	}
 	
@@ -156,10 +182,6 @@ public class DrawingSurface extends PApplet {
 		}
 	}
 	
-	
-	public void mouseWheel(MouseEvent event) {
-		//maybe zoom functionality??
-	}
 	
 	public void mouseDragged() {
 		currentScreen.processMouseDrag(mouseX, mouseY);
@@ -214,6 +236,8 @@ public class DrawingSurface extends PApplet {
 		return hours;
 	}
 	
+	
+	public void handleButtonEvents(GButton button, GEvent event) {}
 }
 
 

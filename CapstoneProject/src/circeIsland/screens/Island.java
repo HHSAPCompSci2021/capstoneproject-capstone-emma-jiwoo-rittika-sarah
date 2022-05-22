@@ -85,22 +85,7 @@ public class Island extends Screen{
 		float cellHeight = (surface.height - borderY) / element.length;
 		
 		
-		surface.push();
-		//int days = surface.getDays();
-		int hours = surface.getHours();
-		int factor = 1;
-		surface.image(islandImage, 0, 0, surface.width, surface.height);
-		if(hours >= 16 && hours <= 19) {
-			surface.fill(5, (hours - 7) * 10/factor);
-			surface.rect(0, 0, surface.width, surface.height);
-			factor++;
-		}
-		if(hours > 19) {
-			surface.fill(5, (10 + factor)* 10);
-			surface.rect(0, 0, surface.width, surface.height);
-			factor--;
-		}
-		surface.pop();
+		changeWithTime();
 		
 		
 		
@@ -181,6 +166,28 @@ public class Island extends Screen{
 		
 	}
 	
+	private void changeWithTime() {
+		surface.push();
+		//int days = surface.getDays();
+		int hours = surface.getHours();
+		int factor = 1;
+		surface.image(islandImage, 0, 0, surface.width, surface.height);
+		if(hours >= 16 && hours <= 19) {
+			//surface.tint(0, 153, 204);
+			surface.fill(5, (hours - 7) * 10/factor);
+			//surface.fill(5, (hours - factor) * 10 / factor);
+			surface.rect(0, 0, surface.width, surface.height);
+			factor++;
+		}
+		else if(hours > 19) {
+			System.out.println(hours);
+			surface.fill(5, (factor + 9) * 10);
+			//surface.fill(5, (10 + factor)* 10);
+			surface.rect(0, 0, surface.width, surface.height);
+			factor--;
+		}
+		surface.pop();
+	}
 
 	public void addNymph() {
 		Nymph newVisitor = new Nymph(nymphImage, 200, 200);
