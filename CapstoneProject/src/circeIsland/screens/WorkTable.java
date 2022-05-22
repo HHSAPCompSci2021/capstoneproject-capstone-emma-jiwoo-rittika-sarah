@@ -67,7 +67,7 @@ public class WorkTable extends Screen{
 		breadRecipe = new ArrayList<Holdable>();
 		seedsRecipe = new ArrayList<Holdable>();
 		potionRecipe = new ArrayList<Holdable>();
-				
+		setImages();	
 		declareRecipes();
 		addRecipes();
 		showRecipes = false;
@@ -108,12 +108,12 @@ public class WorkTable extends Screen{
 		
 	}
 	
-	private void setup() {
-		setImages();
-	}
+//	private void setup() {
+//		setImages();
+//	}
 	
 	public void draw() {
-
+		super.draw();
 		surface.background(255,255,255);
 		
 //		surface.image(cauldronNeutralEmptyImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
@@ -247,9 +247,18 @@ public class WorkTable extends Screen{
 		float bowlHeight = 200;
 			
 		surface.noFill();
+		surface.noStroke();
 		surface.rect(bowlX, bowlY, bowlWidth, bowlHeight);
 		
-		surface.image(cauldronNeutralEmptyImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
+		if (brewStage == 0)
+			surface.image(cauldronNeutralEmptyImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
+		if (brewStage == 1)
+			surface.image(cauldronNeutralFullImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
+		if (brewStage == 2)
+			surface.image(cauldronHappyImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
+		if (brewStage == 3)
+			surface.image(cauldronSadImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
+		
 
 		
 		String contents = "";
@@ -430,8 +439,10 @@ public class WorkTable extends Screen{
 		
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
 		if (curHoldable == null){}
-		else if (click.intersects(cauldron))
+		else if (click.intersects(cauldron)) {
 			cauldronItems.add(curHoldable);
+			brewStage = 1;
+		}
 		
 		//check if the current holding type is the same as the inventory type. if so, add to that
 		//if intersecting with holdingsButton and empty space, move into that space
@@ -552,13 +563,14 @@ public class WorkTable extends Screen{
 			cauldronItems.clear();
 			brewedItem = h;
 			System.out.println(brewedItem.getType());
+			brewStage = 2;
 		}
 		else {
 			for (Holdable h: cauldronItems)
 				addToStorage(h);
 			cauldronItems.clear();
+			brewStage = 3;
 		}
-		surface.text("BREWING",  100, 100);
 	}
 	
 	private Holdable matchesRecipe() {

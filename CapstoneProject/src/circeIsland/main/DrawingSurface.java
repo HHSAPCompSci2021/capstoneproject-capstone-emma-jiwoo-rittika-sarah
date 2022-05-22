@@ -77,7 +77,7 @@ public class DrawingSurface extends PApplet {
 		
 		workshop.add(circe);
 		circe.setIsland(island);
-		currentScreen = island;
+		currentScreen = workshop;
 	}
 	
 	/**
