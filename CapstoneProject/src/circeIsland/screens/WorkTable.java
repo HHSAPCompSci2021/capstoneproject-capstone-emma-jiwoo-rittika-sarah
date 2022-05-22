@@ -78,14 +78,13 @@ public class WorkTable extends Screen{
 		// for testing:
 		int i = 1;
 		for (ArrayList<Holdable> h: storage) {
-			h.add(new Holdable(i));
+			h.add(new Holdable(i, holdableImages[i-1]));
 			if (i == 5 || i == 8 || i == 7) {
 				h.add(new Holdable(i, holdableImages[i-1]));
 				h.add(new Holdable(i, holdableImages[i-1]));
 				h.add(new Holdable(i, holdableImages[i-1]));
 				h.add(new Holdable(i, holdableImages[i-1]));
 			}
-				
 			i++;
 		}
 	}
@@ -202,8 +201,8 @@ public class WorkTable extends Screen{
 				surface.rect(620 + (j * cellWidth), 30 + (i*cellHeight), cellWidth, cellHeight);
 				
 				//draws element per grid
-				Holdable h = new Holdable(currentElement);
-				h.draw(surface, cellCenterX, cellCenterY, cellWidth, cellHeight);
+				Holdable h = new Holdable(currentElement, holdableImages[currentElement-1]);
+				h.draw(surface, boxX+j*cellWidth, boxY + (i*cellHeight), cellWidth, cellHeight);
 				
 				//writes inventory numbers to drawing surface
 				surface.textSize(15);
@@ -288,7 +287,7 @@ public class WorkTable extends Screen{
 			return;
 		if (storage.get(h.getType()-1).get(0).getType() == 13)
 			storage.get(h.getType()-1).remove(0);
-		storage.get(h.getType()-1).add(new Holdable(h.getType()));
+		storage.get(h.getType()-1).add(new Holdable(h.getType(), holdableImages[h.getType()-1]));
 	}
 	
 	public void removeFromStorage(Holdable h) {
@@ -396,7 +395,10 @@ public class WorkTable extends Screen{
 		Holdable[][] inventory = new Holdable[6][2];
 		for (int i = 0; i<inventory.length; i++) {
 			for (int j = 0; j<inventory[0].length; j++) {
-				inventory[i][j] = new Holdable(storage.get(currentNum).get(0).getType());
+				int type = storage.get(currentNum).get(0).getType();
+				inventory[i][j] = new Holdable(type);
+				if (type != 13)
+					inventory[i][j].loadImage(holdableImages[type-1]);
 				currentNum ++;
 			}
 		}
@@ -501,7 +503,7 @@ public class WorkTable extends Screen{
 		Holdable[][] inventory = new Holdable[6][2];
 		for (int i = 0; i<inventory.length; i++) {
 			for (int j = 0; j<inventory[0].length; j++) {
-				inventory[i][j] = new Holdable(currentType);
+				inventory[i][j] = new Holdable(currentType, holdableImages[currentType-1]);
 				currentType ++;
 			}
 		}
@@ -555,6 +557,7 @@ public class WorkTable extends Screen{
 		}
 		else if(buttonName.equals("Recipes")) {
 			showRecipes = !showRecipes;
+			displayRecipes();
 		}
 		else if(buttonName.equals("X")) {
 			surface.switchScreen(0);
@@ -623,17 +626,18 @@ public class WorkTable extends Screen{
 		
 		if (size == wineRecipe.size() && w.size() == 0) {
 			System.out.println("wine recipe should work");
-			return new Holdable(10);
+			return new Holdable(10, holdableImages[9]);
 		}
 		if (size == breadRecipe.size() && b.size() == 0)
-			return new Holdable(11);
+			return new Holdable(11, holdableImages[10]);
 		if (size == potionRecipe.size() && p.size() == 0)
-			return new Holdable(12);
+			return new Holdable(12, holdableImages[11]);
 		if (size == 1 && s.size() == 3) {
-			thing = new Holdable(cauldronItems.get(0).getType()-4);
-			thing = new Holdable(cauldronItems.get(0).getType()-4);
-			thing = new Holdable(cauldronItems.get(0).getType()-4);
-			thing = new Holdable(cauldronItems.get(0).getType()-4);
+			int type = cauldronItems.get(0).getType()-4;
+			thing = new Holdable(type, holdableImages[type-1]);
+			thing = new Holdable(type, holdableImages[type-1]);
+			thing = new Holdable(type, holdableImages[type-1]);
+			thing = new Holdable(type, holdableImages[type-1]);
 		}
 		
 		return thing;
