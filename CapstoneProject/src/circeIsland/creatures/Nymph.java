@@ -19,13 +19,15 @@ public class Nymph extends Visitor{
 	public void act() {
 		int[] circeGrid = checkCirceNearby();
 		int[] myGrid = coorToGrid(x,y);
+//		if(super.getIsland().get) {
+//			return;
+//		}
 		if(circeGrid == null || !super.getIsland().getCirce().getGreeting()) {
 			super.act();
 			return;
 		}
 		if(circeGrid.equals(myGrid)) {
 			return;
-
 		}
 		
 		int dir = destinationDir(circeGrid);

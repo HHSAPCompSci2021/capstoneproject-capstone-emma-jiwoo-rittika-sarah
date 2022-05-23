@@ -11,8 +11,8 @@ import processing.core.PImage;
  */
 public class Circe extends Creature{
 
-	public static final double CIRCE_WIDTH = 35;
-	public static final double CIRCE_HEIGHT = 62;
+	public static final double CIRCE_WIDTH = 28.57142857;
+	public static final double CIRCE_HEIGHT = 12.09677419;
 	// 70 * 125
 	
 	private Holdable[] holdings;
@@ -42,7 +42,6 @@ public class Circe extends Creature{
 	public void plant() {
 		Element e = super.getIsland().getElement(super.getXGrid(), super.getYGrid());
 		if(e instanceof GardenLand && holdings[currentHold].getType() >= Holdable.GRAPE_SEED && holdings[currentHold].getType() <= Holdable.ANITHOS_SEED) {
-			Holdable p = new Holdable(holdings[currentHold].getType()+4);
 			GardenLand g = (GardenLand)e;
 			g.plant(holdings[currentHold].getType()+4);
 		}
@@ -85,30 +84,30 @@ public class Circe extends Creature{
 			g.push();
 			g.fill(255);
 			
-			float screenWidth = super.getIsland().WIDTH;
-			float screenHeight = super.getIsland().HEIGHT;
+			float screenWidth = super.getIsland().getSurface().width;
+			float screenHeight = super.getIsland().getSurface().height;
 			float cell = screenWidth/20;
 			float cellStartX =  (screenWidth - (holdings.length * cell))*1/10;
-			g.strokeWeight(7);
+			g.strokeWeight(cell/10);
 			g.stroke(110,110,110);
 			for(int i = 0; i<holdings.length; i++) {
-				g.rect(cellStartX + cell*i,screenHeight-cell-150, cell, cell);
+				g.rect(cellStartX + cell*i,screenHeight-cell*3/2, cell, cell);
 				if(holdings[i] != null)
-					holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell-150, cell*9/10, cell*9/10);
+					holdings[i].draw(g, cellStartX + cell*i, screenHeight-cell*3/2, cell*9/10, cell*9/10);
 			}
 			g.noFill();
 			g.stroke(255,205,0);
-			g.rect(cellStartX + cell*currentHold, screenHeight-cell-150,cell, cell);
+			g.rect(cellStartX + cell*currentHold, screenHeight-cell*3/2,cell, cell);
 			g.pop();
 		}
 	}
 	
 	public int getInventoryByCoor (int x, int y) {
-		float screenWidth = super.getIsland().WIDTH;
-		float screenHeight = super.getIsland().HEIGHT;
+		float screenWidth = super.getIsland().getSurface().width;
+		float screenHeight = super.getIsland().getSurface().height;
 		float cell = screenWidth/20;
 		float cellStartX =  (screenWidth - (holdings.length * cell))*1/10;
-		if(screenHeight-cell-150 < y && y < screenHeight-150 &&
+		if(screenHeight-cell*3/2 < y && y < screenHeight-150 &&
 			cellStartX < x && cellStartX + holdings.length * cell > x) {
 			return (int)((x-cellStartX)/cell);
 		}

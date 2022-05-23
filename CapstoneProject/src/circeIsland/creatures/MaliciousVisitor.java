@@ -14,16 +14,18 @@ public class MaliciousVisitor extends Visitor{
 	
 	private boolean stealing;
 	private boolean running;
-	private Holdable[] stolen;
+//	private Holdable[] stolen;
+	private int stealingCounting;
 
 	public MaliciousVisitor(PImage img, int x, int y) {
 		super(img, x, y);
 		stealing = false;
 		running = true;
-		stolen = new Holdable[3];
-		for(int i = 0; i < stolen.length; i++) {
-			stolen[i] = null;
-		}
+//		stolen = new Holdable[3];
+		stealingCounting = 0;
+//		for(int i = 0; i < stolen.length; i++) {
+//			stolen[i] = null;
+//		}
 	}
 
 	public String getType() {
@@ -31,23 +33,27 @@ public class MaliciousVisitor extends Visitor{
 	}
 	
 	public void act() {
-		if(running && !stealing) {
+		if(super.getIsInGrid()) {
 			int[] currentPos = super.coorToGrid(x,y);
-			if(super.getIsland().getElement(currentPos[0], currentPos[1]) instanceof House) {
-				stealing = true;
+			if(isHouseNearby(currentPos)) {
+				if(stealingCounting<20) {
+					stealingCounting++;
+				}else {
+					stealing = true;
+				}
+			}else if(running && !stealing) {
+				int[] circeGrid = checkCirceNearby();
+				int dir = -1;
+				if(circeGrid == null) {
+					House circeHouse = super.getIsland().getCirceHouse();
+					int[] circeHouseCoor = {circeHouse.getXCoor(), circeHouse.getYCoor()};
+					dir = super.destinationDir(circeHouseCoor);
+				}else {
+					dir = destinationDir(circeGrid);
+				}
+				
+				super.act(dir);
 			}
-			
-			int[] circeGrid = checkCirceNearby();
-			int dir = -1;
-			if(circeGrid == null) {
-				House circeHouse = super.getIsland().getCirceHouse();
-				int[] circeHouseCoor = {circeHouse.getXCoor(), circeHouse.getYCoor()};
-				dir = super.destinationDir(circeHouseCoor);
-			}else {
-				dir = destinationDir(circeGrid);
-			}
-			
-			super.act(dir);
 		}
 	}
 	
@@ -84,18 +90,21 @@ public class MaliciousVisitor extends Visitor{
 		return Creature.RIGHT;
 	}
 	
-	public boolean getStealingStatus() {
+	public boolean getStolen() {
 		return stealing;
 	}
 	
-	public void stealing(ArrayList<ArrayList<Holdable>> storage) {
-		int i = (int) (Math.random() * storage.size());
-		int j = (int) (Math.random() * storage.get(0).size());
-//		if(storage)
-
-		stealing = false;
+	private boolean isHouseNearby(int[] currentPos) {
+		return (super.getIsland().getElement(currentPos[0], currentPos[1]) instanceof House ||
+				super.getIsland().getElement(currentPos[0], currentPos[1]-1) instanceof House ||
+				super.getIsland().getElement(currentPos[0], currentPos[1]+1) instanceof House ||
+				super.getIsland().getElement(currentPos[0]-1, currentPos[1]+1) instanceof House||
+				super.getIsland().getElement(currentPos[0]-1, currentPos[1]-1) instanceof House||
+				super.getIsland().getElement(currentPos[0]-1, currentPos[1]) instanceof House||
+				super.getIsland().getElement(currentPos[0]+1, currentPos[1]-1) instanceof House||
+				super.getIsland().getElement(currentPos[0]+1, currentPos[1]) instanceof House||
+				super.getIsland().getElement(currentPos[0]+1, currentPos[1]+1) instanceof House);
 	}
-	
 
 	
 }

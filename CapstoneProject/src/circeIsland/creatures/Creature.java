@@ -18,6 +18,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	private Island myIsland;
 	private boolean isInGrid;
 	private int count;
+	private double prevWidth, prevHeight;
 	
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
@@ -44,6 +45,8 @@ public abstract class Creature extends Rectangle2D.Double{
 		image = img;
 		isInGrid = false;
 		myIsland = null;
+		prevWidth = 1200;
+		prevHeight = 900;
 	}
 	
 	
@@ -148,16 +151,25 @@ public abstract class Creature extends Rectangle2D.Double{
 	public void draw(DrawingSurface g) {
 		if(isInGrid) {
 			g.push();
+			double islandHeight = myIsland.getSurface().height;
+			double islandWidth =myIsland.getSurface().width;
+			if(prevHeight != islandHeight) {
+				y *= islandHeight/prevHeight;
+				prevHeight = islandHeight;
+			}
+			if(prevWidth != islandWidth) {
+				x *= islandWidth/prevWidth;
+				prevWidth = islandWidth;
+			}			
+			
+			double myWidth = islandWidth/width;
+			double myHeight = islandHeight/height;
 			if (image != null) {
-				double sizeX = 1000/width;
-				double sizeY = 750/height;
-				double myWidth = myIsland.getWidth()/sizeX;
-				double myHeight = myIsland.getHeight()/sizeY;
 //				g.rect((float)x,(float)y,(float)(width*rateX),(float)(height*rateY));
-				g.image(image,(float)x,(float)y,(float)(myWidth),(float)(myHeight));
+				g.image(image,(float)x + 6,(float)y + 9,(float)(myWidth),(float)(myHeight));
 			} else {
 				g.fill(100);
-				g.rect((float)x,(float)y,(float)width,(float)height);
+				g.rect((float)x,(float)y,(float)myWidth,(float)myHeight);
 				g.fill(0);
 				g.text(getType(), (float)x, (float)y);
 			}
@@ -184,10 +196,9 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public boolean canStand(double xCoor, double yCoor) {
 //		System.out.println(xCoor + "," + yCoor );
-		double sizeX = 1000/width;
-		double sizeY = 750/height;
-		double myWidth = myIsland.getWidth()/sizeX;
-		double myHeight = myIsland.getHeight()/sizeY;
+//		System.out.println("Island Width: " + myIsland.getWidth() + "Island Height" + myIsland.getHeight());
+		double myWidth = myIsland.getSurface().width/width;
+		double myHeight = myIsland.getSurface().height/height;
 		int[] gridTopLeft = coorToGrid(xCoor, yCoor);
 		int[] gridBottomRight = coorToGrid(xCoor+myWidth, yCoor+myHeight);
 		if(gridTopLeft[0] < 0 || gridBottomRight[0] > myIsland.getElements().length || 
