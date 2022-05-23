@@ -26,6 +26,7 @@ public class Island extends Screen{
 	private Rectangle infoButton;
 	
 	private boolean landElementSelected, mouseClickEnabled, dropDone, showWarning;
+	private int warningCase;
 	private int[] selectedSpot;
 	private GDropList list;
 	
