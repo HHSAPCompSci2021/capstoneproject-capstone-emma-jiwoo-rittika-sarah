@@ -72,6 +72,9 @@ public class Nymph extends Visitor{
 		return false;
 	}
 	
+	public int[] getHouseLoc() {
+		return house;
+	}
 	
 	
 }

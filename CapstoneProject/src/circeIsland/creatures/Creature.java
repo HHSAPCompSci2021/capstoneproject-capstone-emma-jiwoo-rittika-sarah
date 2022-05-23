@@ -152,8 +152,8 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	public int[] coorToGrid(double xCoor, double yCoor) {
-		double cellWidth = (myIsland.getWidth())/myIsland.getElements()[0].length;
-		double cellHeight = (myIsland.getHeight())/myIsland.getElements().length;
+		double cellWidth = (myIsland.getSurface().width )/myIsland.getElements()[0].length;
+		double cellHeight = (myIsland.getSurface().height )/myIsland.getElements().length;
 		int xGrid = (int) (xCoor/cellWidth);
 		int yGrid = (int) (yCoor/cellHeight);
 ////		System.out.println(xGrid + "," + yGrid);
@@ -187,8 +187,8 @@ public abstract class Creature extends Rectangle2D.Double{
 				width = islandWidth/widthRatio;
 			}			
 			if (image != null) {
-//				g.rect((float)x,(float)y,(float)(width*rateX),(float)(height*rateY));
-				g.image(image,(float)x + 6,(float)y + 9,(float)(width),(float)(height));
+				g.rect((float)x,(float)y,(float)(width),(float)(height));
+				g.image(image,(float)x,(float)y,(float)(width),(float)(height));
 			} else {
 				g.fill(100);
 				g.rect((float)x,(float)y,(float)width,(float)height);
@@ -198,9 +198,7 @@ public abstract class Creature extends Rectangle2D.Double{
 			g.pop();
 		}
 	}
-	
-	
-	
+
 	public void act(int dir) {
 		if(isInGrid) {
 			if(dir == -1 && (count%10 == 0 || count%11 == 0 || count% 9 == 0)) 
@@ -220,25 +218,26 @@ public abstract class Creature extends Rectangle2D.Double{
 //		System.out.println(xCoor + "," + yCoor );
 //		System.out.println("Island Width: " + myIsland.getWidth() + "Island Height" + myIsland.getHeight());
 		
+		Element[][] elements = myIsland.getElements();
 		
 		int[] gridBottomLeft = coorToGrid(xCoor, yCoor+height);
 		int[] gridBottomRight = coorToGrid(xCoor+width, yCoor+height);
-		if(gridBottomLeft[0] < 0 || gridBottomRight[0] > myIsland.getElements().length || 
-				gridBottomLeft[1] < 0 || gridBottomRight[1] > myIsland.getElements()[0].length) {
+//		System.out.println("Left: " + gridBottomLeft[0] + ", Right: " + gridBottomRight[0] + ", Down: " + gridBottomLeft[1]);
+		if(gridBottomLeft[0] < 0 || gridBottomRight[0] > elements.length || 
+			gridBottomLeft[1] < 0 || gridBottomRight[1] > elements.length) {
 			return false;
 		}
-		if (myIsland.getElement(gridBottomLeft[0], gridBottomLeft[1]) == null || 
-			myIsland.getElement(gridBottomRight[0], gridBottomRight[1]) == null) {
+		if (elements[gridBottomLeft[0]][gridBottomLeft[1]] == null || 
+			elements[gridBottomRight[0]][gridBottomRight[1]] == null) {
 			return false;
 		}
-		return myIsland.getElement(gridBottomLeft[0], gridBottomLeft[1]).getStandable() &&
-				myIsland.getElement(gridBottomRight[0], gridBottomRight[1]).getStandable();
+		return elements[gridBottomLeft[0]][gridBottomLeft[1]].getStandable() &&
+				elements[gridBottomRight[0]][gridBottomRight[1]].getStandable();
 		
 		
 //		System.out.println(myWidth + ", " + myHeight);
 
 		
-//		Element[][] elements = myIsland.getElements();
 //		double feetX = this.x + width / 2;
 //		double feetY = this.y + height / 2;
 //		

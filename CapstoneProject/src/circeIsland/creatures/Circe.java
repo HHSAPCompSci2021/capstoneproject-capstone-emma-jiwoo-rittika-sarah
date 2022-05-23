@@ -168,4 +168,22 @@ public class Circe extends Creature{
         return -1;
 
     }
+	
+//	public boolean canStand(double xCoor, double yCoor) {
+//		Element[][] elements = super.getIsland().getElements();
+//		
+//		int[] gridBottomLeft = coorToGrid(xCoor, yCoor+height);
+//		int[] gridBottomRight = coorToGrid(xCoor+width, yCoor+height);
+//		System.out.println("Left: " + gridBottomLeft[0] + ", Right: " + gridBottomRight[0] + ", Down: " + gridBottomLeft[1]);
+//		if(gridBottomLeft[0] < 0 || gridBottomRight[0] > elements.length || 
+//			gridBottomLeft[1] < 0 || gridBottomRight[1] > elements.length) {
+//			return false;
+//		}
+//		if (elements[gridBottomLeft[0]][gridBottomLeft[1]] == null || 
+//			elements[gridBottomRight[0]][gridBottomRight[1]] == null) {
+//			return false;
+//		}
+//		return elements[gridBottomLeft[0]][gridBottomLeft[1]].getStandable() &&
+//				elements[gridBottomRight[0]][gridBottomRight[1]].getStandable();
+//	}
 }
