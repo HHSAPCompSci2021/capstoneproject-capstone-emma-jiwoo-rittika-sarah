@@ -81,7 +81,7 @@ public class DrawingSurface extends PApplet {
 		exit.addEventHandler(workshop,  "handleButtonClick");
 		
 		circe.setIsland(island);
-		currentScreen = island;
+		currentScreen = workshop;
 	}
 	
 	/**

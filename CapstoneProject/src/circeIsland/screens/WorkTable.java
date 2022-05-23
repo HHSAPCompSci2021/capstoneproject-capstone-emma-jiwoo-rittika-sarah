@@ -57,7 +57,7 @@ public class WorkTable extends Screen{
 		cookButton = new Rectangle(100, 500, 100, 50);
 		recipeButton = new Rectangle(400, 500, 100, 50);
 		inventoryButton = new Rectangle(620, 30, 150, 400);
-		holdingsButton = new Rectangle(620, 450, 150, 100);
+		holdingsButton = new Rectangle(900, 450, 150, 100);
 		recipes = new ArrayList<String>();
 		cauldron = new Rectangle(300, 250, 250, 250);
 		cauldronItems = new ArrayList<Holdable>();
@@ -136,9 +136,9 @@ public class WorkTable extends Screen{
 		
 		//for resizing
 
-		inventoryButton.setBounds(3 *surface.width / 4, surface.height / 10, surface.width / 8, (int)(surface.height / 2));
-		holdingsButton.setBounds(3 *surface.width / 4, surface.height / 10, surface.width / 8, surface.height / 9);
-		cauldron.setBounds(surface.width/5 - 50, surface.height/5, surface.width/2, surface.height/2);
+		inventoryButton.setBounds(4 *surface.width / 5, surface.height / 10, surface.width / 8, (int)(surface.height / 2));
+		holdingsButton.setBounds(4 *surface.width / 5, 7 * surface.height / 10, surface.width / 8, surface.height / 9);
+		cauldron.setBounds(3 * surface.width/9, 2 * surface.height/5, (int)(surface.width/3), surface.height/2 - 80);
 		
 		
 		drawInventory();
@@ -194,8 +194,6 @@ public class WorkTable extends Screen{
 		//top left coordinates of the inventory grid: surface.rect(620, 30, 150, 500)
 		int boxX = 620;
 		int boxY = 30;
-		boxX = 3 *surface.width / 4;
-		boxY = surface.height / 10;
 		boxX = inventoryButton.x;
 		boxY = inventoryButton.y;
 		
@@ -241,8 +239,8 @@ public class WorkTable extends Screen{
 		
 		int boxX = 620;
 		int boxY = 450;
-		boxX = 3 *surface.width / 4;
-		boxY = 7 * surface.height/10;
+		boxX = holdingsButton.x;
+		boxY = holdingsButton.y;
 		
 		float cellWidth = holdingsButton.width / inventory[0].length;
 		float cellHeight = holdingsButton.height / inventory.length;
