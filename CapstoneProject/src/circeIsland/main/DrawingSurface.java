@@ -54,8 +54,8 @@ public class DrawingSurface extends PApplet {
 	 */
 	public void setup() {
 		G4P.setGlobalColorScheme(3);
-		Rectangle cookButton = new Rectangle(100, 500, 100, 50);
-		Rectangle recipeButton = new Rectangle(400, 500, 100, 50);
+		Rectangle cookButton = new Rectangle(300, 700, 100, 50);
+		Rectangle recipeButton = new Rectangle(600, 700, 100, 50);
 		brewer = new GButton(this, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
 		recipe = new GButton(this, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
 		exit = new GButton(this, 25, 25, 25, 25, "X");
