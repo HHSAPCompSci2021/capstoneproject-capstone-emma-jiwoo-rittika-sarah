@@ -53,12 +53,6 @@ public class House extends Element{
 				y *= rateY;
 				surface.image(getImage(),(float)x + 6,(float)y + 9,(float)(cellWidth*rateX),(float)(cellHeight*rateY));
 			}
-//			surface.push();
-//			surface.fill(191, 128, 111);
-//			surface.rect(6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight), cellWidth, cellHeight);
-//			surface.fill(0);
-//			surface.text("house", 6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight)+cellHeight);
-//			surface.pop();
 		}
 		
 	}
