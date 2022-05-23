@@ -102,6 +102,7 @@ public class Island extends Screen{
 					surface.noFill();
 					if(element[j][i] instanceof Land) {
 						surface.rect(6 + (j * cellWidth), 9 + (i*cellHeight), cellWidth,cellHeight);
+						surface.text("(" + j + "," + i +")", 6+ j*cellWidth + 10, 9 + i*cellHeight + 15);
 					}
 					else {
 						element[j][i].draw(surface, cellWidth, cellHeight);
