@@ -149,8 +149,8 @@ public abstract class Creature extends Rectangle2D.Double{
 		if(isInGrid) {
 			g.push();
 			if (image != null) {
-				double sizeX = 800/width;
-				double sizeY = 600/height;
+				double sizeX = 1000/width;
+				double sizeY = 750/height;
 				double myWidth = myIsland.getWidth()/sizeX;
 				double myHeight = myIsland.getHeight()/sizeY;
 //				g.rect((float)x,(float)y,(float)(width*rateX),(float)(height*rateY));
@@ -184,8 +184,8 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public boolean canStand(double xCoor, double yCoor) {
 //		System.out.println(xCoor + "," + yCoor );
-		double sizeX = 800/width;
-		double sizeY = 600/height;
+		double sizeX = 1000/width;
+		double sizeY = 750/height;
 		double myWidth = myIsland.getWidth()/sizeX;
 		double myHeight = myIsland.getHeight()/sizeY;
 		int[] gridTopLeft = coorToGrid(xCoor, yCoor);
