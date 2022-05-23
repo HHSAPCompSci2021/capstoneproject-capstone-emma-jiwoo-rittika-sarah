@@ -295,7 +295,7 @@ public class Island extends Screen{
 		
 		
 		
-		//click on circe's house -- temp
+		
 		if(circe.getInventoryByCoor(mouseX, mouseY) != -1) {
             circe.grab(circe.getInventoryByCoor(mouseX, mouseY));
 		} 

@@ -1,11 +1,14 @@
 package circeIsland.creatures;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 import circeIsland.elements.Land;
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
+import circeIsland.elements.*;
 
 
 /**
@@ -81,6 +84,15 @@ public abstract class Creature extends Rectangle2D.Double{
 				x += (-1 * velocity);
 			}
 		}
+		
+//		if(dir == LEFT) {
+//			if(canStand(x, y))
+//				super.x += (-1 * velocity);
+//			
+//		}else if(dir == RIGHT) {
+//			if(canStand(x, y))
+//				super.x += velocity;
+//		}
 	}
 	
 	public void moveY(int dir) {
@@ -219,6 +231,25 @@ public abstract class Creature extends Rectangle2D.Double{
 		}
 		return myIsland.getElement(gridBottomLeft[0], gridBottomLeft[1]).getStandable() &&
 				myIsland.getElement(gridBottomRight[0], gridBottomRight[1]).getStandable();
+		
+//		System.out.println(myWidth + ", " + myHeight);
+//		
+//		Element[][] elements = myIsland.getElements();
+//		double feetX = this.x + myWidth / 2;
+//		double feetY = this.y + myHeight / 2;
+//		
+//		//int[] coord = myIsland.coorToGrid(x + 6,  y + 9);
+//		int[] coord = myIsland.coorToGrid(xCoor,  yCoor);
+//		System.out.println(Arrays.toString(coord));
+//		if(elements[coord[0]][coord[1]] instanceof Land) {
+//			System.out.println("CAN MOVE");
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
+		
+		
 	}
 	
 	public abstract void act();

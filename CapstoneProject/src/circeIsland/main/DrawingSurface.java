@@ -58,7 +58,7 @@ public class DrawingSurface extends PApplet {
 		Rectangle recipeButton = new Rectangle(600, 700, 100, 50);
 		brewer = new GButton(this, cookButton.x, cookButton.y, cookButton.width, cookButton.height, "Brew");
 		recipe = new GButton(this, recipeButton.x, recipeButton.y, recipeButton.width, recipeButton.height, "Recipes");
-		exit = new GButton(this, 25, 25, 25, 25, "X");
+		exit = new GButton(this, 25, 45, 25, 25, "X");
 		brewer.setVisible(false);
 		recipe.setVisible(false);
 		exit.setVisible(false);
@@ -81,7 +81,7 @@ public class DrawingSurface extends PApplet {
 		exit.addEventHandler(workshop,  "handleButtonClick");
 		
 		circe.setIsland(island);
-		currentScreen = workshop;
+		currentScreen = island;
 	}
 	
 	/**
