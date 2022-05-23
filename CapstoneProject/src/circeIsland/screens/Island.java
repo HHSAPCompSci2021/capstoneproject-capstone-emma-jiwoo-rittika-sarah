@@ -134,15 +134,15 @@ public class Island extends Screen{
 			list.setItems(new String[] {"Choose", "House", "Garden", "Pig pen", "Land", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
-		if(gardenElementSelected) {
-			System.out.println("garden drop down");
-			gardenElementSelected = false;
-			mouseClickEnabled = false;
-			G4P.setGlobalColorScheme(4);
-			list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
-			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
-			list.addEventHandler(this,  "handlePlantChange");
-		}
+//		if(gardenElementSelected) {
+//			System.out.println("garden drop down");
+//			gardenElementSelected = false;
+//			mouseClickEnabled = false;
+//			G4P.setGlobalColorScheme(4);
+//			list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
+//			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
+//			list.addEventHandler(this,  "handlePlantChange");
+//		}
 		if (dropDone) {
 			mouseClickEnabled = true;
 			list.setVisible(false);
@@ -180,7 +180,7 @@ public class Island extends Screen{
 			factor++;
 		}
 		else if(hours > 19) {
-			System.out.println(hours);
+			//System.out.println(hours);
 			surface.fill(5, (factor + 9) * 10);
 			//surface.fill(5, (10 + factor)* 10);
 			surface.rect(0, 0, surface.width, surface.height);
@@ -308,35 +308,45 @@ public class Island extends Screen{
 		else if(clickedElement instanceof GardenLand && circe.intersects(clickedElement.getXCoor() * cellWidth, clickedElement.getYCoor() * cellHeight, cellWidth, cellHeight)){//clickedElement != null && clickedElement instanceof GardenLand){//element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
 			System.out.println("IT IS GARDEN");
 			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);
+			Holdable holding = circe.getInventory()[circe.getCurrentHold()];
 			if(e.isAlive()) {
+				if(holding != null && holding.getType() == Holdable.WATER) {
+					System.out.println("watering");
+					e.water();
+				}
 				System.out.println(e.getLifeState());
 				System.out.println("HERE To HARVEST");
 				circe.harvest(e);
 			}
+			else if(e.isDead()) {
+				System.out.println("I guess it died");
+				element[clickInGrid[0]][clickInGrid[1]] = new GardenLand(this, allAGarden, clickInGrid[0], clickInGrid[1]);
+			}
 			else {
-				int curr = circe.getInventory()[circe.getCurrentHold()].getType();
-				if(curr == Holdable.ANITHOS_SEED) {
-					System.out.println("let's add a");
-					e.plant(curr, allAGarden);
-					circe.removeFromInventory(circe.getCurrentHold());
-				}
-				else if(curr == Holdable.BARLEY_SEED) {
-					System.out.println("let's add b");
-					e.plant(curr, allBGarden);
-					circe.removeFromInventory(circe.getCurrentHold());
-				}
-				else if (curr == Holdable.GRAPE_SEED) {
-					System.out.println("let's add g");
-					e.plant(curr, allGGarden);
-					circe.removeFromInventory(circe.getCurrentHold());
-				}
-				else if(curr == Holdable.MARATHOS_SEED) {
-					System.out.println("let's add m");
-					e.plant(curr, allMGarden);
-					circe.removeFromInventory(circe.getCurrentHold());
+				if(holding != null) {
+					int hold = holding.getType();
+					if(hold == Holdable.ANITHOS_SEED) {
+						System.out.println("let's add a");
+						e.plant(hold, allAGarden);
+						circe.removeFromInventory(circe.getCurrentHold());
+					}
+					else if(hold == Holdable.BARLEY_SEED) {
+						System.out.println("let's add b");
+						e.plant(hold, allBGarden);
+						circe.removeFromInventory(circe.getCurrentHold());
+					}
+					else if (hold == Holdable.GRAPE_SEED) {
+						System.out.println("let's add g");
+						e.plant(hold, allGGarden);
+						circe.removeFromInventory(circe.getCurrentHold());
+					}
+					else if(hold == Holdable.MARATHOS_SEED) {
+						System.out.println("let's add m");
+						e.plant(hold, allMGarden);
+						circe.removeFromInventory(circe.getCurrentHold());
+					}					
 				}
 			}
-			
 		}
 		else if(element[clickInGrid[0]][clickInGrid[1]] instanceof Pond) {
 			System.out.println("ADDING WATER TO INVENTORY");
@@ -687,8 +697,8 @@ public class Island extends Screen{
 		c2.putOnIsland(this);
 		c3.putOnIsland(this);
 		
-		circe.addOnInventory(new Holdable(Holdable.BREAD));
-		circe.addOnInventory(new Holdable(Holdable.POTION));
+		circe.addOnInventory(new Holdable(Holdable.WATER));
+		circe.addOnInventory(new Holdable(Holdable.WATER));
 		
 		
 		//ALL LAND

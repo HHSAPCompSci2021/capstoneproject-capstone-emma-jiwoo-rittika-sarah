@@ -131,6 +131,14 @@ public class WorkTable extends Screen{
 //		surface.image(cauldronNeutralEmptyImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
 	//	surface.image(holdableImages[5], 0, 0, 50, 50);
 
+		
+		//for resizing
+
+		inventoryButton.setBounds(3 *surface.width / 4, surface.height / 10, surface.width / 8, (int)(surface.height / 2));
+		holdingsButton.setBounds(3 *surface.width / 4, surface.height / 10, surface.width / 8, surface.height / 9);
+		cauldron.setBounds(surface.width/5 - 100, surface.height/4, surface.width/2, surface.height/2);
+		
+		
 		drawInventory();
 		drawCirceInventory();
 		drawAlchemy();
@@ -184,10 +192,14 @@ public class WorkTable extends Screen{
 		//top left coordinates of the inventory grid: surface.rect(620, 30, 150, 500)
 		int boxX = 620;
 		int boxY = 30;
+		boxX = 3 *surface.width / 4;
+		boxY = surface.height / 10;
+		boxX = inventoryButton.x;
+		boxY = inventoryButton.y;
 		
 		
-		float cellWidth = 150 / inventory[0].length;
-		float cellHeight = 400 / inventory.length;
+		float cellWidth = inventoryButton.width / inventory[0].length;
+		float cellHeight = inventoryButton.height / inventory.length;
 		
 		int currentElement = 1;
 		for(int i = 0; i<inventory.length; i++) { //RECT coordinates (top left) : 620, 30
@@ -198,7 +210,7 @@ public class WorkTable extends Screen{
 				surface.push();
 				//draws the grid for the inventory
 				surface.fill(235, 213, 190);
-				surface.rect(620 + (j * cellWidth), 30 + (i*cellHeight), cellWidth, cellHeight);
+				surface.rect(boxX + (j * cellWidth), boxY + (i*cellHeight), cellWidth, cellHeight);
 				
 				//draws element per grid
 				Holdable h = new Holdable(currentElement, holdableImages[currentElement-1]);
@@ -229,6 +241,8 @@ public class WorkTable extends Screen{
 		
 		int boxX = 620;
 		int boxY = 450;
+		boxX = 3 *surface.width / 4;
+		boxY = 7 * surface.height/10;
 		
 		float cellWidth = holdingsButton.width / inventory[0].length;
 		float cellHeight = holdingsButton.height / inventory.length;
@@ -254,10 +268,10 @@ public class WorkTable extends Screen{
 	}
 	
 	public void drawAlchemy() {
-		int bowlX = 200;
-		int bowlY = 200;
-		float bowlWidth = 300;
-		float bowlHeight = 200;
+		int bowlX = cauldron.x;
+		int bowlY = cauldron.y;
+		float bowlWidth = cauldron.width;
+		float bowlHeight = cauldron.height;
 			
 		surface.noFill();
 		surface.noStroke();
