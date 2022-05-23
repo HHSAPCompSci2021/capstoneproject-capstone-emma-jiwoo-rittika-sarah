@@ -80,7 +80,7 @@ public class DrawingSurface extends PApplet {
 		recipe.addEventHandler(workshop,  "handleButtonClick");
 		exit.addEventHandler(workshop,  "handleButtonClick");
 		
-		circe.setIsland(island);
+		circe.putOnIsland(island);
 		currentScreen = island;
 	}
 	

@@ -75,7 +75,7 @@ public class Circe extends Creature{
 	public void turnPig(MaliciousVisitor visitor) {
 		Pig pig = new Pig(super.getIsland().getImage("pig"),(int)visitor.getX(), (int)visitor.getY());
 		pig.putOnIsland(visitor.getIsland());
-		visitor.removeFromIsland(visitor.getIsland());
+		visitor.removeFromIsland();
 	}
 	
 	public void draw(DrawingSurface g) {
