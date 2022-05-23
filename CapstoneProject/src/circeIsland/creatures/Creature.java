@@ -279,6 +279,33 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	/**
+	 * 
+	 * @param destination the x and y coordinate where 
+	 * @pre destination has to be in the grid, not the bound exception, and it has to be length 2 int array
+	 * @return the direction toward the destination
+	 */
+	public int destinationDir(int[] destination) {
+		int[] grid = coorToGrid(x, y+height);
+		int diffX = grid[0] - destination[0];
+		int diffY = grid[1] - destination[1];
+		
+		if(diffX == 0 && diffY == 0) {
+			return -1;
+		}
+		
+		if(Math.abs(diffY) > Math.abs(diffX)) {
+			if(diffY < 0) 
+				return Creature.DOWN;
+			return Creature.UP;
+		}
+		
+		if(diffX<0)
+			return Creature.RIGHT;
+		return Creature.LEFT;
+
+	}	
+	
+	/**
 	 * It will draw the creature on the drawing surface.
 	 * If the image is null, the gray rectangle with the description of the crature would be drawn.
 	 * If the image is not null, the image will be drawn.

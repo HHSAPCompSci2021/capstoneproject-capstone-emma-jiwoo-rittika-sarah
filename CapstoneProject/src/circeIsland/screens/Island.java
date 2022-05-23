@@ -602,7 +602,7 @@ public class Island extends Screen{
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 150);
 		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 300, 100);
-		Pig c3 = new Pig(pigImage, 200, 250);
+		Pig c3 = new Pig(pigImage, 300, 250);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
 		c3.putOnIsland(this);

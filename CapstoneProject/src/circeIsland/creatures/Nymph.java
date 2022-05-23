@@ -26,10 +26,6 @@ public class Nymph extends Visitor{
 		houseRect = null;
 	}	
 	
-	public String getType() {
-		return "Nymph";
-	}
-	
 	public void draw(DrawingSurface g) {
 		if(super.getIsInGrid()) {
 			if(!inHouse) {
@@ -78,6 +74,14 @@ public class Nymph extends Visitor{
 		
 	}
 	
+	public int[] getHouseLoc() {
+		return house;
+	}
+
+	public String getType() {
+		return "Nymph";
+	}
+	
 	private boolean setHouse() {
 		Element[][] elements = super.getIsland().getElements();
 		for(int i = 0; i<elements.length; i++) {
@@ -99,10 +103,5 @@ public class Nymph extends Visitor{
 		house[1] = -1;
 		return false;
 	}
-	
-	public int[] getHouseLoc() {
-		return house;
-	}
-
-	
+		
 }

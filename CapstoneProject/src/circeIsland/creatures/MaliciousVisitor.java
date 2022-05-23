@@ -42,7 +42,6 @@ public class MaliciousVisitor extends Visitor{
 				setHouse();
 			}
 			if(this.intersects(circeHouseRect)) {
-				System.out.println("Running:");
 				stealing = true;
 				stealingCount++;
 			}else if(running && !stealing) {
@@ -50,10 +49,8 @@ public class MaliciousVisitor extends Visitor{
 				int dir = -1;
 				if(circeGrid == null) {
 					dir = super.destinationDir(circeHouse);
-					System.out.println("Going:");
 				}else {
 					dir = destinationDir(circeGrid);
-					System.out.println("AHH:");
 				}
 				
 				super.act(dir);
@@ -79,7 +76,7 @@ public class MaliciousVisitor extends Visitor{
 	
 	
 	public int destinationDir(int[] destination) {
-		int[] grid = coorToGrid(x, y);
+		int[] grid = coorToGrid(x, y+height);
 		int diffX = grid[0] - destination[0];
 		int diffY = grid[1] - destination[1];
 		
