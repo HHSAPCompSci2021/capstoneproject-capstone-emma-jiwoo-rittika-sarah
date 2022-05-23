@@ -70,22 +70,30 @@ public abstract class Creature extends Rectangle2D.Double{
 	
 	public void moveX(int dir) {
 		if(dir == LEFT) {
-			if(canStand(x+(-1 * velocity), y))
-				super.x += (-1 * velocity);
+			x += (-1 * velocity);
+			if(!canStand(x,y)) {
+				x += velocity;
+			}
 			
 		}else if(dir == RIGHT) {
-			if(canStand(x+velocity, y))
-				super.x += velocity;
+			x += velocity;
+			if(!canStand(x,y)) {
+				x += (-1 * velocity);
+			}
 		}
 	}
 	
 	public void moveY(int dir) {
 		if(dir == UP) {
-			if(canStand(x, y+(-1 * velocity)))
-				super.y += (-1 * velocity);
+			y += (-1 * velocity);
+			if(!canStand(x,y)) {
+				y += velocity;
+			}
 		}else if(dir == DOWN) {
-			if(canStand(x, y + velocity))
-				super.y += velocity;
+			y += velocity;
+			if(!canStand(x,y)) {
+				y += (-1 * velocity);
+			}
 		}
 	}
 	
@@ -199,17 +207,17 @@ public abstract class Creature extends Rectangle2D.Double{
 //		System.out.println("Island Width: " + myIsland.getWidth() + "Island Height" + myIsland.getHeight());
 		double myWidth = myIsland.getSurface().width/width;
 		double myHeight = myIsland.getSurface().height/height;
-		int[] gridTopLeft = coorToGrid(xCoor, yCoor);
+		int[] gridBottomLeft = coorToGrid(xCoor, yCoor+myHeight);
 		int[] gridBottomRight = coorToGrid(xCoor+myWidth, yCoor+myHeight);
-		if(gridTopLeft[0] < 0 || gridBottomRight[0] > myIsland.getElements().length || 
-			gridTopLeft[1] < 0 || gridBottomRight[1] > myIsland.getElements()[0].length) {
+		if(gridBottomLeft[0] < 0 || gridBottomRight[0] > myIsland.getElements().length || 
+				gridBottomLeft[1] < 0 || gridBottomRight[1] > myIsland.getElements()[0].length) {
 			return false;
 		}
-		if (myIsland.getElement(gridTopLeft[0], gridTopLeft[1]) == null || 
+		if (myIsland.getElement(gridBottomLeft[0], gridBottomLeft[1]) == null || 
 			myIsland.getElement(gridBottomRight[0], gridBottomRight[1]) == null) {
 			return false;
 		}
-		return myIsland.getElement(gridTopLeft[0], gridTopLeft[1]).getStandable() &&
+		return myIsland.getElement(gridBottomLeft[0], gridBottomLeft[1]).getStandable() &&
 				myIsland.getElement(gridBottomRight[0], gridBottomRight[1]).getStandable();
 	}
 	

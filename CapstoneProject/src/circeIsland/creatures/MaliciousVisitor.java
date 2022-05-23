@@ -35,7 +35,7 @@ public class MaliciousVisitor extends Visitor{
 	public void act() {
 		if(super.getIsInGrid()) {
 			int[] currentPos = super.coorToGrid(x,y);
-			if(isHouseNearby(currentPos)) {
+			if(super.getIsland().getElement(currentPos[0], currentPos[1]) instanceof House ) {
 				if(stealingCounting<20) {
 					stealingCounting++;
 				}else {
@@ -94,17 +94,7 @@ public class MaliciousVisitor extends Visitor{
 		return stealing;
 	}
 	
-	private boolean isHouseNearby(int[] currentPos) {
-		return (super.getIsland().getElement(currentPos[0], currentPos[1]) instanceof House ||
-				super.getIsland().getElement(currentPos[0], currentPos[1]-1) instanceof House ||
-				super.getIsland().getElement(currentPos[0], currentPos[1]+1) instanceof House ||
-				super.getIsland().getElement(currentPos[0]-1, currentPos[1]+1) instanceof House||
-				super.getIsland().getElement(currentPos[0]-1, currentPos[1]-1) instanceof House||
-				super.getIsland().getElement(currentPos[0]-1, currentPos[1]) instanceof House||
-				super.getIsland().getElement(currentPos[0]+1, currentPos[1]-1) instanceof House||
-				super.getIsland().getElement(currentPos[0]+1, currentPos[1]) instanceof House||
-				super.getIsland().getElement(currentPos[0]+1, currentPos[1]+1) instanceof House);
-	}
+
 
 	
 }

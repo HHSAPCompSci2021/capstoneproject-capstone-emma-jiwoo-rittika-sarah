@@ -107,7 +107,7 @@ public class Circe extends Creature{
 		float screenHeight = super.getIsland().getSurface().height;
 		float cell = screenWidth/20;
 		float cellStartX =  (screenWidth - (holdings.length * cell))*1/10;
-		if(screenHeight-cell*3/2 < y && y < screenHeight-150 &&
+		if(screenHeight-cell*3/2 < y && y < screenHeight-cell*1/2 &&
 			cellStartX < x && cellStartX + holdings.length * cell > x) {
 			return (int)((x-cellStartX)/cell);
 		}
