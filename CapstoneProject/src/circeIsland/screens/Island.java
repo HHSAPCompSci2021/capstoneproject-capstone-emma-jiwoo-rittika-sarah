@@ -288,6 +288,7 @@ public class Island extends Screen{
 				if(holding != null && holding.getType() == Holdable.WATER) {
 					System.out.println("watering");
 					e.water();
+					circe.removeFromInventory(circe.getCurrentHold());
 				}
 				System.out.println(e.getLifeState());
 				System.out.println("HERE To HARVEST");
@@ -600,9 +601,9 @@ public class Island extends Screen{
 		circeHouse.setImage(cHImage);
 		
 		circe.putOnIsland(this);
-		Nymph c1 = new Nymph(nymphImage, 450, 150);
-		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 300, 100);
-		Pig c3 = new Pig(pigImage, 300, 250);
+		Nymph c1 = new Nymph(nymphImage, 450, 250);
+		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 600, 400);
+		Pig c3 = new Pig(pigImage, 575, 250);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
 		c3.putOnIsland(this);

@@ -27,6 +27,7 @@ public class DrawingSurface extends PApplet {
 	private WorkTable workshop;
 	private Circe circe;
 	private Information info;
+	private WelcomeScreen welcome;
 	private Screen currentScreen;
 	
 	private GButton brewer, recipe, exit;
@@ -74,6 +75,7 @@ public class DrawingSurface extends PApplet {
 		island = new Island(this, iImage, circe, 4, 14);
 		info = new Information(this);
 		workshop = new WorkTable(this);
+		welcome = new WelcomeScreen(this);
 		
 		workshop.add(circe);
 		brewer.addEventHandler(workshop,  "handleButtonClick");
@@ -81,7 +83,7 @@ public class DrawingSurface extends PApplet {
 		exit.addEventHandler(workshop,  "handleButtonClick");
 		
 		circe.putOnIsland(island);
-		currentScreen = island;
+		currentScreen = welcome;
 	}
 	
 	/**
@@ -99,7 +101,7 @@ public class DrawingSurface extends PApplet {
 		}
 		
 		//drawCount += 1/frameRate;
-		if(drawCount >=5) {
+		if(drawCount >=120) {
 			drawCount = 0;
 			hours ++;
 			//System.out.println("HOUR UP : " + hours + " " + frameRate);
@@ -162,7 +164,7 @@ public class DrawingSurface extends PApplet {
 	/**
 	 * Switches the current screen displayed to a different screen depending on the provided code. 
 	 * If the code is 0, switches between Island and Workshop.
-	 * If the code is 1, switches between island and information
+	 * If the code is 1, switches between island and Information
 	 * @param x the code determining which switch to execute
 	 */
 	public void switchScreen(int x) {
@@ -172,7 +174,7 @@ public class DrawingSurface extends PApplet {
 			else
 				currentScreen = island;
 		}
-		else {
+		else if(x == 0) {
 			if(currentScreen.equals(workshop)) {
 				currentScreen = island;
 				workshop.setButtonVisible(false);
@@ -181,6 +183,14 @@ public class DrawingSurface extends PApplet {
 				currentScreen = workshop;
 				workshop.setButtonVisible(true);
 			}
+		}
+		else if(x == 2) {
+			if(currentScreen.equals(welcome))
+				currentScreen = info;
+		}
+		else if(x == 3) {
+			if(currentScreen.equals(welcome))
+				currentScreen = island;
 		}
 	}
 	

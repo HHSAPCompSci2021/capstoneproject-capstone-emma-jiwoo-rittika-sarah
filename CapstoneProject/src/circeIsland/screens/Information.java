@@ -19,14 +19,17 @@ public class Information extends Screen{
 	 * @param surface teh PApplet on which the screen will be displayed
 	 */
 	public Information(DrawingSurface surface) {
-		super(800, 600, surface);
+		super(1200, 900, surface);
 		exitButton = new Rectangle(super.WIDTH/2 - 25, super.HEIGHT - 100, 50, 30);
 		info = "Welcome to Circe's Island!"
 				+ "\n- To move Circe, use the WASD keys."
-				+ "\n- To enter Circe's workspace and make potions, move Circe to her house\n and press RETURN"
-				+ "\n- To add elements to the Island, click on a location and select the desired element."
-				+ "\n- To plant the garden, first move Circe to a garden plot. Ensure Circe is\n holding the desired seed, then click on the plot to plant the seed"
-				+ "\n- When a Malicious Visitor enters the Island, turn them into pigs. First feed\n them with food "
+				+ "\n- To enter Circe's workspace and make potions and food, move Circe to her\n house and press RETURN"
+				+ "\n- At Circe's workspace, you can brew potions, make food, or get seeds\n from harvested plants."
+				+ " You can also switch items from circe's holdings\n to the storage."
+				+ "\n- To add elements to the Island, click on a location and select the desired\n element."
+				+ "\n- To plant the garden, first move Circe to a garden plot. Ensure Circe is\n holding the desired\n"
+				+ " seed, then click on the plot to plant the seed"
+				+ "\n- When a Malicious Visitor enters the Island, turn them into pigs. First\n feed them with food "
 				+ "to stop them from running away. Then feed them with the potion to convert them to\n pigs. Don't forget to give them a pig pen!";
 		setupImages();
 	}
@@ -61,9 +64,9 @@ public class Information extends Screen{
 		surface.text(info,  50,  100);
 		
 		//images!
-		surface.image(island,  surface.width / 2 + 80, 100, 450, 275);
+		surface.image(island,  surface.width / 2 + 100, 100, 450, 275);
 		surface.image(circe, surface.width / 2 - 40, 2 * surface.height / 3 - 30, 80, 150);
-		surface.image(mal, surface.width / 2 - 150, 2 * surface.height / 3 - 30, 80, 150);
+		surface.image(mal, surface.width / 2 - 230, 2 * surface.height / 3 - 30, 80, 150);
 		surface.image(nymph, surface.width / 2 + 150 , 2 * surface.height / 3 - 30, 80, 150);
 		//surface.image(island,  surface.width / 2 + 100, surface.height + 100);
 		
@@ -87,6 +90,5 @@ public class Information extends Screen{
 		mal = surface.loadImage("Files/MaliciousFrontStand.png");
 		nymph = surface.loadImage("Files/NymphFrontStand.png");
 		potion = surface.loadImage("Files/HoldablePotion.png");
-		
 	}
 }

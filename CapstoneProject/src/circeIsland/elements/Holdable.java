@@ -80,9 +80,6 @@ public class Holdable {
 	
 	public void draw(DrawingSurface surface, float xCoor, float yCoor, float cellWidth, float cellHeight) {
 		surface.push();
-//		if (image != null) {
-//			surface.image(image, xCoor,yCoor,cellWidth,cellHeight);
-//		}
 		if(holdableImages[type] != null)
 			surface.image(holdableImages[type], xCoor,yCoor,cellWidth,cellHeight);
 //		surface.fill(176, 54, 83);
