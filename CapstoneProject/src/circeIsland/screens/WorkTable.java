@@ -138,8 +138,8 @@ public class WorkTable extends Screen{
 		
 		//for resizing
 
-		inventoryButton.setBounds(4 *surface.width / 5, surface.height / 10, surface.width / 8, (int)(surface.height / 2));
-		holdingsButton.setBounds(4 *surface.width / 5, 7 * surface.height / 10, surface.width / 8, surface.height / 9);
+		inventoryButton.setBounds((int)(4 *surface.width / 5.2), surface.height / 13, surface.width / 6, (int)(surface.height / 1.6));
+		holdingsButton.setBounds((int)(4 *surface.width / 5.2),(int)( 7 * surface.height / 9.5), surface.width / 6, surface.height / 7);
 		cauldron.setBounds(3 * surface.width/9, 2 * surface.height/5, (int)(surface.width/3), surface.height/2 - 80);
 		
 		
@@ -209,7 +209,7 @@ public class WorkTable extends Screen{
 				
 				surface.push();
 				//draws the grid for the inventory
-				surface.fill(235, 213, 190);
+				surface.fill(232, 224, 206);
 				surface.rect(boxX + (j * cellWidth), boxY + (i*cellHeight), cellWidth, cellHeight);
 				
 				//draws element per grid
@@ -220,6 +220,12 @@ public class WorkTable extends Screen{
 				surface.textSize(15);
 				surface.fill(0);
 				surface.text("" + (inventory[i][j]), boxX + (j*cellWidth)+cellWidth-15, boxY + (i*cellHeight)+cellHeight-8);
+				surface.textSize(12);
+				surface.fill(255, 255, 255, 100);
+				surface.noStroke();
+				surface.rect(boxX + (j*cellWidth), boxY + (i*cellHeight)+cellHeight-18, cellWidth-20, 12);
+				surface.fill(0);
+				surface.text(h.getName(), boxX + (j*cellWidth)+5, boxY + (i*cellHeight)+cellHeight-8);
 				surface.pop();
 				
 				currentElement++;
@@ -253,7 +259,7 @@ public class WorkTable extends Screen{
 				
 				surface.push();
 				//draws the grid for the inventory
-				surface.fill(235, 213, 190);
+				surface.fill(232, 224, 206);
 				surface.rect(boxX + (j * cellWidth), boxY + (i*cellHeight), cellWidth, cellHeight);
 				
 				//draws item
