@@ -6,21 +6,23 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 /**
+ * This class represents Circe, extends from the Creature
+ * It can grab the things and stole, plant, water, harvest, magic and so on.
  * 
  * @author Jiwoo Kim
  */
 public class Circe extends Creature{
 
-	public static final double CIRCE_WIDTH = 28.57142857;
-	public static final double CIRCE_HEIGHT = 12.09677419;
+	public static final double CIRCE_WIDTH_RATIO = 28.57142857;
+	public static final double CIRCE_HEIGHT_RATIO = 12.09677419;
 	// 70 * 125
 	
 	private Holdable[] holdings;
 	private int currentHold;
 	private boolean greeting;
 	
-	public Circe(PImage img, int x, int y) {
-		super(img, x, y, CIRCE_WIDTH, CIRCE_HEIGHT, 8);
+	public Circe(PImage img, double x, double y) {
+		super(img, x, y, CIRCE_WIDTH_RATIO, CIRCE_HEIGHT_RATIO, 8);
 		holdings = new Holdable[6];
 		greeting = true;
 		currentHold = 0;
@@ -73,9 +75,9 @@ public class Circe extends Creature{
 	}
 	
 	public void turnPig(MaliciousVisitor visitor) {
-		Pig pig = new Pig(super.getIsland().getImage("pig"),(int)visitor.getX(), (int)visitor.getY());
+		Pig pig = new Pig(super.getIsland().getImage("pig"),visitor.getX(), visitor.getY());
 		pig.putOnIsland(visitor.getIsland());
-		visitor.removeFromIsland(visitor.getIsland());
+		visitor.removeFromIsland();
 	}
 	
 	public void draw(DrawingSurface g) {
@@ -107,7 +109,7 @@ public class Circe extends Creature{
 		float screenHeight = super.getIsland().getSurface().height;
 		float cell = screenWidth/20;
 		float cellStartX =  (screenWidth - (holdings.length * cell))*1/10;
-		if(screenHeight-cell*3/2 < y && y < screenHeight-150 &&
+		if(screenHeight-cell*3/2 < y && y < screenHeight-cell*1/2 &&
 			cellStartX < x && cellStartX + holdings.length * cell > x) {
 			return (int)((x-cellStartX)/cell);
 		}
@@ -168,4 +170,5 @@ public class Circe extends Creature{
         return -1;
 
     }
+	
 }

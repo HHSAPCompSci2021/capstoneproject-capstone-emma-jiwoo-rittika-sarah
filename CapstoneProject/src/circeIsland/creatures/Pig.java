@@ -1,5 +1,7 @@
 package circeIsland.creatures;
 
+import java.awt.geom.Rectangle2D;
+
 import circeIsland.elements.*;
 import processing.core.PImage;
 
@@ -8,8 +10,8 @@ import processing.core.PImage;
  * @author Jiwoo Kim
  */
 public class Pig extends Creature{
-	public static final double PIG_WIDTH = 22.22222222;
-	public static final double PIG_HEIGHT = 11.53846154;
+	public static final double PIG_WIDTH_RATIO = 22.22222222;
+	public static final double PIG_HEIGHT_RATIO = 11.53846154;
 	private boolean inPigPen;
 	// 90*130
 
@@ -17,12 +19,27 @@ public class Pig extends Creature{
 		this(null, x, y);
 	}
 	
-	public Pig(PImage img, int x, int y) {
-		super(img, x, y, PIG_WIDTH, PIG_HEIGHT, 3);
+	public Pig(PImage img, double x, double y) {
+		super(img, x, y, PIG_WIDTH_RATIO, PIG_HEIGHT_RATIO, 3);
 		inPigPen = false;
 	}
 	
 	public void act() {
+		int[] grid= coorToGrid(x,y);
+		if(super.getIsland().getElement(grid[0]+1, grid[1]+1) instanceof PigPen) {
+			inPigPen = true;
+		}
+		if(inPigPen) {
+			super.act(-1);
+			return;
+		}
+		
+		int[] pigPen = findPigPen();
+		if(pigPen[0] != -1) {
+			act(super.destinationDir(pigPen));
+			
+			return;
+		}
 		super.act(-1);
 	}
 	
@@ -36,25 +53,42 @@ public class Pig extends Creature{
 	
 	public boolean canStand(double xCoor, double yCoor) {
 		if(inPigPen) {
-			double rateX = super.getIsland().getWidth()/800;
-			double rateY = super.getIsland().getHeight()/600;
-			int[] gridTopLeft = coorToGrid(xCoor-2, yCoor + 4 );
-			int[] gridBottomRight = coorToGrid(xCoor-2 + width*rateX, yCoor +11+ height*rateY);
-			if(gridTopLeft[0] < 0 || gridBottomRight[0] > super.getIsland().getElements().length || 
-				gridTopLeft[1] < 0 || gridBottomRight[1] > super.getIsland().getElements()[0].length) {
+			Element[][] elements = super.getIsland().getElements();
+			
+			int[] gridBottomLeft = coorToGrid(xCoor, yCoor+height);
+			int[] gridBottomRight = coorToGrid(xCoor+width, yCoor+height);
+			if(gridBottomLeft[0] < 0 || gridBottomRight[0] > elements.length || 
+				gridBottomLeft[1] < 0 || gridBottomRight[1] > elements.length) {
 				return false;
 			}
-			if (super.getIsland().getElement(gridTopLeft[0], gridTopLeft[1]) == null || 
-					super.getIsland().getElement(gridBottomRight[0], gridBottomRight[1]) == null) {
+			if (elements[gridBottomLeft[0]][gridBottomLeft[1]] == null || 
+				elements[gridBottomRight[0]][gridBottomRight[1]] == null) {
 				return false;
 			}
-			return super.getIsland().getElement(gridTopLeft[0], gridTopLeft[1]) instanceof PigPen &&
+			return super.getIsland().getElement(gridBottomLeft[0], gridBottomLeft[1]) instanceof PigPen &&
 					super.getIsland().getElement(gridBottomRight[0], gridBottomRight[1]) instanceof PigPen;
 
 		}else {
 			return super.canStand(xCoor, yCoor);
 		}
 	}
+	
+	
+	public int[] findPigPen() {
+		Element[][] elements = super.getIsland().getElements();
+		for(int i = 0; i<elements.length; i++) {
+			for(int j = 0; j<elements[0].length; j++) {
+				if(elements[j][i] instanceof PigPen) {
+					int[] pigPen = {j, i};
+					return pigPen;
+				}
+			}
+		}
+		int[] pigPen = {-1, -1};
+		return pigPen;
+	}	
+	
+
 	
 	public String getType() {
 		return "Pig";

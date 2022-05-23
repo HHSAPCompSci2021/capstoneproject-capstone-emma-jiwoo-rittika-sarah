@@ -1,9 +1,11 @@
 package circeIsland.creatures;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import circeIsland.elements.Holdable;
 import circeIsland.elements.House;
+import circeIsland.main.DrawingSurface;
 import processing.core.PImage;
 
 /**
@@ -14,18 +16,20 @@ public class MaliciousVisitor extends Visitor{
 	
 	private boolean stealing;
 	private boolean running;
-//	private Holdable[] stolen;
-	private int stealingCounting;
+	private int stealingCount;
+	private int[] circeHouse;
+	private Rectangle2D.Double circeHouseRect;
 
-	public MaliciousVisitor(PImage img, int x, int y) {
+
+	public MaliciousVisitor(PImage img, double x, double y) {
 		super(img, x, y);
 		stealing = false;
 		running = true;
-//		stolen = new Holdable[3];
-		stealingCounting = 0;
-//		for(int i = 0; i < stolen.length; i++) {
-//			stolen[i] = null;
-//		}
+		stealingCount = 0;
+		circeHouse = new int[2];
+		circeHouse[0] = -1;
+		circeHouse[1] = -1;
+		circeHouseRect = null;
 	}
 
 	public String getType() {
@@ -34,20 +38,17 @@ public class MaliciousVisitor extends Visitor{
 	
 	public void act() {
 		if(super.getIsInGrid()) {
-			int[] currentPos = super.coorToGrid(x,y);
-			if(isHouseNearby(currentPos)) {
-				if(stealingCounting<20) {
-					stealingCounting++;
-				}else {
-					stealing = true;
-				}
+			if(circeHouse[0] == -1) {
+				setHouse();
+			}
+			if(this.intersects(circeHouseRect)) {
+				stealing = true;
+				stealingCount++;
 			}else if(running && !stealing) {
 				int[] circeGrid = checkCirceNearby();
 				int dir = -1;
 				if(circeGrid == null) {
-					House circeHouse = super.getIsland().getCirceHouse();
-					int[] circeHouseCoor = {circeHouse.getXCoor(), circeHouse.getYCoor()};
-					dir = super.destinationDir(circeHouseCoor);
+					dir = super.destinationDir(circeHouse);
 				}else {
 					dir = destinationDir(circeGrid);
 				}
@@ -69,9 +70,13 @@ public class MaliciousVisitor extends Visitor{
 		return running;
 	}
 	
+	public int getStealingCount() {
+		return stealingCount;
+	}
+	
 	
 	public int destinationDir(int[] destination) {
-		int[] grid = coorToGrid(x, y);
+		int[] grid = coorToGrid(x, y+height);
 		int diffX = grid[0] - destination[0];
 		int diffY = grid[1] - destination[1];
 		
@@ -94,16 +99,29 @@ public class MaliciousVisitor extends Visitor{
 		return stealing;
 	}
 	
-	private boolean isHouseNearby(int[] currentPos) {
-		return (super.getIsland().getElement(currentPos[0], currentPos[1]) instanceof House ||
-				super.getIsland().getElement(currentPos[0], currentPos[1]-1) instanceof House ||
-				super.getIsland().getElement(currentPos[0], currentPos[1]+1) instanceof House ||
-				super.getIsland().getElement(currentPos[0]-1, currentPos[1]+1) instanceof House||
-				super.getIsland().getElement(currentPos[0]-1, currentPos[1]-1) instanceof House||
-				super.getIsland().getElement(currentPos[0]-1, currentPos[1]) instanceof House||
-				super.getIsland().getElement(currentPos[0]+1, currentPos[1]-1) instanceof House||
-				super.getIsland().getElement(currentPos[0]+1, currentPos[1]) instanceof House||
-				super.getIsland().getElement(currentPos[0]+1, currentPos[1]+1) instanceof House);
+	public void draw(DrawingSurface g) {
+		if(super.getIsInGrid()) {
+			super.draw(g);
+			if(circeHouse[0] == -1) {
+				setHouse();
+			}
+			if(islandWidthResized() || islandHeightResized()) {
+				double cellWidth = (super.getIsland().getSurface().width - 11) / super.getIsland().getElements()[0].length;
+				double cellHeight = (super.getIsland().getSurface().height - 17) / super.getIsland().getElements().length;
+				circeHouseRect = new Rectangle2D.Double(circeHouse[0]*cellWidth-cellWidth/3,circeHouse[1]*cellHeight-cellHeight/3,cellWidth*8/3, cellHeight*8/3);
+			}
+			
+			
+		}
+	}
+
+	private void setHouse() {
+		House h = super.getIsland().getCirceHouse();
+		circeHouse[0] = h.getXCoor();
+		circeHouse[1] = h.getYCoor();
+		double cellWidth = (super.getIsland().getSurface().width - 11) / super.getIsland().getElements()[0].length;
+		double cellHeight = (super.getIsland().getSurface().height - 17) / super.getIsland().getElements().length;
+		circeHouseRect = new Rectangle2D.Double(circeHouse[0]*cellWidth-cellWidth/3,circeHouse[1]*cellHeight-cellHeight/3,cellWidth*8/3, cellHeight*8/3);
 	}
 
 	

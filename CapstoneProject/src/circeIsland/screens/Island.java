@@ -89,14 +89,9 @@ public class Island extends Screen{
 		surface.strokeWeight(0);
 		for(int i = 0; i<element.length; i++) { //x
 			for(int j = 0; j<element[0].length; j++) { //y
-//				surface.text("" + i + ", " + j, 6+ j*cellWidth + 5, 9 + i*cellHeight + 10);
 				if(element[j][i] == null) {
 					surface.noFill();
 					surface.rect(6 + (j * cellWidth), 9 + (i*cellHeight), cellWidth, cellHeight);
-					
-//					surface.fill(0);
-//					surface.text("null", 6+ j*cellWidth + 10, 9 + i*cellHeight + 15);
-					
 				}
 				else {
 					surface.noFill();
@@ -106,7 +101,6 @@ public class Island extends Screen{
 					else {
 						element[j][i].draw(surface, cellWidth, cellHeight);
 					}
-					//element[i][j].draw(surface, cellWidth, cellHeight);
 				}
 			}
 		}
@@ -130,15 +124,6 @@ public class Island extends Screen{
 			list.setItems(new String[] {"Choose", "House", "Garden", "Pig pen", "Land", "None"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
-//		if(gardenElementSelected) {
-//			System.out.println("garden drop down");
-//			gardenElementSelected = false;
-//			mouseClickEnabled = false;
-//			G4P.setGlobalColorScheme(4);
-//			list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2)  + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
-//			list.setItems(new String[] {"Grape", "Barley", "Marathos", "Anithos"}, 0);
-//			list.addEventHandler(this,  "handlePlantChange");
-//		}
 		if (dropDone) {
 			mouseClickEnabled = true;
 			list.setVisible(false);
@@ -164,7 +149,6 @@ public class Island extends Screen{
 	
 	private void changeWithTime() {
 		surface.push();
-		//int days = surface.getDays();
 		int hours = surface.getHours();
 		int factor = 1;
 		surface.image(islandImage, 0, 0, surface.width, surface.height);
@@ -176,7 +160,6 @@ public class Island extends Screen{
 			factor++;
 		}
 		else if(hours > 19) {
-			//System.out.println(hours);
 			surface.fill(5, (factor + 9) * 10);
 			//surface.fill(5, (10 + factor)* 10);
 			surface.rect(0, 0, surface.width, surface.height);
@@ -204,7 +187,6 @@ public class Island extends Screen{
 					count ++;
 			}
 		}
-		//System.out.println(count);
 		return count;
 	}
 	
@@ -256,14 +238,7 @@ public class Island extends Screen{
 		}
 		
 		Element clickedElement = getElement(clickInGrid[1], clickInGrid[0]);
-		
-//		if(clickedElement != null) {
-//			System.out.println(clickedElement.toString());
-//		}
-//		else if(clickedElement == null) {
-//			System.out.println("NULL");
-//		}
-		
+
 		//click on malicious visitor with bread/wine/potion
 		for (int i = 0; i<creatures.size(); i++) {
 			if (creatures.get(i) instanceof MaliciousVisitor) {
@@ -294,15 +269,15 @@ public class Island extends Screen{
 		
 		
 		
-		//click on circe's house -- temp
+		
 		if(circe.getInventoryByCoor(mouseX, mouseY) != -1) {
             circe.grab(circe.getInventoryByCoor(mouseX, mouseY));
 		} 
-		//click on circe's house
-		else if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
-			System.out.println("at circe's");
-			surface.switchScreen(0);
-		}
+//		//click on circe's house
+//		else if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
+//			System.out.println("at circe's");
+//			surface.switchScreen(0);
+//		}
 		//click on garden
 		else if(clickedElement instanceof GardenLand && circe.intersects(clickedElement.getXCoor() * cellWidth, clickedElement.getYCoor() * cellHeight, cellWidth, cellHeight)){
 			System.out.println("IT IS GARDEN");
@@ -349,17 +324,12 @@ public class Island extends Screen{
 			}
 		}
 		else if(element[clickInGrid[0]][clickInGrid[1]] instanceof Pond) {
-			System.out.println("ADDING WATER TO INVENTORY");
 			circe.addOnInventory(new Holdable(9));
 		}
 		else if(mouseX >= infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY >= infoButton.y && mouseY <= infoButton.y + infoButton.height) {
-			System.out.println("info");
-			//list.dispose();
 			surface.switchScreen(1);
 		}
 		else if(clickedElement != null && clickedElement instanceof Land){
-			//System.out.println("here");
-			System.out.println("LAND HO");
 			landElementSelected = true;
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
@@ -377,13 +347,12 @@ public class Island extends Screen{
 	 * @param key the key pressed
 	 */
 	public void processKey(char key) {
-		for(int i = 0; i<6; i++) {
-			if(circe.getInventory()[i] == null) {
-				break;
-			}
-			System.out.println(circe.getInventory()[i].getName());
-		}
-		System.out.println();
+//		for(int i = 0; i<6; i++) {
+//			if(circe.getInventory()[i] == null) {
+//				break;
+//			}
+//		}
+		
 		if(key == 'w' || key == 'W') {
 			circe.moveY(Creature.UP);
 		}
@@ -398,10 +367,7 @@ public class Island extends Screen{
 		}
 		
 		int[] coor = circe.coorToGrid(circe.getCenterX(), circe.getCenterY());
-		System.out.println("Circe grid : " + Arrays.toString(coor));
-		if(element[coor[0]][coor[1]] instanceof Land) {
-			System.out.println("She's at land");
-		}
+		//System.out.println("Circe grid : " + Arrays.toString(coor));
 		
 		if(key == '\n') {
 			float cellWidth = (surface.width - 11) / element[0].length;
@@ -409,27 +375,9 @@ public class Island extends Screen{
 			
 			Rectangle2D.Double cHouseRect = new Rectangle2D.Double(circeHouse.getXCoor() * cellWidth - 20, circeHouse.getYCoor() * cellHeight - 20, 2*cellWidth + 40, 2*cellHeight + 40);
 			if(circe.intersects(cHouseRect)) {
-				System.out.println("switching?");
 				surface.switchScreen(0);
 			}
 			
-			//checking if she is near the malicious visitor
-//			for(int i = 0; i<creatures.size(); i++) {
-//				if(creatures.get(i) instanceof MaliciousVisitor) {
-//					MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
-//					boolean isNear = Math.abs(mv.getXGrid() - circe.getXGrid()) < 3 && Math.abs(mv.getYGrid() - circe.getYGrid()) < 3;
-//					//near enough, has food and wine
-//					int bread = circe.inventoryContains(Holdable.BREAD);
-//					int potion = circe.inventoryContains(Holdable.POTION);
-//					if(isNear && bread != -1 && potion != -1) {
-//						circe.turnPig(mv);
-//						circe.removeFromInventory(bread);
-//						circe.removeFromInventory(potion);
-//						break; //can only turn one at a time
-//					}
-//					
-//				}
-//			}
 		}
 		
 	}
@@ -528,13 +476,7 @@ public class Island extends Screen{
 	public DrawingSurface getSurface() {
 		return surface;
 	}
-	
-//	//have to change to not include water outside island
-//	public boolean isValid(int rowLoc, int colLoc) {
-//        if(element[colLoc][rowLoc] == null)
-//        	return false;
-//        return true;
-//    }
+
 	
 	
 	/**
@@ -560,7 +502,7 @@ public class Island extends Screen{
 		else if(text.equals("Pig pen")) {
 			int x = selectedSpot[0];
 			int y = selectedSpot[1];
-			element[x][y] = new PigPen(this, x, y);
+			element[x][y] = new PigPen(this, penImage, x, y);
 		}
 		else if(text.equals("Land")) {
 			int x = selectedSpot[0];
@@ -570,39 +512,7 @@ public class Island extends Screen{
 		
 		dropDone = true;
 	}
-	
-	/**
-	 * Changes the growing plant at the garden land selected by the user to the plant option selected by the user
-	 * @param list the list of options in the drop-down menu
-	 * @param event
-	 */
-//	public void handlePlantChange(GDropList list, GEvent event) {
-//		System.out.println("plant change handle");
-//		//mouseClickEnabled = false;
-//		String text = list.getSelectedText();
-//		list.setVisible(false);
-//		int x = selectedSpot[0];
-//		int y = selectedSpot[1];
-//		
-//		if(text.equals("Grape")) {
-//			GardenLand gl = (GardenLand)element[x][y];
-//			//gl.plant("grape");
-//		}
-//		else if(text.equals("Barley")) {
-//			GardenLand gl = (GardenLand)element[x][y];
-//			//gl.plant("barley");
-//		}
-//		else if(text.equals("Marathos")) {
-//			GardenLand gl = (GardenLand)element[x][y];
-//			//gl.plant("marathos");
-//		}
-//		else if(text.equals("Anithos")) {
-//			GardenLand gl = (GardenLand)element[x][y];
-//			//gl.plant("barley");
-//		}
-//
-//		dropDone = true;
-//	}
+
 	
 	
 	/**
@@ -679,7 +589,7 @@ public class Island extends Screen{
 		
 		houseImage = surface.loadImage("Files/HouseVisitor.png");
 		cHImage = surface.loadImage("Files/HouseCirce.png");
-		penImage = surface.loadImage("Files/GardenEmpty.png");
+		penImage = surface.loadImage("Files/PigPen.png");
 		
 		
 	}
@@ -692,7 +602,7 @@ public class Island extends Screen{
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 150);
 		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 300, 100);
-		Pig c3 = new Pig(pigImage, 200, 250);
+		Pig c3 = new Pig(pigImage, 300, 250);
 		c1.putOnIsland(this);
 		c2.putOnIsland(this);
 		c3.putOnIsland(this);
@@ -859,13 +769,6 @@ public class Island extends Screen{
 		
 		//Circe's House
 		circeHouse.putOnIsland(this);
-//		for(int i = 0; i<element.length; i++) {
-//			for(int j = 0; j<element[0].length; j++) {
-//				if(element[i][j] instanceof House) {
-//					System.out.println("SUCCESS " + i + " " + j);
-//				}
-//			}
-//		}
 		
 	}
 
