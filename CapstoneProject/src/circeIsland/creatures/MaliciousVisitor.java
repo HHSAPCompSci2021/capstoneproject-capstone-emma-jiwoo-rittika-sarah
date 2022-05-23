@@ -95,7 +95,7 @@ public class MaliciousVisitor extends Visitor{
 		return Creature.RIGHT;
 	}
 	
-	public boolean getStolen() {
+	public boolean isStealing() {
 		return stealing;
 	}
 	

@@ -34,24 +34,22 @@ public class DrawingSurface extends PApplet {
 	private PImage cImage, iImage;
 	private PFont font;
 	
-	private float ratioX, ratioY;
 	private int drawCount, newCreatureCounter;
 	private int days, hours;
 	
 	
 	/**
-	 * Creates a new Drawing Surface, with the workshop and information screens
+	 * Creates a new Drawing Surface, and initializes the time
 	 */
 	public DrawingSurface() {
-		//island = new Island(this);
-		//island = new Island(this, 300, 300, 7, 10);
-		//circe = new Circe()
-		
-		
+		drawCount = 0;
+		newCreatureCounter = 0;
+		days = 0;
+		hours = 0;
 	}
 	
 	/**
-	 * Sets up the buttons and the island and work table screens
+	 * Sets up the buttons and the screens
 	 */
 	public void setup() {
 		G4P.setGlobalColorScheme(3);
@@ -90,44 +88,41 @@ public class DrawingSurface extends PApplet {
 	 * Draws the current screen to the PApplet, and keeps track of time
 	 */
 	public void draw() { 
-		drawCount++;
-		newCreatureCounter++;
+		if(!currentScreen.equals(welcome) && !currentScreen.equals(info)) {
+			drawCount++;
+			newCreatureCounter++;
+		}
 		
-		if(newCreatureCounter % 1000 == 0) {
+		if(newCreatureCounter % 5000 == 0 && newCreatureCounter != 0) {
 			island.addNymph();
 		}
-		if(newCreatureCounter % 3300 == 0) {
+		if(newCreatureCounter % 7000 == 0 && newCreatureCounter != 0) {
 			island.addMaliciousVisitor();
 		}
 		
 		//drawCount += 1/frameRate;
-		if(drawCount >=120) {
+		if(drawCount >=90) {
 			drawCount = 0;
 			hours ++;
-			//System.out.println("HOUR UP : " + hours + " " + frameRate);
+			System.out.println("HOUR UP : " + hours + " " + frameRate);
 		}
 		if(hours == 24) {
 			drawCount = 0;
 			hours = 0;
 			System.out.println("DAY UP" + days + " " + frameRate);
 			days++;
-//			if(days % 5 == 0 && days != 0) {
-//				island.addNymph();
-//			}
 		}
 		
-		
-//		ratioX = (float)width/currentScreen.WIDTH;
-//		ratioY = (float)height/currentScreen.HEIGHT;
-//
-//		push();
-//		
-//		scale(ratioX, ratioY);
 		
 		background(255);
 		textFont(font);
 		textSize(12);
 		fill(0);
+		
+//		if(newCreatureCounter % 4000 == 0 && newCreatureCounter != 0) {
+//			abort();
+//		}
+		
 		
 		stroke(0);
 		if(currentScreen.equals(workshop)) {
@@ -140,20 +135,20 @@ public class DrawingSurface extends PApplet {
 		if (currentScreen.equals(info)){
 			info.draw();
 		}
+		if(currentScreen.equals(welcome)) {
+			welcome.draw();
+		}
 		
 		drawTime();
 	}
 	
 	
 	private void drawTime() {
-		if(!currentScreen.equals(info)) {
+		if(!currentScreen.equals(info) && !currentScreen.equals(welcome)) {
 			push();
-			
 			float w = textWidth("Days : " + days + "   Time: " + hours + ":00");
-			
 			fill(222, 139, 62);
 			rect(20, 20, w + 30, 30);
-			
 			fill(0);
 			text("Days : " + days + "   Time: " + hours + ":00", 35, 40);
 			pop();
@@ -165,6 +160,7 @@ public class DrawingSurface extends PApplet {
 	 * Switches the current screen displayed to a different screen depending on the provided code. 
 	 * If the code is 0, switches between Island and Workshop.
 	 * If the code is 1, switches between island and Information
+	 * If the code is 2 or 3, the screen switches from he welcome screen to the info screen or the island respectively
 	 * @param x the code determining which switch to execute
 	 */
 	public void switchScreen(int x) {
@@ -185,41 +181,58 @@ public class DrawingSurface extends PApplet {
 			}
 		}
 		else if(x == 2) {
-			if(currentScreen.equals(welcome))
+			if(currentScreen.equals(welcome)) {
 				currentScreen = info;
+				welcome = null;
+			}
 		}
 		else if(x == 3) {
-			if(currentScreen.equals(welcome))
+			if(currentScreen.equals(welcome)) {
 				currentScreen = island;
+				welcome = null;
+			}
 		}
 	}
 	
-	
+	/**
+	 * Executes when the mouse is dragged. The current screen processes the event.
+	 */
 	public void mouseDragged() {
 		currentScreen.processMouseDrag(mouseX, mouseY);
 	}
 	
+	/**
+	 * Executes when the mouse button is pressed. The current screen processes the event.
+	 */
 	public void mousePressed() {
 		currentScreen.processMousePress(mouseX, mouseY);
 	}
 	
+	/**
+	 * Executes when the mouse button is released. The current screen processes the event.
+	 */
 	public void mouseReleased() {
 		currentScreen.processMouseRelease(mouseX, mouseY);
 	}
 	
-	
+	/**
+	 * Executes when the mouse is clicked. The current screen processes the event.
+	 */
 	public void mouseClicked() {
 		currentScreen.processMouseClick(mouseX, mouseY);
 	}
 	
+	/**
+	 * Executes when a key is pressed. The current screen processes the event.
+	 */
 	public void keyPressed() {
-		System.out.println(key);
+		//System.out.println(key);
 		currentScreen.processKey(key);
 	}
 	
 	
 	/**
-	 * Returns the Buttons that this DrawingSurface has, namely the brewer, recipe, and exit button
+	 * Returns the Buttons that this DrawingSurface has, namely the brewer, recipe, and exit buttons
 	 * @return
 	 */
 	public ArrayList<GButton> getButtons(){
@@ -248,6 +261,13 @@ public class DrawingSurface extends PApplet {
 		return hours;
 	}
 	
+	/**
+	 * Returns this DrawingSurface's WorkTable
+	 * @return the WorkTable
+	 */
+	public WorkTable getWorkTable() {
+		return workshop;
+	}
 	
 //	public void handleButtonEvents(GButton button, GEvent event) {}
 }

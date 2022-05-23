@@ -15,11 +15,12 @@ public class Screen{
 	public final int WIDTH;
 	protected DrawingSurface surface;
 	
-	//CONSTRUCTOR
+
 	/**
-	 * Creates a new Screen given its width and height
+	 * Creates a new Screen given its width, height, adn a drawing surface
 	 * @param width the width of the screen
 	 * @param height the height of the Screen
+	 * @param the DrawingSurface on which this screen can be drawn
 	 */
 	public Screen(int width, int height, DrawingSurface surface) {
 		this.HEIGHT = height;
@@ -53,29 +54,46 @@ public class Screen{
 		
 	}
 	
+	/**
+	 * Returns the height of this screen
+	 * @return height
+	 */
 	public int getHeight() {
 		return HEIGHT;//surface.width;
 	}
 	
+	/**
+	 * Returns the width of this screen
+	 * @return width
+	 */
 	public int getWidth() {
 		return WIDTH;//surface.height;
 	}
-	
-//	public int getDays() {
-//		return days;
-//	}
 
-
+	/**
+	 * If the mouse is  dragged, performs functions depending on the x and y location of the mouse
+	 * @param mouseX x-coordinate of mouse
+	 * @param mouseY y-coordinate of mouse
+	 */
 	public void processMouseDrag(int mouseX, int mouseY) {
 		
 	}
 
-
+	/**
+	 * If the mouse is pressed, performs functions depending on the x and y location of the mouse
+	 * @param mouseX x-coordinate of mouse
+	 * @param mouseY y-coordinate of mouse
+	 */
 	public void processMousePress(int mouseX, int mouseY) {
 		
 	}
 
 
+	/**
+	 * If the mouse button is released, performs functions depending on the x and y location of the mouse
+	 * @param mouseX x-coordinate of mouse
+	 * @param mouseY y-coordinate of mouse
+	 */
 	public void processMouseRelease(int mouseX, int mouseY) {
 	}
 	

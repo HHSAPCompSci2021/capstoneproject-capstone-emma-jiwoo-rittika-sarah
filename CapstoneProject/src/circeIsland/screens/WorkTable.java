@@ -21,8 +21,7 @@ public class WorkTable extends Screen{
 	//12 items: Grape seed, barley seed, marathos seed, anithos seed, grape, barley, marathos, anithos,
 	//			water, wine, bread, potion
 	
-	private Rectangle cookButton, recipeButton, inventoryButton, holdingsButton, cauldron;
-	//GButton brewer, recipe, exit;
+	private Rectangle inventoryButton, holdingsButton, cauldron;
 	private ArrayList<String> recipes;
 	private ArrayList<Holdable> cauldronItems;
 	private boolean showRecipes;
@@ -54,8 +53,6 @@ public class WorkTable extends Screen{
 		//cookButton = new Rectangle(800/2-100,600/2-50,200,100);
 		storage = new ArrayList<ArrayList<Holdable>>();
 		//circe = c;
-		cookButton = new Rectangle(100, 500, 100, 50);
-		recipeButton = new Rectangle(400, 500, 100, 50);
 		inventoryButton = new Rectangle(620, 30, 150, 400);
 		holdingsButton = new Rectangle(900, 450, 150, 100);
 		inventoryButton = new Rectangle(630, 30, 200, 420);
