@@ -8,8 +8,8 @@ import processing.core.PImage;
  * @author Jiwoo Kim
  */
 public class Pig extends Creature{
-	public static final double PIG_WIDTH = 22.22222222;
-	public static final double PIG_HEIGHT = 11.53846154;
+	public static final double PIG_WIDTH_RATIO = 22.22222222;
+	public static final double PIG_HEIGHT_RATIO = 11.53846154;
 	private boolean inPigPen;
 	// 90*130
 
@@ -17,8 +17,8 @@ public class Pig extends Creature{
 		this(null, x, y);
 	}
 	
-	public Pig(PImage img, int x, int y) {
-		super(img, x, y, PIG_WIDTH, PIG_HEIGHT, 3);
+	public Pig(PImage img, double x, double y) {
+		super(img, x, y, PIG_WIDTH_RATIO, PIG_HEIGHT_RATIO, 3);
 		inPigPen = false;
 	}
 	

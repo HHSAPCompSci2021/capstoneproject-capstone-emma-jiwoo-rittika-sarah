@@ -14,6 +14,7 @@ import circeIsland.elements.*;
 /**
  * The class represents the creature.
  * All the moving creatures are extended from this class.
+ * It can move to X and Y directions
  * 
  * @author Jiwoo Kim
  */
@@ -44,7 +45,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	 * @param ratioX the number represents how many creatures fit horizontally in the island 
 	 * @param ratioY the number represents how many creatures fit vertically in the island
 	 */
-	public Creature (int xCoor, int yCoor, double ratioX, double ratioY) {
+	public Creature (double xCoor, double yCoor, double ratioX, double ratioY) {
 		this(null, xCoor, yCoor, ratioX, ratioY, 10);
 	}
 	
@@ -59,7 +60,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	 * @param ratioX the number represents how many creatures fit horizontally in the island 
 	 * @param ratioY the number represents how many creatures fit vertically in the island
 	 */
-	public Creature (PImage img, int xCoor, int yCoor, double ratioX, double ratioY) {
+	public Creature (PImage img, double xCoor, double yCoor, double ratioX, double ratioY) {
 		this(img, xCoor, yCoor, ratioX, ratioY, 10);
 	}
 	
@@ -73,7 +74,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	 * @param ratioY the number represents how many creatures fit vertically in the island
 	 * @param vel velocity of the creature
 	 */
-	public Creature (int xCoor, int yCoor, double ratioX, double ratioY, int vel) {
+	public Creature (double xCoor, double yCoor, double ratioX, double ratioY, int vel) {
 		this(null, xCoor, yCoor,ratioX, ratioY, vel);
 	}
 	
@@ -88,7 +89,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	 * @param ratioY the number represents how many creatures fit vertically in the island
 	 * @param vel velocity of the creature
 	 */
-	public Creature (PImage img, int xCoor, int yCoor, double ratioX, double ratioY, int vel) {
+	public Creature (PImage img, double xCoor, double yCoor, double ratioX, double ratioY, int vel) {
 		super(xCoor,yCoor, 1200/ratioX, 900/ratioY);
 		widthRatio = ratioX;
 		heightRatio = ratioY;
@@ -225,6 +226,28 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	/**
+	 * 
+	 * @return whether the island width are resized or not (resize: true, otherwise: false)
+	 */
+	public boolean islandWidthResized() {
+		return prevWidth != myIsland.getSurface().width;
+	}
+	
+	/**
+	 * 
+	 * @return whether the island height resized or not. (resize: true, otherwise: false)
+	 */
+	public boolean islandHeightResized() {
+		return prevHeight != myIsland.getSurface().height;
+	}
+	public double getPrevHeight() {
+		return prevHeight;
+	}
+	public double getPrevWidth() {
+		return prevWidth;
+	}
+	
+	/**
 	 * change the actual coordinate system to the grid coordinate 
 	 * @param xCoor x coordinate of the creature
 	 * @param yCoor y coordinate of the creature
@@ -269,14 +292,14 @@ public abstract class Creature extends Rectangle2D.Double{
 	public void draw(DrawingSurface g) {
 		if(isInGrid) {
 			g.push();
-			double islandHeight = myIsland.getSurface().height;
-			double islandWidth =myIsland.getSurface().width;
-			if(prevHeight != islandHeight) {
+			if(islandHeightResized()) {
+				double islandHeight = myIsland.getSurface().height;
 				y *= islandHeight/prevHeight;
 				prevHeight = islandHeight;
 				height = islandHeight/heightRatio;
 			}
-			if(prevWidth != islandWidth) {
+			if(islandWidthResized()) {
+				double islandWidth =myIsland.getSurface().width;
 				x *= islandWidth/prevWidth;
 				prevWidth = islandWidth;
 				width = islandWidth/widthRatio;
@@ -293,7 +316,7 @@ public abstract class Creature extends Rectangle2D.Double{
 			g.pop();
 		}
 	}
-	
+
 	/**
 	 * Check if the input x coordinate and y coordinate are standable or not
 	 * 

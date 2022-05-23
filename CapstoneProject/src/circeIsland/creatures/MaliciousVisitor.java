@@ -1,9 +1,11 @@
 package circeIsland.creatures;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import circeIsland.elements.Holdable;
 import circeIsland.elements.House;
+import circeIsland.main.DrawingSurface;
 import processing.core.PImage;
 
 /**
@@ -14,18 +16,20 @@ public class MaliciousVisitor extends Visitor{
 	
 	private boolean stealing;
 	private boolean running;
-//	private Holdable[] stolen;
-	private int stealingCounting;
+	private int stealingCount;
+	private int[] circeHouse;
+	private Rectangle2D.Double circeHouseRect;
 
-	public MaliciousVisitor(PImage img, int x, int y) {
+
+	public MaliciousVisitor(PImage img, double x, double y) {
 		super(img, x, y);
 		stealing = false;
 		running = true;
-//		stolen = new Holdable[3];
-		stealingCounting = 0;
-//		for(int i = 0; i < stolen.length; i++) {
-//			stolen[i] = null;
-//		}
+		stealingCount = 0;
+		circeHouse = new int[2];
+		circeHouse[0] = -1;
+		circeHouse[1] = -1;
+		circeHouseRect = null;
 	}
 
 	public String getType() {
@@ -34,22 +38,22 @@ public class MaliciousVisitor extends Visitor{
 	
 	public void act() {
 		if(super.getIsInGrid()) {
-			int[] currentPos = super.coorToGrid(x,y);
-			if(super.getIsland().getElement(currentPos[0], currentPos[1]) instanceof House ) {
-				if(stealingCounting<20) {
-					stealingCounting++;
-				}else {
-					stealing = true;
-				}
+			if(circeHouse[0] == -1) {
+				setHouse();
+			}
+			if(this.intersects(circeHouseRect)) {
+				System.out.println("Running:");
+				stealing = true;
+				stealingCount++;
 			}else if(running && !stealing) {
 				int[] circeGrid = checkCirceNearby();
 				int dir = -1;
 				if(circeGrid == null) {
-					House circeHouse = super.getIsland().getCirceHouse();
-					int[] circeHouseCoor = {circeHouse.getXCoor(), circeHouse.getYCoor()};
-					dir = super.destinationDir(circeHouseCoor);
+					dir = super.destinationDir(circeHouse);
+					System.out.println("Going:");
 				}else {
 					dir = destinationDir(circeGrid);
+					System.out.println("AHH:");
 				}
 				
 				super.act(dir);
@@ -67,6 +71,10 @@ public class MaliciousVisitor extends Visitor{
 	
 	public boolean isRunning() {
 		return running;
+	}
+	
+	public int getStealingCount() {
+		return stealingCount;
 	}
 	
 	
@@ -94,7 +102,30 @@ public class MaliciousVisitor extends Visitor{
 		return stealing;
 	}
 	
+	public void draw(DrawingSurface g) {
+		if(super.getIsInGrid()) {
+			super.draw(g);
+			if(circeHouse[0] == -1) {
+				setHouse();
+			}
+			if(islandWidthResized() || islandHeightResized()) {
+				double cellWidth = (super.getIsland().getSurface().width - 11) / super.getIsland().getElements()[0].length;
+				double cellHeight = (super.getIsland().getSurface().height - 17) / super.getIsland().getElements().length;
+				circeHouseRect = new Rectangle2D.Double(circeHouse[0]*cellWidth-cellWidth/3,circeHouse[1]*cellHeight-cellHeight/3,cellWidth*8/3, cellHeight*8/3);
+			}
+			
+			
+		}
+	}
 
+	private void setHouse() {
+		House h = super.getIsland().getCirceHouse();
+		circeHouse[0] = h.getXCoor();
+		circeHouse[1] = h.getYCoor();
+		double cellWidth = (super.getIsland().getSurface().width - 11) / super.getIsland().getElements()[0].length;
+		double cellHeight = (super.getIsland().getSurface().height - 17) / super.getIsland().getElements().length;
+		circeHouseRect = new Rectangle2D.Double(circeHouse[0]*cellWidth-cellWidth/3,circeHouse[1]*cellHeight-cellHeight/3,cellWidth*8/3, cellHeight*8/3);
+	}
 
 	
 }

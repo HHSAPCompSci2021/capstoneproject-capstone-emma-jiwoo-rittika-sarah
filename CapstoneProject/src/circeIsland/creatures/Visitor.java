@@ -8,12 +8,12 @@ import processing.core.PImage;
  */
 public abstract class Visitor extends Creature{
 	
-	public static final double VISITOR_WIDTH = 27.77777778;
-	public static final double VISITOR_HEIGHT = 11.19402985;
+	public static final double VISITOR_WIDTH_RATIO = 27.77777778;
+	public static final double VISITOR_HEIGHT_RATIO = 11.19402985;
 			// 75*135
 	
-	public Visitor(PImage img, int x, int y) {
-		super(img, x, y, VISITOR_WIDTH, VISITOR_HEIGHT);
+	public Visitor(PImage img, double x, double y) {
+		super(img, x, y, VISITOR_WIDTH_RATIO, VISITOR_HEIGHT_RATIO);
 	}
 	
 	public void act() {

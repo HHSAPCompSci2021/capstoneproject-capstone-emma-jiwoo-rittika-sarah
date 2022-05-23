@@ -6,21 +6,23 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 /**
+ * This class represents Circe, extends from the Creature
+ * It can grab the things and stole, plant, water, harvest, magic and so on.
  * 
  * @author Jiwoo Kim
  */
 public class Circe extends Creature{
 
-	public static final double CIRCE_WIDTH = 28.57142857;
-	public static final double CIRCE_HEIGHT = 12.09677419;
+	public static final double CIRCE_WIDTH_RATIO = 28.57142857;
+	public static final double CIRCE_HEIGHT_RATIO = 12.09677419;
 	// 70 * 125
 	
 	private Holdable[] holdings;
 	private int currentHold;
 	private boolean greeting;
 	
-	public Circe(PImage img, int x, int y) {
-		super(img, x, y, CIRCE_WIDTH, CIRCE_HEIGHT, 8);
+	public Circe(PImage img, double x, double y) {
+		super(img, x, y, CIRCE_WIDTH_RATIO, CIRCE_HEIGHT_RATIO, 8);
 		holdings = new Holdable[6];
 		greeting = true;
 		currentHold = 0;
@@ -73,7 +75,7 @@ public class Circe extends Creature{
 	}
 	
 	public void turnPig(MaliciousVisitor visitor) {
-		Pig pig = new Pig(super.getIsland().getImage("pig"),(int)visitor.getX(), (int)visitor.getY());
+		Pig pig = new Pig(super.getIsland().getImage("pig"),visitor.getX(), visitor.getY());
 		pig.putOnIsland(visitor.getIsland());
 		visitor.removeFromIsland();
 	}
@@ -169,21 +171,4 @@ public class Circe extends Creature{
 
     }
 	
-//	public boolean canStand(double xCoor, double yCoor) {
-//		Element[][] elements = super.getIsland().getElements();
-//		
-//		int[] gridBottomLeft = coorToGrid(xCoor, yCoor+height);
-//		int[] gridBottomRight = coorToGrid(xCoor+width, yCoor+height);
-//		System.out.println("Left: " + gridBottomLeft[0] + ", Right: " + gridBottomRight[0] + ", Down: " + gridBottomLeft[1]);
-//		if(gridBottomLeft[0] < 0 || gridBottomRight[0] > elements.length || 
-//			gridBottomLeft[1] < 0 || gridBottomRight[1] > elements.length) {
-//			return false;
-//		}
-//		if (elements[gridBottomLeft[0]][gridBottomLeft[1]] == null || 
-//			elements[gridBottomRight[0]][gridBottomRight[1]] == null) {
-//			return false;
-//		}
-//		return elements[gridBottomLeft[0]][gridBottomLeft[1]].getStandable() &&
-//				elements[gridBottomRight[0]][gridBottomRight[1]].getStandable();
-//	}
 }
