@@ -8,6 +8,7 @@ public class House extends Element{
 	private String type; //Either "circe" or "norm"
 	private int xSize; //circe: 3x3 Normal: 2x2 
 	private int ySize;
+	private boolean isTaken;
 
 	
 	public House(Island i,  PImage p, int xInput, int yInput, String type) {
@@ -18,6 +19,7 @@ public class House extends Element{
 			xSize = 2;
 			ySize = 2;
 		}
+		isTaken = false;
 	}
 
 	@Override
@@ -79,6 +81,14 @@ public class House extends Element{
 	
 	public String toString() {
 		return super.toString() + " type: "+type;
+	}
+	
+	public boolean getTaken() {
+		return isTaken;
+	}
+	
+	public void setTaken(boolean b) {
+		isTaken = b;
 	}
 
 }
