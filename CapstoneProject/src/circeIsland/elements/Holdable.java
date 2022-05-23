@@ -28,6 +28,7 @@ public class Holdable {
 	public static final int PLACEHOLDER = 13;
 	
 	private PImage image;
+	private static PImage[] holdableImages;
 	
 
 	public Holdable(int type) {
@@ -79,9 +80,11 @@ public class Holdable {
 	
 	public void draw(DrawingSurface surface, float xCoor, float yCoor, float cellWidth, float cellHeight) {
 		surface.push();
-		if (image != null) {
-			surface.image(image, xCoor,yCoor,cellWidth,cellHeight);
-		}
+//		if (image != null) {
+//			surface.image(image, xCoor,yCoor,cellWidth,cellHeight);
+//		}
+		if(holdableImages[type] != null)
+			surface.image(holdableImages[type], xCoor,yCoor,cellWidth,cellHeight);
 //		surface.fill(176, 54, 83);
 //		surface.rect(10 + xCoor, 10 +yCoor, 10, 10);
 //		surface.fill(0);
@@ -91,5 +94,21 @@ public class Holdable {
 	
 	public String toString() {
 		return "type:"+type;
+	}
+	
+	public static void setImages(DrawingSurface surface) {
+		holdableImages = new PImage[13];
+		holdableImages[1] = surface.loadImage("Files/HoldableSeedGrape.png");
+		holdableImages[2] = surface.loadImage("Files/HoldableSeedBarley.png");
+		holdableImages[3] = surface.loadImage("Files/HoldableSeedMarathos.png");
+		holdableImages[4] = surface.loadImage("Files/HoldableSeedAnithos.png");
+		holdableImages[5] = surface.loadImage("Files/HoldableGrape.png");
+		holdableImages[6] = surface.loadImage("Files/HoldableBarley.png");
+		holdableImages[7] = surface.loadImage("Files/HoldableAnithos.png");
+		holdableImages[8] = surface.loadImage("Files/HoldableMarathos.png");
+		holdableImages[9] = surface.loadImage("Files/HoldableWater.png");
+		holdableImages[10] = surface.loadImage("Files/HoldableWine.png");
+		holdableImages[11] = surface.loadImage("Files/HoldableBread.png");
+		holdableImages[12] = surface.loadImage("Files/HoldablePotion.png");
 	}
 }

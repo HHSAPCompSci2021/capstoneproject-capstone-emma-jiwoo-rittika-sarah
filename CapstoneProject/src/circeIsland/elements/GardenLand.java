@@ -57,10 +57,10 @@ public class GardenLand extends Element{
 	}
 		
 	public void plant(int type, PImage[] images) {
-		budImage = images[0];
-		sproutImage = images[1];
-		grownImage = images[2];
-		deadImage = images[3];
+		budImage = images[1];
+		sproutImage = images[2];
+		grownImage = images[3];
+		deadImage = images[4];
 		
 		this.type = type;
 		lifeState = BUD;
@@ -102,19 +102,19 @@ public class GardenLand extends Element{
 				toBeUsed = getImage();
 			}
 			else if (lifeState == BUD) {
-				System.out.println("BUD");
+				//System.out.println("BUD");
 				toBeUsed = budImage;
 			}
 			else if (lifeState == SPROUT) {
-				System.out.println("Sprout");
+				//System.out.println("Sprout");
 				toBeUsed = sproutImage;
 			}
 			else if (lifeState == GROWN) {
-				System.out.println("GRown");
+				//System.out.println("GRown");
 				toBeUsed = grownImage;
 			}
 			else if (lifeState == DEAD) {
-				System.out.println("Dead");
+				//System.out.println("Dead");
 				toBeUsed = deadImage;
 			}
 			

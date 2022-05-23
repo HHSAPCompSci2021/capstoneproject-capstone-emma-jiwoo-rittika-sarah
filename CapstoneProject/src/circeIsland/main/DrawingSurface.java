@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import circeIsland.creatures.Circe;
+import circeIsland.elements.Holdable;
 import circeIsland.screens.*;
 import g4p_controls.G4P;
 import g4p_controls.GButton;
@@ -67,6 +68,8 @@ public class DrawingSurface extends PApplet {
 		cImage = loadImage("Files/CirceFrontStand.png");
 		iImage = loadImage("Files/Island2.png");
 		
+		Holdable.setImages(this);
+		
 		circe = new Circe(cImage, 300, 300);
 		island = new Island(this, iImage, circe, 4, 14);
 		info = new Information(this);
@@ -75,7 +78,6 @@ public class DrawingSurface extends PApplet {
 		workshop.add(circe);
 		brewer.addEventHandler(workshop,  "handleButtonClick");
 		recipe.addEventHandler(workshop,  "handleButtonClick");
-		
 		exit.addEventHandler(workshop,  "handleButtonClick");
 		
 		circe.setIsland(island);

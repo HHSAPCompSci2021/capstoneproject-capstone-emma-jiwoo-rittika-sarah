@@ -23,12 +23,9 @@ public class Island extends Screen{
 	private ArrayList<Creature> creatures;
 	private Circe circe;
 	private House circeHouse;
-//	private Nymph newVisitor;
-//	private MaliciousVisitor newMalVisitor;
+	private Rectangle infoButton;
 	
-	private Rectangle infoButton, inventoryRect;
-	
-	private boolean landElementSelected, mouseClickEnabled, gardenElementSelected, dropDone, showWarning;
+	private boolean landElementSelected, mouseClickEnabled, dropDone, showWarning;
 	private int[] selectedSpot;
 	private GDropList list;
 	
@@ -59,10 +56,8 @@ public class Island extends Screen{
 		circe = c;
 		creatures = new ArrayList<Creature>();
 		infoButton = new Rectangle(surface.width-80, 20, surface.width / element.length -10, surface.height /element[0].length - 10);
-		inventoryRect = new Rectangle(surface.width - 300, surface.height - 50, 96, 40);
 		
 		landElementSelected = false;
-		gardenElementSelected = false;
 		mouseClickEnabled = true;
 		selectedSpot = new int[2];
 		setupIsland(houseX, houseY);
@@ -268,6 +263,7 @@ public class Island extends Screen{
 //			System.out.println("NULL");
 //		}
 		
+		//click on malicious visitor with bread/wine/potion
 		for (int i = 0; i<creatures.size(); i++) {
 			if (creatures.get(i) instanceof MaliciousVisitor) {
 				MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
@@ -297,18 +293,21 @@ public class Island extends Screen{
 		
 		
 		
-		
+		//click on circe's house -- temp
 		if(circe.getInventoryByCoor(mouseX, mouseY) != -1) {
             circe.grab(circe.getInventoryByCoor(mouseX, mouseY));
 		} 
+		//click on circe's house
 		else if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
 			System.out.println("at circe's");
 			surface.switchScreen(0);
 		}
-		else if(clickedElement instanceof GardenLand && circe.intersects(clickedElement.getXCoor() * cellWidth, clickedElement.getYCoor() * cellHeight, cellWidth, cellHeight)){//clickedElement != null && clickedElement instanceof GardenLand){//element[clickInGrid[0]][clickInGrid[1]] instanceof GardenLand) {
+		//click on garden
+		else if(clickedElement instanceof GardenLand && circe.intersects(clickedElement.getXCoor() * cellWidth, clickedElement.getYCoor() * cellHeight, cellWidth, cellHeight)){
 			System.out.println("IT IS GARDEN");
 			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);
 			Holdable holding = circe.getInventory()[circe.getCurrentHold()];
+			
 			if(e.isAlive()) {
 				if(holding != null && holding.getType() == Holdable.WATER) {
 					System.out.println("watering");
@@ -327,22 +326,22 @@ public class Island extends Screen{
 					int hold = holding.getType();
 					if(hold == Holdable.ANITHOS_SEED) {
 						System.out.println("let's add a");
-						e.plant(hold, allAGarden);
+						e.plant(hold + 4, allAGarden);
 						circe.removeFromInventory(circe.getCurrentHold());
 					}
 					else if(hold == Holdable.BARLEY_SEED) {
 						System.out.println("let's add b");
-						e.plant(hold, allBGarden);
+						e.plant(hold + 4, allBGarden);
 						circe.removeFromInventory(circe.getCurrentHold());
 					}
 					else if (hold == Holdable.GRAPE_SEED) {
 						System.out.println("let's add g");
-						e.plant(hold, allGGarden);
+						e.plant(hold + 4, allGGarden);
 						circe.removeFromInventory(circe.getCurrentHold());
 					}
 					else if(hold == Holdable.MARATHOS_SEED) {
 						System.out.println("let's add m");
-						e.plant(hold, allMGarden);
+						e.plant(hold + 4, allMGarden);
 						circe.removeFromInventory(circe.getCurrentHold());
 					}					
 				}
@@ -830,8 +829,6 @@ public class Island extends Screen{
 		
 		
 		//POND
-//		element[1][0] = new Pond(this, 1, 0);
-//		element[1][0].setIsInGrid(true);
 		element[16][5] = new Pond(this, 16, 5);
 		element[16][5].setIsInGrid(true);
 		element[17][5] = new Pond(this, 17, 5);
@@ -861,14 +858,13 @@ public class Island extends Screen{
 		
 		//Circe's House
 		circeHouse.putOnIsland(this);
-		System.out.println("2");
-		for(int i = 0; i<element.length; i++) {
-			for(int j = 0; j<element[0].length; j++) {
-				if(element[i][j] instanceof House) {
-					System.out.println("SUCCESS " + i + " " + j);
-				}
-			}
-		}
+//		for(int i = 0; i<element.length; i++) {
+//			for(int j = 0; j<element[0].length; j++) {
+//				if(element[i][j] instanceof House) {
+//					System.out.println("SUCCESS " + i + " " + j);
+//				}
+//			}
+//		}
 		
 	}
 
