@@ -187,7 +187,7 @@ public abstract class Creature extends Rectangle2D.Double{
 				width = islandWidth/widthRatio;
 			}			
 			if (image != null) {
-				g.rect((float)x,(float)y,(float)(width),(float)(height));
+//				g.rect((float)x,(float)y,(float)(width),(float)(height));
 				g.image(image,(float)x,(float)y,(float)(width),(float)(height));
 			} else {
 				g.fill(100);
