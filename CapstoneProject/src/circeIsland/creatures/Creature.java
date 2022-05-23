@@ -22,6 +22,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	private boolean isInGrid;
 	private int count;
 	private double prevWidth, prevHeight;
+	private double widthRatio, heightRatio;
 	
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
@@ -43,7 +44,9 @@ public abstract class Creature extends Rectangle2D.Double{
 	}
 	
 	public Creature (PImage img, int xCoor, int yCoor, double width, double height, int vel) {
-		super(xCoor,yCoor, width, height);
+		super(xCoor,yCoor, 1200/width, 900/height);
+		widthRatio = width;
+		heightRatio = height;
 		velocity = vel;
 		image = img;
 		isInGrid = false;
@@ -176,20 +179,19 @@ public abstract class Creature extends Rectangle2D.Double{
 			if(prevHeight != islandHeight) {
 				y *= islandHeight/prevHeight;
 				prevHeight = islandHeight;
+				height = islandHeight/heightRatio;
 			}
 			if(prevWidth != islandWidth) {
 				x *= islandWidth/prevWidth;
 				prevWidth = islandWidth;
+				width = islandWidth/widthRatio;
 			}			
-			
-			double myWidth = islandWidth/width;
-			double myHeight = islandHeight/height;
 			if (image != null) {
 //				g.rect((float)x,(float)y,(float)(width*rateX),(float)(height*rateY));
-				g.image(image,(float)x + 6,(float)y + 9,(float)(myWidth),(float)(myHeight));
+				g.image(image,(float)x + 6,(float)y + 9,(float)(width),(float)(height));
 			} else {
 				g.fill(100);
-				g.rect((float)x,(float)y,(float)myWidth,(float)myHeight);
+				g.rect((float)x,(float)y,(float)width,(float)height);
 				g.fill(0);
 				g.text(getType(), (float)x, (float)y);
 			}
@@ -217,10 +219,10 @@ public abstract class Creature extends Rectangle2D.Double{
 	public boolean canStand(double xCoor, double yCoor) {
 //		System.out.println(xCoor + "," + yCoor );
 //		System.out.println("Island Width: " + myIsland.getWidth() + "Island Height" + myIsland.getHeight());
-		double myWidth = myIsland.getSurface().width/width;
-		double myHeight = myIsland.getSurface().height/height;
-		int[] gridBottomLeft = coorToGrid(xCoor, yCoor+myHeight);
-		int[] gridBottomRight = coorToGrid(xCoor+myWidth, yCoor+myHeight);
+		
+		
+		int[] gridBottomLeft = coorToGrid(xCoor, yCoor+height);
+		int[] gridBottomRight = coorToGrid(xCoor+width, yCoor+height);
 		if(gridBottomLeft[0] < 0 || gridBottomRight[0] > myIsland.getElements().length || 
 				gridBottomLeft[1] < 0 || gridBottomRight[1] > myIsland.getElements()[0].length) {
 			return false;
@@ -232,11 +234,13 @@ public abstract class Creature extends Rectangle2D.Double{
 		return myIsland.getElement(gridBottomLeft[0], gridBottomLeft[1]).getStandable() &&
 				myIsland.getElement(gridBottomRight[0], gridBottomRight[1]).getStandable();
 		
+		
 //		System.out.println(myWidth + ", " + myHeight);
-//		
+
+		
 //		Element[][] elements = myIsland.getElements();
-//		double feetX = this.x + myWidth / 2;
-//		double feetY = this.y + myHeight / 2;
+//		double feetX = this.x + width / 2;
+//		double feetY = this.y + height / 2;
 //		
 //		//int[] coord = myIsland.coorToGrid(x + 6,  y + 9);
 //		int[] coord = myIsland.coorToGrid(xCoor,  yCoor);
