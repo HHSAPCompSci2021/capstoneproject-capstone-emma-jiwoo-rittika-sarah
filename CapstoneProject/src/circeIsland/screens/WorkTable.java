@@ -58,6 +58,8 @@ public class WorkTable extends Screen{
 		recipeButton = new Rectangle(400, 500, 100, 50);
 		inventoryButton = new Rectangle(620, 30, 150, 400);
 		holdingsButton = new Rectangle(900, 450, 150, 100);
+		inventoryButton = new Rectangle(630, 30, 200, 420);
+		holdingsButton = new Rectangle(630, 450, 200, 100);
 		recipes = new ArrayList<String>();
 		cauldron = new Rectangle(300, 250, 250, 250);
 		cauldronItems = new ArrayList<Holdable>();
