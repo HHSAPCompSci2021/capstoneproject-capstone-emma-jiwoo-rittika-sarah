@@ -59,7 +59,7 @@ public class WorkTable extends Screen{
 		inventoryButton = new Rectangle(620, 30, 150, 400);
 		holdingsButton = new Rectangle(620, 450, 150, 100);
 		recipes = new ArrayList<String>();
-		cauldron = new Rectangle(200, 200, 300, 200);
+		cauldron = new Rectangle(300, 250, 250, 250);
 		cauldronItems = new ArrayList<Holdable>();
 		brewedItem = null;
 		brewedItemNum = 0;
@@ -100,6 +100,7 @@ public class WorkTable extends Screen{
 	}
 	
 	private void setImages() {
+		backgroundImage = surface.loadImage("Files/WorkTableBackground.png");
 		cauldronNeutralEmptyImage = surface.loadImage("Files/CauldronNeutralEmpty.png");
 		cauldronNeutralFullImage = surface.loadImage("Files/CauldronNeutralFull.png");
 		cauldronHappyImage = surface.loadImage("Files/CauldronHappy.png");
@@ -111,8 +112,8 @@ public class WorkTable extends Screen{
 		holdableImages[3] = surface.loadImage("Files/HoldableSeedAnithos.png");
 		holdableImages[4] = surface.loadImage("Files/HoldableGrape.png");
 		holdableImages[5] = surface.loadImage("Files/HoldableBarley.png");
-		holdableImages[6] = surface.loadImage("Files/HoldableAnithos.png");
-		holdableImages[7] = surface.loadImage("Files/HoldableMarathos.png");
+		holdableImages[6] = surface.loadImage("Files/HoldableMarathos.png");
+		holdableImages[7] = surface.loadImage("Files/HoldableAnithos.png");
 		holdableImages[8] = surface.loadImage("Files/HoldableWater.png");
 		holdableImages[9] = surface.loadImage("Files/HoldableWine.png");
 		holdableImages[10] = surface.loadImage("Files/HoldableBread.png");
@@ -127,6 +128,7 @@ public class WorkTable extends Screen{
 	public void draw() {
 		super.draw();
 		surface.background(255,255,255);
+		surface.image(backgroundImage, 0, 0, surface.width, surface.height);
 		
 //		surface.image(cauldronNeutralEmptyImage, cauldron.x, cauldron.y, cauldron.width, cauldron.height);
 	//	surface.image(holdableImages[5], 0, 0, 50, 50);
@@ -136,7 +138,7 @@ public class WorkTable extends Screen{
 
 		inventoryButton.setBounds(3 *surface.width / 4, surface.height / 10, surface.width / 8, (int)(surface.height / 2));
 		holdingsButton.setBounds(3 *surface.width / 4, surface.height / 10, surface.width / 8, surface.height / 9);
-		cauldron.setBounds(surface.width/5 - 100, surface.height/4, surface.width/2, surface.height/2);
+		cauldron.setBounds(surface.width/5 - 50, surface.height/5, surface.width/2, surface.height/2);
 		
 		
 		drawInventory();
@@ -204,8 +206,6 @@ public class WorkTable extends Screen{
 		int currentElement = 1;
 		for(int i = 0; i<inventory.length; i++) { //RECT coordinates (top left) : 620, 30
 			for(int j = 0; j<inventory[0].length; j++) {
-				float cellCenterX = (float)(boxX + (j*cellWidth) + (cellWidth/2.5));
-				float cellCenterY = (float)(boxY + (i*cellHeight) + (cellHeight/2.5));
 				
 				surface.push();
 				//draws the grid for the inventory
@@ -250,8 +250,6 @@ public class WorkTable extends Screen{
 		
 		for(int i = 0; i<inventory.length; i++) { 
 			for(int j = 0; j<inventory[0].length; j++) {
-				float cellCenterX = (float)(boxX + (j*cellWidth) + (cellWidth/2.5));
-				float cellCenterY = (float)(boxY + (i*cellHeight) + (cellHeight/2.5));
 				
 				surface.push();
 				//draws the grid for the inventory
