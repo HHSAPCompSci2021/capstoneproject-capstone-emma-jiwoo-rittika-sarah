@@ -12,7 +12,7 @@ public class Information extends Screen{
 
 	private Rectangle exitButton;
 	private String info;
-	private PImage island, circe, mal, nymph, potion;
+	private PImage circe, mal, nymph;
 	
 	/**
 	 * Creates a new information screen on the given PApplet
@@ -100,10 +100,10 @@ public class Information extends Screen{
 	
 	
 	private void setupImages() {
-		island = surface.loadImage("Files/Island2.png");
+		//island = surface.loadImage("Files/Island2.png");
 		circe = surface.loadImage("Files/CirceFrontStand.png");
 		mal = surface.loadImage("Files/MaliciousFrontStand.png");
 		nymph = surface.loadImage("Files/NymphFrontStand.png");
-		potion = surface.loadImage("Files/HoldablePotion.png");
+		//potion = surface.loadImage("Files/HoldablePotion.png");
 	}
 }

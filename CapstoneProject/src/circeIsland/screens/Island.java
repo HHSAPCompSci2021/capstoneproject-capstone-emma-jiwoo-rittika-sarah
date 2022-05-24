@@ -139,26 +139,28 @@ public class Island extends Screen{
 		circe.draw(surface);
 		
 		//show any required warning every four days
-		if(surface.getDays() % 4 == 0) {
+		if(surface.getDays() % 2 == 0 && surface.getDays() != 0) {
 			int numHouses = getNumHouses();
 			int numNymphs = getNumCreature('n');
-			if(numNymphs - numHouses >= 4)
+			if(numNymphs - numHouses >= 1)
 				drawWarningMessage(1);
 		}
 		
 	}
 	
 	private void performSteal(Creature c) {
-//		MaliciousVisitor mv = (MaliciousVisitor)c;
-//		double prob = Math.random();
-//		if(mv.isStealing() && prob < 0.15 && surface.getDays() % 2 == 1 && surface.getHours() % 6 == 0 && surface.getHours() != 0) {
-//			WorkTable w = surface.getWorkTable();
-//			int randType = (int)(Math.random() * 13);
-//			if(randType != 0) {
-//				w.removeFromStorage(new Holdable(randType));
-//				System.out.println("stolen" + randType);
-//			}
-//		}
+		MaliciousVisitor mv = (MaliciousVisitor)c;
+		double prob = Math.random();
+		if(mv.isStealing() && prob < 0.15 && surface.getDays() % 2 == 1 && surface.getHours() % 6 == 0 && surface.getHours() != 0) {
+			mv.getStealingCount();
+			WorkTable w = surface.getWorkTable();
+			int randType = (int)(Math.random() * 13);
+			if(randType != 0) {
+				w.removeFromStorage(new Holdable(randType));
+				mv.stealMessage(this.surface);
+				System.out.println("stolen" + randType);
+			}
+		}
 	}
 	
 	
@@ -199,7 +201,7 @@ public class Island extends Screen{
 	public void addMaliciousVisitor() {
 		//MaliciousVisitor newVisitor = new MaliciousVisitor(malImage, 200, 200);
 		//newVisitor.putOnIsland(this);
-		malVisitor = new MaliciousVisitor(nymphImage, 200, 200);
+		malVisitor = new MaliciousVisitor(malImage, 200, 200);
 		malVisitor.putOnIsland(this);
 	}
 	
@@ -234,8 +236,9 @@ public class Island extends Screen{
 	
 	
 	private void drawWarningMessage(int code) {
-		//surface.rect(60,  50,  surface.width - 120,  surface.height - 120);
-		String msg;
+		surface.fill(255);
+		surface.rect(60,  50,  surface.width/4,  surface.height/7 - 120);
+		String msg = "";
 		
 		switch(code) {
 		case 1: //too many nymphs
@@ -243,6 +246,11 @@ public class Island extends Screen{
 		case 2:
 			
 		}
+		
+		double w = surface.textWidth(msg);
+		surface.fill(0);
+		surface.text(msg,  (float)(60 + ((surface.width/4) / 2) - w / 2), (50 + (surface.height/7 - 120)) / 2 + 10);
+		
 		
 	}
 	
@@ -308,6 +316,7 @@ public class Island extends Screen{
 					if(n.contains(mouseX, mouseY) && isNear && (hold == Holdable.BREAD || hold == Holdable.WINE)) {
 						n.fed();
 						circe.removeFromInventory(circe.getCurrentHold());
+						return;
 					}
 				}
 			}
@@ -320,6 +329,7 @@ public class Island extends Screen{
 					if(p.contains(mouseX, mouseY) && isNear && (hold == Holdable.BARLEY_PLANT)) {
 						p.fed();
 						circe.removeFromInventory(circe.getCurrentHold());
+						return;
 					}
 				}
 			}
