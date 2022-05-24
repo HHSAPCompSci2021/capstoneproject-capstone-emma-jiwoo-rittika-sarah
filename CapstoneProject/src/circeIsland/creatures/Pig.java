@@ -6,6 +6,7 @@ import circeIsland.elements.*;
 import processing.core.PImage;
 
 /**
+ * This class represents pig, extends from the Creature
  * 
  * @author Jiwoo Kim
  */
@@ -48,7 +49,12 @@ public class Pig extends Creature{
 	}
 	
 	/**
+	 * Update the pig movement
+	 * if the pig is not in the pigpen, it keep searching for pig pen
+	 * If the pig pen is founded, and not in the pig pen, it would go through the pig pen
+	 * If the feeding does not happen for 3 days, it would die
 	 * 
+	 * @pre island has to be not null
 	 */
 	public void act() {
 		int[] grid= coorToGrid(x,y);
@@ -81,14 +87,14 @@ public class Pig extends Creature{
 		super.act(-1);
 	}
 	
-	public void setInPigPen() {
-		inPigPen = !inPigPen; 
-	}
-	
-	public boolean getInPigPen() {
-		return inPigPen;
-	}
-	
+	/**
+	 * inherited method of the super class.
+	 * If it is in pig pen, it only can stands in the pig pen
+	 * if it is not, it just inherited from the super class
+	 * @param xCoor the left side x coordinate of the creature
+	 * @param yCoor the up side y coordinate of the creature
+	 * @return if the (xCoor, yCoor) is null, or out of bounds in the island, or if the bottom left and bottom right of the creature is not standable, it will return false. otherwise, it will return true.
+	 */
 	public boolean canStand(double xCoor, double yCoor) {
 		if(inPigPen) {
 			Element[][] elements = super.getIsland().getElements();
@@ -113,6 +119,21 @@ public class Pig extends Creature{
 	
 	/**
 	 * 
+	 * @return wheter it is not dead or not. true if it is dead false otherwise
+	 */
+	public boolean isDead() {
+		return (lifeState<1);
+	}
+	
+	/**
+	 * @return the type of this class ("Pig")
+	 */
+	public String getType() {
+		return "Pig";
+	}
+	
+	/**
+	 * it update the lifestate and feed
 	 */
 	public void fed() {
 		feeding = true;
@@ -120,11 +141,8 @@ public class Pig extends Creature{
 			lifeState++;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public int[] findPigPen() {
+
+	private int[] findPigPen() {
 		Element[][] elements = super.getIsland().getElements();
 		for(int i = 0; i<elements.length; i++) {
 			for(int j = 0; j<elements[0].length; j++) {
@@ -137,20 +155,5 @@ public class Pig extends Creature{
 		int[] pigPen = {-1, -1};
 		return pigPen;
 	}	
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isDead() {
-		return (lifeState<1);
-	}
-	
-	/**
-	 * @return the type of this class ("Pig")
-	 */
-	public String getType() {
-		return "Pig";
-	}
 
 }

@@ -8,7 +8,7 @@ import circeIsland.main.DrawingSurface;
 import processing.core.PImage;
 
 /**
- * 
+ * This class represents nymph, extends from the Visitor
  * @author Jiwoo Kim
  */
 public class Nymph extends Visitor{
@@ -27,7 +27,13 @@ public class Nymph extends Visitor{
 	public static final int BAD = 1;
 	public static final int ANGRY = 0;
 	
-
+	/**
+	 * Initilize the nymph 
+	 * other values are setted as a default that shown in Creature.java constructors and visitor.java constructor
+	 * @param img the visitor image
+	 * @param x x coordinate of the visitor
+	 * @param y y coordinate of the visitor
+	 */
 	public Nymph(PImage img, double x, double y) {
 		super(img, x, y);
 		house = new int[2];
@@ -41,6 +47,13 @@ public class Nymph extends Visitor{
 		newDay = false;
 	}	
 	
+	/**
+	 * The nymph will be drawn by Creature.java draw method
+	 * It will try to set nymph's house if nymph does not have a house
+	 * It will draw "huh?" or "huh!" on top of its head when it feels bad 
+	 * @pre Drawing Surface has to be not the null
+	 * @param g Drawing surface object that the creature will be drawn on
+	 */
 	public void draw(DrawingSurface g) {
 		if(super.getIsInGrid()) {
 			if(!inHouse) {
@@ -66,6 +79,14 @@ public class Nymph extends Visitor{
 		}
 	}
 	
+	/**
+	 * If the nymph wants to go out the island, she goes toward the deck to leave the island
+	 * If nymph has a house, and the times is later than 16, she would go to home.
+	 * If nymph does not fed for a day, she would be depressed a little bit more
+	 * If nymph does not have a house after 16, she would be angry and wanting to go out the island.
+	 * If the checkCirceNearby() returns not a null, it  will chase the circe
+	 * @pre island has to be not null
+	 */
 	public void act() {
 		int[] circeGrid = checkCirceNearby();
 		int[] myGrid = coorToGrid(x,y);
@@ -122,22 +143,41 @@ public class Nymph extends Visitor{
 
 		
 	}
+	
+	/**
+	 * @return the integer that represents nymph's feeling
+	 */
 	public int getEmotion() {
 		return emotion;
 	}
 	
+	/**
+	 * Set the nymph's emotion with the parameter
+	 * @param i integer that represents Nymph's new emotion state
+	 */
 	public void setEmotion(int i) {
 		emotion = i;
 	}
 	
+	/**
+	 * @return the grid coordinate if nymph has a house, null if nymph does not have a house
+	 */
 	public int[] getHouseLoc() {
 		return house;
 	}
 	
+	/**
+	 * Set wheter nymph wants to go out or not by boolean b
+	 * true represents nymph wants to go out, and false represents nymph does not want to go out the island
+	 * @param b new nymph wanting go out state
+	 */
 	public void setGetOut(boolean b) {
 		getOut = b;
 	}
 	
+	/**
+	 * @return true if nymph wants to get out of the island, false otherwise
+	 */
 	public boolean getGetOut() {
 		return getOut;
 	}
@@ -149,6 +189,9 @@ public class Nymph extends Visitor{
 		return "Nymph";
 	}
 	
+	/**
+	 * updating the emotion state.
+	 */
 	public void fed() {
 		feeding = true;
 		if(emotion < HAPPY)

@@ -130,7 +130,7 @@ public class Circe extends Creature{
 	}
 	
 	/**
-	 * The Circe will be drawn following by Creature.java draw method,
+	 * The Circe will be drawn by Creature.java draw method,
 	 * and Additionally, the circe inventory would be drawn
 	 * If circe is not in the grid, it does not draw anything.
 	 * 
