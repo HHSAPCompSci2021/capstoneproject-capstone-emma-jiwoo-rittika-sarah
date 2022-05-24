@@ -14,7 +14,7 @@ import circeIsland.elements.*;
 import circeIsland.main.DrawingSurface;
 
 /**
- * 
+ * Has the island, with all the elements and creatures
  * @author Rittika Saha
  */
 public class Island extends Screen{
@@ -154,6 +154,9 @@ public class Island extends Screen{
 			mv.getStealingCount();
 			WorkTable w = surface.getWorkTable();
 			int randType = (int)(Math.random() * 13);
+			if(randType == 0) {
+				return;
+			}
 			if(randType != 0) {
 				w.removeFromStorage(new Holdable(randType));
 				mv.stealMessage(this.surface);

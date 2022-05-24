@@ -6,6 +6,11 @@ import circeIsland.main.DrawingSurface;
 import processing.core.PFont;
 import processing.core.PImage;
 
+/**
+ * The welcome screen that has the play button
+ * @author Rittika Saha
+ *
+ */
 public class WelcomeScreen extends Screen{
 
 	private Rectangle infoButton, playButton;

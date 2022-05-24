@@ -6,6 +6,11 @@ import javax.swing.JFrame;
 import processing.awt.PSurfaceAWT;
 import processing.core.PApplet;
 
+/**
+ * Contains the main method
+ * @author Rittika Saha
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {
