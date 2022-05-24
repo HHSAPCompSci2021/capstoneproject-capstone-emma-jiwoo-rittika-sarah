@@ -9,10 +9,9 @@ import circeIsland.screens.Island;
 import processing.core.PImage;
 
 /**
- * 
+ * This class represents an Element, which makes up each grid of the island. 
  * @author Emma Yu
  *
- *This class represents an Element, which makes up each grid of the island. 
  */
 public abstract class Element {
 

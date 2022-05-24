@@ -4,9 +4,8 @@ import circeIsland.main.DrawingSurface;
 import processing.core.PImage;
 
 /**
- * 
- * @author Emma Yu
  * This class represents all of the items that are able to be held by Circe and added to storage. 
+ * @author Emma Yu
  */
 public class Holdable {
 	private int type;

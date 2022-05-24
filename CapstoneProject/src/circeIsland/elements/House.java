@@ -4,8 +4,8 @@ import circeIsland.screens.Island;
 import processing.core.PImage;
 
 /**
- * @author Emma Yu
  * This class represents the House Element, which are either Nymph Houses or Circe Houses.
+ * @author Emma Yu
  */
 public class House extends Element{
 	

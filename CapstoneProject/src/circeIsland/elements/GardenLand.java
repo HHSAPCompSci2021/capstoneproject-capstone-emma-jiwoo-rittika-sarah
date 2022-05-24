@@ -7,9 +7,9 @@ import circeIsland.screens.Island;
 import processing.core.PImage;
 
 /**
- * @author Emma Yu
  * This class represents Garden Land, which is a type of land that Circe can plant plants on. As time passes,
  * the plants grow and can eventually be harvested. Plants must be watered and will die if its conditions aren't met
+  * @author Emma Yu
  */
 public class GardenLand extends Element{	
 

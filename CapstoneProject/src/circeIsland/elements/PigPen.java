@@ -4,6 +4,11 @@ import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 import processing.core.PImage;
 
+/**
+ * This class represents a Pig Pen, where pigs live
+ * @author Emma Yu
+ *
+ */
 public class PigPen extends Element{
 
 	/**

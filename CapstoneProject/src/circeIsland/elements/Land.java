@@ -3,6 +3,11 @@ package circeIsland.elements;
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
+/**
+ * This class represents land, which makes up the bulk of the island
+ * @author Emma Yu
+ *
+ */
 public class Land extends Element{
 
 	/**

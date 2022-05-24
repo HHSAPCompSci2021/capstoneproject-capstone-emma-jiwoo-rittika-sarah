@@ -2,6 +2,11 @@ package circeIsland.elements;
 import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 
+/**
+ * This class represents a Pond, from which Circe can get water
+ * @author Emma Yu
+ *
+ */
 public class Pond extends Element{
 
 	/**
