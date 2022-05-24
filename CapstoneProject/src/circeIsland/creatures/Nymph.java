@@ -142,6 +142,9 @@ public class Nymph extends Visitor{
 		return getOut;
 	}
 
+	/**
+	 * @return the type of this class ("Nymph")
+	 */
 	public String getType() {
 		return "Nymph";
 	}

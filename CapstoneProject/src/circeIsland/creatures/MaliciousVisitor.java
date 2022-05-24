@@ -20,7 +20,7 @@ public class MaliciousVisitor extends Visitor{
 	private int[] circeHouse;
 	private Rectangle2D.Double circeHouseRect;
 
-
+	
 	public MaliciousVisitor(PImage img, double x, double y) {
 		super(img, x, y);
 		stealing = false;
