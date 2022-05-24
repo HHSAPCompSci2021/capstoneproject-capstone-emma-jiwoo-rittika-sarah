@@ -36,7 +36,7 @@ public class Nymph extends Visitor{
 		inHouse = false;
 		houseRect = null;
 		deck = null;
-		emotion = HAPPY;
+		emotion = 5;
 		feeding = false;
 		newDay = false;
 	}	

@@ -3,6 +3,10 @@ import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 import processing.core.PImage;
 
+/**
+ * @author Emma Yu
+ * This class represents the House Element, which are either Nymph Houses or Circe Houses.
+ */
 public class House extends Element{
 	
 	private String type; //Either "circe" or "norm"
@@ -10,7 +14,15 @@ public class House extends Element{
 	private int ySize;
 	private boolean isTaken;
 
-	
+	/**
+	 * Creates a new House
+	 * @param i 
+	 * @param p The image of the house
+	 * @param xInput
+	 * @param yInput
+	 * @param type Type of House, either "circe" or "norm"
+	 * @pre type must be either "circe" or "norm"
+	 */
 	public House(Island i,  PImage p, int xInput, int yInput, String type) {
 		super(i, p, xInput, yInput);
 		setStandable(false);
@@ -59,6 +71,10 @@ public class House extends Element{
 		
 	}
 	
+	/**
+	 * Puts the House on the given Island
+	 * @param i
+	 */
 	public void putOnIsland(Island i) { //different b/c houses take up more than 1 grid
 		if (type == "circe") {
 			for (int j = getYCoor(); j<getYCoor()+ySize; j++) {
@@ -79,6 +95,9 @@ public class House extends Element{
 		return super.toString() + " type: "+type;
 	}
 	
+	/**
+	 * @return Whether or not the House is taken
+	 */
 	public boolean getTaken() {
 		return isTaken;
 	}

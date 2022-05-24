@@ -6,10 +6,10 @@ import processing.core.PImage;
 /**
  * 
  * @author Emma Yu
- *
+ * This class represents all of the items that are able to be held by Circe and added to storage. 
  */
 public class Holdable {
-	int type;
+	private int type;
 	public static final int GRAPE_SEED = 1;
 	public static final int BARLEY_SEED = 2;
 	public static final int MARATHOS_SEED = 3;
@@ -30,24 +30,46 @@ public class Holdable {
 	private PImage image;
 	private static PImage[] holdableImages;
 	
-
+	/**
+	 * Creates a new Holdable object given the type of object that it is
+	 * @param type The type of object
+	 * @pre type must be from 1-13
+	 */
 	public Holdable(int type) {
 		this.type = type;
 	}
 	
+	/**
+	 * Creates a new Holdable object given the type of object that it is and a PImage
+	 * @param type The type of object
+	 * @param image Image of object
+	 * @pre type must be from 1-13
+	 */
 	public Holdable(int type, PImage image) {
 		this.type = type;
 		this.image = image;
 	}
 	
+	/**
+	 * Sets the image parameter to the given image
+	 * @param image Picture to be set as image
+	 */
 	public void loadImage(PImage image) {
 		this.image = image;
 	}
 	
+	/**
+	 * Returns the Holdable object's type
+	 * @return Type of object from 1-13
+	 */
 	public int getType() {
 		return type;
 	}
 	
+	/**
+	 * Returns the Holdable object's name, mostly for testing purposes
+	 * @return Name of object as a String
+	 */
 	public String getName() { //dont use this for actual code, just to display names
 		switch(type) {
 		case 1:
@@ -78,6 +100,15 @@ public class Holdable {
 		return "";
 	}
 	
+	/**
+	 * Draws the Holdable object to the given surface depending on its x and y coordinates, width, and height.
+	 * Draws the object by using its image. If there is no initialized image, does not draw anything
+	 * @param surface DrawingSurface to draw the object on
+	 * @param xCoor x-coordinate to draw at
+	 * @param yCoor y-coordinate to draw at
+	 * @param cellWidth Width to draw at
+	 * @param cellHeight Height to draw at
+	 */
 	public void draw(DrawingSurface surface, float xCoor, float yCoor, float cellWidth, float cellHeight) {
 		surface.push();
 		if(holdableImages[type] != null)
@@ -89,10 +120,18 @@ public class Holdable {
 		surface.pop();
 	}
 	
+	/**
+	 * Returns the type as a string
+	 * @return Holdable's type as a String
+	 */
 	public String toString() {
 		return "type:"+type;
 	}
 	
+	/**
+	 * Loads and initializes all images
+	 * @param surface The DrawingSurface to load the images from
+	 */
 	public static void setImages(DrawingSurface surface) {
 		holdableImages = new PImage[13];
 		holdableImages[1] = surface.loadImage("Files/HoldableSeedGrape.png");

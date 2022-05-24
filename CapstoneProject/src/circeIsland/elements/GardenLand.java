@@ -6,6 +6,11 @@ import circeIsland.main.DrawingSurface;
 import circeIsland.screens.Island;
 import processing.core.PImage;
 
+/**
+ * @author Emma Yu
+ * This class represents Garden Land, which is a type of land that Circe can plant plants on. As time passes,
+ * the plants grow and can eventually be harvested. Plants must be watered and will die if its conditions aren't met
+ */
 public class GardenLand extends Element{	
 
 	private int type;//Plant types: grapes, barley, maratho, anithos
@@ -31,7 +36,13 @@ public class GardenLand extends Element{
 	private PImage grownImage;
 	private PImage deadImage;
 
-	
+	/**
+	 * Creates a new GardenLand object
+	 * @param i 
+	 * @param p Array of images for each stage in the GardenLand's life
+	 * @param xInput
+	 * @param yInput
+	 */
 	public GardenLand(Island i, PImage[] p, int xInput, int yInput) {
 		super(i, p[0], xInput, yInput);
 		budImage = p[1];
@@ -45,17 +56,34 @@ public class GardenLand extends Element{
 		currentDay = 0;
 	}
 	
+	/**
+	 * Returns the type of plant that the GardenLand has
+	 * @return
+	 */
 	public int getType() {
 		return type;
 	}
 	
+	/**
+	 * Sets the GardenLand type to the planted seed type and initializes relevant variables for plant growth
+	 * @param type Type of plant
+	 * @pre type must be from 0-4
+	 */
 	public void plant(int type) {
 		this.type = type;
 		lifeState = BUD;
 		hydrationLvl = 5;
 		startDay = getIsland().getSurface().getDays();
 	}
-		
+	
+	/**
+	 * Sets the GardenLand type to the planted seed type and initializes relevant variables for plant growth.
+	 * Also sets the image field to the given set of images
+	 * @param type Type of plant
+	 * @param images Array of GardenLand images
+	 * @pre type must be from 0-4
+	 * @pre images must have length of 4, with each image corresponding to an increasing value of life state
+	 */
 	public void plant(int type, PImage[] images) {
 		budImage = images[1];
 		sproutImage = images[2];
@@ -68,11 +96,17 @@ public class GardenLand extends Element{
 		startDay = getIsland().getSurface().getDays();
 	}
 	
+	/**
+	 * Sets the plant's water level to full
+	 */
 	public void water() {
 		if (isAlive())
 			hydrationLvl = 5;
 	}
 	
+	/**
+	 * If something is planted on the GardenLand, moves the plant to its next growth stage every 2 days
+	 */
 	public void grow() {
 		int daysPassed = getIsland().getSurface().getDays()-startDay;
 		if (hydrationLvl > 2) {
@@ -85,6 +119,9 @@ public class GardenLand extends Element{
 		}
 	}
 	
+	/**
+	 * Sets all plant growth and plant type fields to 0
+	 */
 	public void harvest() {
 		startDay = 0;
 		type = 0;
@@ -141,10 +178,12 @@ public class GardenLand extends Element{
 //		surface.text("garden", 6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight)+cellHeight);
 		
 	
-	
+	/**
+	 * Updates how long the plant has been alive for and checks if the plant should be dead. If so, dies. 
+	 * Otherwise, allows the plant to keep growing
+	 */
 	public void act() { 
 		if (currentDay != getIsland().getSurface().getDays() && isAlive()) {
-			//hydrationLvl --;
 			currentDay = getIsland().getSurface().getDays();
 		}
 		if (hydrationLvl <=0 && isAlive())
@@ -152,22 +191,34 @@ public class GardenLand extends Element{
 		grow();
 	}
 	
+	/**
+	 * @return The plant's lifeState field, corresponding from 0-4 depending on what state it is
+	 */
 	public int getLifeState() {
 		return lifeState;
 	}
 	
+	/**
+	 * @return Whether or not the plant is alive
+	 */
 	public boolean isAlive() {
 		if (lifeState == BUD || lifeState == SPROUT || lifeState == GROWN)
 			return true;
 		return false;
 	}
 	
+	/**
+	 * @return Whether or not the plant is ready to be harvested
+	 */
 	public boolean isMature() {
 		if (lifeState == GROWN)
 			return true;
 		return false;
 	}
 	
+	/**
+	 * @return Whether or not the plant is dead
+	 */
 	public boolean isDead() {
 		if(lifeState == DEAD)
 			return true;

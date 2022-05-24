@@ -13,6 +13,9 @@ import circeIsland.elements.Holdable;
  * 
  * @author Emma Yu, Rittika Saha
  *
+ *This class represents the the screen of Circe's work table. It includes an ArrayList of the Holdable items in her storage
+ *and allows the user to interact with this storage. It also includes a brewing function that allows the user to 
+ *create new items. 
  */
 public class WorkTable extends Screen{
 
@@ -37,15 +40,31 @@ public class WorkTable extends Screen{
 	
 	private PImage backgroundImage;
 	private PImage cauldronNeutralEmptyImage, cauldronNeutralFullImage, cauldronHappyImage, cauldronSadImage;
+	private PImage scroll;
 	private PImage[] holdableImages;
 	
+	/**
+	 * Recipe for wine
+	 */
 	public static ArrayList<Holdable> wineRecipe;
+	/**
+	 * Recipe for bread
+	 */
 	public static ArrayList<Holdable> breadRecipe;
+	/**
+	 * Recipe for seeds
+	 */
 	public static ArrayList<Holdable> seedsRecipe;
+	/**
+	 * Recipe for potion
+	 */
 	public static ArrayList<Holdable> potionRecipe;
 
 	
-	
+	/**
+	 * Creates a new WorkTable in the provided surface
+	 * @param surface The PApplet that the WorkTable is drawn on
+	 */
 	public WorkTable(DrawingSurface surface) {
 		super(1200,600, surface);
 		//this.surface = surface;
@@ -73,7 +92,6 @@ public class WorkTable extends Screen{
 		for (int i = 0; i<12; i++)
 			storage.add(new ArrayList<Holdable>());
 		
-		// for testing:
 		int i = 1;
 		for (ArrayList<Holdable> h: storage) {
 			h.add(new Holdable(i, holdableImages[i-1]));
@@ -87,10 +105,10 @@ public class WorkTable extends Screen{
 		}
 	}
 	
-	public void setStartingInventory() {
-		
-	}
-	
+	/**
+	 * Initializes Circe 
+	 * @param c Circe
+	 */
 	public void add(Circe c) {
 		circe = c;
 	}
@@ -114,15 +132,16 @@ public class WorkTable extends Screen{
 		holdableImages[9] = surface.loadImage("Files/HoldableWine.png");
 		holdableImages[10] = surface.loadImage("Files/HoldableBread.png");
 		holdableImages[11] = surface.loadImage("Files/HoldablePotion.png");
-		
+		scroll = surface.loadImage("Files/Scroll.png");
 	}
 	
-//	private void setup() {
-//		setImages();
-//	}
-	
+	/**
+	 * Draws the WorkTable with all its Holdables and other images to the screen.
+	 * @post The properties of the provided PApplet provided may be modified
+	 */
 	public void draw() {
 		super.draw();
+		surface.push();
 		surface.background(255,255,255);
 		surface.image(backgroundImage, 0, 0, surface.width, surface.height);
 		
@@ -164,14 +183,16 @@ public class WorkTable extends Screen{
 		if (brewedItem != null) {
 			brewedItem.draw(surface, cauldron.x + cauldron.width/2, cauldron.y + cauldron.height/2, cellWidthInv, cellHeightInv);
 		}
-		
+		surface.pop();
 		
 	}
 	
 	
-	
+	/**
+	 * Draws the inventory and the number of each item
+	 */
 	public void drawInventory(){
-		
+		surface.push();
 		int currentNum = 0;
 		//draw grid and holdables for each grid
 		int[][] inventory = new int[6][2];
@@ -201,7 +222,6 @@ public class WorkTable extends Screen{
 		for(int i = 0; i<inventory.length; i++) { //RECT coordinates (top left) : 620, 30
 			for(int j = 0; j<inventory[0].length; j++) {
 				
-				surface.push();
 				//draws the grid for the inventory
 				surface.fill(232, 224, 206);
 				surface.rect(boxX + (j * cellWidth), boxY + (i*cellHeight), cellWidth, cellHeight);
@@ -220,16 +240,20 @@ public class WorkTable extends Screen{
 				surface.rect(boxX + (j*cellWidth), boxY + (i*cellHeight)+cellHeight-18, cellWidth-20, 12);
 				surface.fill(0);
 				surface.text(h.getName(), boxX + (j*cellWidth)+5, boxY + (i*cellHeight)+cellHeight-8);
-				surface.pop();
 				
 				currentElement++;
-				
 			}
 		}
-		
+		surface.textSize(20);
+		surface.text("surface", boxX, boxY);
+		surface.pop();
 	}
 	
+	/**
+	 * Draws Circe's current inventory
+	 */
 	public void drawCirceInventory() {
+		surface.push();
 		Holdable[][]inventory = new Holdable[2][3];
 		int count = 0;
 		for (int i = 0; i<inventory.length; i++) {
@@ -250,8 +274,6 @@ public class WorkTable extends Screen{
 		
 		for(int i = 0; i<inventory.length; i++) { 
 			for(int j = 0; j<inventory[0].length; j++) {
-				
-				surface.push();
 				//draws the grid for the inventory
 				surface.fill(232, 224, 206);
 				surface.rect(boxX + (j * cellWidth), boxY + (i*cellHeight), cellWidth, cellHeight);
@@ -259,13 +281,19 @@ public class WorkTable extends Screen{
 				//draws item
 				if (inventory[i][j] != null)
 					inventory[i][j].draw(surface, boxX+j*cellWidth, boxY + (i*cellHeight), cellWidth, cellHeight);
-				surface.pop();
 			}
 		}
-		
+		surface.textSize(20);
+		surface.fill(0);
+		surface.text("holdings", boxX, boxY+holdingsButton.height+10);
+		surface.pop();
 	}
 	
+	/**
+	 * Draws the cauldron depending on how successful the brew is
+	 */
 	public void drawAlchemy() {
+		surface.push();
 		int bowlX = cauldron.x;
 		int bowlY = cauldron.y;
 		float bowlWidth = cauldron.width;
@@ -291,9 +319,14 @@ public class WorkTable extends Screen{
 			contents += h.getName()+" ";
 		}
 		surface.text(contents , bowlX, bowlY);
+		surface.pop();
 	}
 	
-	
+	/**
+	 * Adds an item to the storage array, and removes a placeholder item if needed
+	 * @pre Type of h is from 1-13
+	 * @param h The item to be added
+	 */
 	public void addToStorage(Holdable h) {
 		if (h.getType() == 13) 
 			return;
@@ -302,6 +335,11 @@ public class WorkTable extends Screen{
 		storage.get(h.getType()-1).add(new Holdable(h.getType(), holdableImages[h.getType()-1]));
 	}
 	
+	/**
+	 * Removes an item from the storage array, and adds a placeholder item if there are no more of type h in storage
+	 * @pre Type of h is from 1-13
+	 * @param h The item to be removed
+	 */
 	public void removeFromStorage(Holdable h) {
 		if (h.getType() == 13)
 			return;
@@ -352,6 +390,12 @@ public class WorkTable extends Screen{
 		recipes.add(seeds);
 	}
 	
+	/**
+	 * Executes when the mouse is dragged depending on x and y coordinates of mouse.
+	 * If the user has clicked on an item to drag (locked = true), updates the curHoldableX and curHoldableY parameters
+	 * @param mouseX the x-coordinate of the mouse drag
+	 * @param mouseY the y-coordinate of the mouse drag
+	 */
 	public void processMouseDrag(int mouseX, int mouseY) {
 //		System.out.println("dragging" + curHoldable.getName());
 		if (locked) {
@@ -360,17 +404,13 @@ public class WorkTable extends Screen{
 		}
 	}
 	
-	public void processMouseClick(int mouseX, int mouseY) {
-//		//inside the brew button
-//		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){
-//			brew();
-//		}
-//		else if(mouseX>recipeButton.x && mouseX<recipeButton.x + recipeButton.width && mouseY>recipeButton.y && mouseY<recipeButton.y + recipeButton.height) {
-//			System.out.println(showRecipes);
-//			showRecipes = !showRecipes;
-//		}
-	}
-	
+	/**
+	 * Executes when the mouse is pressed depending on x and y coordinates of mouse/
+	 * If the mouse intersects the inventory, circe's inventory, or the brewed item, turns lock true, 
+	 * indicating that the currently pressed item has been 'locked' in order to drag and drop it 
+	 * @param mouseX the x-coordinate of the mouse press
+	 * @param mouseY the y-coordinate of the mouse press
+	 */
 	public void processMousePress(int mouseX, int mouseY) {
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
 		if (click.intersects(inventoryButton) && toSpotInv(mouseX, mouseY).getType() != 13) {
@@ -461,7 +501,15 @@ public class WorkTable extends Screen{
 		return null;
 	}
 
-
+	/**
+	 * Executes when the mouse is released, depending on x and y coordinates of mouse
+	 * If an item is currently being dragged, it will go to an appropriate spot depending on where the mouse is, 
+	 * then sets locked variable to false
+	 * -If mouse is intersecting a type of item in storage with same type as currently held, adds to that array
+	 * -If mouse is intersecting with empty circe's storage spot, added to that spot
+	 * -If mouse is intersecting with cauldron, adds to cauldron
+	 * -If mouse is anywhere else, returns to where it was taken from
+	 */
 	public void processMouseRelease(int mouseX, int mouseY) {
 		
 		Rectangle click = new Rectangle(mouseX, mouseY, 1, 1);
@@ -559,7 +607,11 @@ public class WorkTable extends Screen{
 		return -1;
 	}
 
-
+	/**
+	 * Executes when a GButton is clicked. Then calls correct method depending on clicked button
+	 * @param b Button that is clicked
+	 * @param event Button event
+	 */
 	public void handleButtonClick(GButton b, GEvent event) {
 		String buttonName = b.getText();
 		if(buttonName.equals("Brew")) {
@@ -574,7 +626,10 @@ public class WorkTable extends Screen{
 		}
 	}
 	
-	
+	/**
+	 * Sets the given button to visible
+	 * @param b Button to be set as visible
+	 */
 	public void setButtonVisible(boolean b) {
 		ArrayList<GButton> buttonList = surface.getButtons();
 		for(GButton button : buttonList) {
@@ -629,7 +684,6 @@ public class WorkTable extends Screen{
 			}
 		}
 		
-//		System.out.println(w.toString());
 		
 		int size = cauldronItems.size();
 		
@@ -652,14 +706,13 @@ public class WorkTable extends Screen{
 	}
 	
 	private void displayRecipes() {
-		surface.text("RECIPES YAYYY",  100, 100);
-		surface.fill(250, 249, 200);
-		surface.rect(50, 50, 410, 300);
+		surface.image(scroll, 200, 70, 250, 300);
 		surface.fill(0);
 		surface.textSize(20);
-		for(int i = 0; i<recipes.size(); i++) {
-			surface.text(recipes.get(i) + "\n", 60, 80 + (30 * i));
-		}
+		surface.text("Wine:", 240, 150);
+//		for(int i = 0; i<recipes.size(); i++) {
+//			surface.text(recipes.get(i) + "\n", 60, 80 + (30 * i));
+//		}
 		
 	}
 }
