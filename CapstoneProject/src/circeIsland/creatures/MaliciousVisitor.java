@@ -115,6 +115,13 @@ public class MaliciousVisitor extends Visitor{
 		}
 	}
 
+	public void stealMessage(DrawingSurface g) {
+		g.fill(170,10,10);
+		g.text("Yay! I Stole!", (float)(x+width/5), (float)(y-height/10));
+		//g.text("huh!", (float)(x+width/5), (float)(y-height/10));
+	}
+	
+	
 	private void setHouse() {
 		House h = super.getIsland().getCirceHouse();
 		circeHouse[0] = h.getXCoor();
