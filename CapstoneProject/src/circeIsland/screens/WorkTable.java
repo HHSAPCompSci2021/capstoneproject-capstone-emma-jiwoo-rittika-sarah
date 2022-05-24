@@ -77,7 +77,7 @@ public class WorkTable extends Screen{
 		int i = 1;
 		for (ArrayList<Holdable> h: storage) {
 			h.add(new Holdable(i, holdableImages[i-1]));
-			if (i == 1 || i == 2 || i == 3) {
+			if (i == 1 || i == 2 || i == 3 || i==4) {
 				h.add(new Holdable(i, holdableImages[i-1]));
 				h.add(new Holdable(i, holdableImages[i-1]));
 				h.add(new Holdable(i, holdableImages[i-1]));
