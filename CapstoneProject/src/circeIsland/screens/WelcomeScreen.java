@@ -3,19 +3,22 @@ package circeIsland.screens;
 import java.awt.Rectangle;
 
 import circeIsland.main.DrawingSurface;
+import processing.core.PFont;
 import processing.core.PImage;
 
 public class WelcomeScreen extends Screen{
 
 	private Rectangle infoButton, playButton;
 	private PImage img;
+	private PFont font;
 	
 	/**
 	 * Creates a new welcome screen and initializes the background image, provided the DrawingSurface
 	 * @param surface the DrawingSurface(PApplet) on which this screen will draw
 	 */
-	public WelcomeScreen(DrawingSurface surface) {
+	public WelcomeScreen(DrawingSurface surface, PFont font) {
 		super(1200, 900, surface);//235 548; 525, 548
+		this.font = font;
 		//width 1 -- 169; h1 = 80
 		infoButton = new Rectangle((int)(surface.width/5.106), (int)(surface.height/1.64), (int)(surface.width / 7.058), (int)(surface.height / 11.25) + 2);
 		playButton = new Rectangle((int)(surface.width/2.285), (int)(surface.height/1.64), (int)(surface.width / 7.058), (int)(surface.height / 11.25) + 2);
@@ -27,7 +30,7 @@ public class WelcomeScreen extends Screen{
 	 */
 	public void draw() {
 		surface.push();
-		
+		surface.textFont(font);
 		surface.textSize(35);
 		infoButton.setBounds((int)(surface.width/5.106) - 3, (int)(surface.height/1.64) - 2, (int)(surface.width / 7.058), (int)(surface.height / 11.25) + 2);
 		playButton.setBounds((int)(surface.width/2.285) - 3, (int)(surface.height/1.64) - 2, (int)(surface.width / 7.058), (int)(surface.height / 11.25) + 2);

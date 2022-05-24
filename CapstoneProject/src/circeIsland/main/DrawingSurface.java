@@ -32,7 +32,7 @@ public class DrawingSurface extends PApplet {
 	
 	private GButton brewer, recipe, exit;
 	private PImage cImage, iImage;
-	private PFont font;
+	private PFont font, wFont;
 	
 	private int drawCount, newCreatureCounter;
 	private int days, hours;
@@ -64,6 +64,7 @@ public class DrawingSurface extends PApplet {
 		
 		//font = createFont("Files/DrakalligroOriginal.ttf", 128);
 		font = createFont("Files/Libra-Normal.otf", 128);
+		wFont = createFont("Files/AlchemistSerifFont-Regular.ttf", 128);
 		cImage = loadImage("Files/CirceFrontStand.png");
 		iImage = loadImage("Files/Island2.png");
 		
@@ -73,7 +74,7 @@ public class DrawingSurface extends PApplet {
 		island = new Island(this, iImage, circe, 4, 14);
 		info = new Information(this);
 		workshop = new WorkTable(this);
-		welcome = new WelcomeScreen(this);
+		welcome = new WelcomeScreen(this, wFont);
 		
 		workshop.add(circe);
 		brewer.addEventHandler(workshop,  "handleButtonClick");

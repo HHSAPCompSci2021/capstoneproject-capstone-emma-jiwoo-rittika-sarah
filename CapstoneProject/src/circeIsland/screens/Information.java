@@ -32,10 +32,16 @@ public class Information extends Screen{
 //				+ "\n- When a Malicious Visitor enters the Island, turn them into pigs. First\n feed them with food "
 //				+ "to stop them from running away. Then feed them with the potion to convert them to\n pigs. Don't forget to give them a pig pen!";
 		
-		info = "You are Circe, an enchantress from Greek mythology, and you have just arrived on your island Aiaia after\n"
-				+ " being banished for using magic. Your goal in this adventure is to transform your island into a habitable\n"
-				+ " haven for other banished nymphs by cultivating your garden, building homes, and turning malicious visitors\n"
-				+ " into pigs!";
+		info = "You are Circe, an enchantress from Greek mythology, and you have just arrived on your island Aiaia after being banished\n"
+				+ " for using magic. Your goal in this adventure is to transform your island into a habitable haven for other banished nymphs\n"
+				+ " by cultivating your garden, building homes, and turning malicious visitors into pigs!\n\n"
+				+ "- To move Circe, use the WASD keys.\n" 
+				+ "- To enter Circe's workspace and make potions and food, move Circe to her house and press RETURN\n" 
+				+ "- At Circe's workspace, you can brew potions, make food, or get seeds from harvested plants. You can also switch items from\n circe's holdings to the storage.\n" 
+				+ "- To add elements to the Island, click on a location and select the desired element.\n" 
+				+ "- To plant the garden, first move Circe to a garden plot. Ensure Circe is holding the desired seed, then click on the plot to\n plant the seed.\n" 
+				+ "- When a Malicious Visitor enters the Island, turn them into pigs. First feed them with food to stop them from running away.\n Then feed them with the potion to convert them to pigs. Don't forget to give them a pig pen!\n"
+				+ "- Keep feeding the Nymph to ensure it does not leave. Feed the pig to ensure it does not die.\n";
 		
 		
 		setupImages();
@@ -71,7 +77,7 @@ public class Information extends Screen{
 		surface.text(info,  50,  100);
 		
 		//images!
-		surface.image(island,  surface.width / 2 + 100, 100, 450, 275);
+		//surface.image(island,  surface.width / 2 + 100, 100, 450, 275);
 		surface.image(circe, surface.width / 2 - 40, 2 * surface.height / 3 - 30, 80, 150);
 		surface.image(mal, surface.width / 2 - 230, 2 * surface.height / 3 - 30, 80, 150);
 		surface.image(nymph, surface.width / 2 + 150 , 2 * surface.height / 3 - 30, 80, 150);

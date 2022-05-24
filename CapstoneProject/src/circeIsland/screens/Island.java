@@ -306,7 +306,7 @@ public class Island extends Screen{
 				if(holding != null) {
 					int hold = holding.getType();
 					if(n.contains(mouseX, mouseY) && isNear && (hold == Holdable.BREAD || hold == Holdable.WINE)) {
-						//n.feed(hold);
+						n.fed();
 						circe.removeFromInventory(circe.getCurrentHold());
 					}
 				}
@@ -318,7 +318,7 @@ public class Island extends Screen{
 				if(holding != null) {
 					int hold = holding.getType();
 					if(p.contains(mouseX, mouseY) && isNear && (hold == Holdable.BARLEY_PLANT)) {
-						//p.feed(hold);
+						p.fed();
 						circe.removeFromInventory(circe.getCurrentHold());
 					}
 				}
@@ -390,9 +390,28 @@ public class Island extends Screen{
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
 		}
+		
+		checkNymphLeaving();
 	}
 	
-	
+	private void checkNymphLeaving() {
+		for(int i = 0; i<creatures.size(); i++) {
+			if(creatures.get(i) instanceof Nymph) {
+				Nymph n = (Nymph)(creatures.get(i));
+				if(n.getGetOut()) {
+					creatures.remove(i);
+					i--;
+				}
+			}
+			else if(creatures.get(i) instanceof Pig) {
+				Pig p = (Pig)(creatures.get(i));
+				if(p.isDead()) {
+					creatures.remove(i);
+					i--;
+				}
+			}
+		}
+	}
 	
 	/**
 	 * In the event that a key is pressed, takes in the key that is pressed and executes the correct response
