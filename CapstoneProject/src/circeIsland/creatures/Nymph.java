@@ -79,6 +79,7 @@ public class Nymph extends Visitor{
 					emotion--;
 				}
 				feeding = false;
+				newDay =false;
 			}
 		}else {
 			newDay = true;
@@ -109,7 +110,6 @@ public class Nymph extends Visitor{
 		if(house[0] == -1 && hours>=16) {
 			emotion--;
 		}
-
 		if(circeGrid == null || !super.getIsland().getCirce().getGreeting()) {
 			super.act();
 			return;
@@ -117,7 +117,6 @@ public class Nymph extends Visitor{
 		if(circeGrid.equals(myGrid)) {
 			return;
 		}
-		
 		int dir = destinationDir(circeGrid);
 		super.act(dir);
 
