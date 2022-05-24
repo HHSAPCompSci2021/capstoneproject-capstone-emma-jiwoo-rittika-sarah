@@ -13,6 +13,9 @@ public class Pig extends Creature{
 	public static final double PIG_WIDTH_RATIO = 22.22222222;
 	public static final double PIG_HEIGHT_RATIO = 11.53846154;
 	private boolean inPigPen;
+	private int lifeState;
+	private boolean feeding;
+	private boolean newDay;
 	// 90*130
 
 	public Pig(int x, int y) {
@@ -22,6 +25,9 @@ public class Pig extends Creature{
 	public Pig(PImage img, double x, double y) {
 		super(img, x, y, PIG_WIDTH_RATIO, PIG_HEIGHT_RATIO, 3);
 		inPigPen = false;
+		lifeState = 3;
+		feeding = false;
+		newDay = false;
 	}
 	
 	public void act() {
@@ -29,6 +35,18 @@ public class Pig extends Creature{
 		if(super.getIsland().getElement(grid[0]+1, grid[1]+1) instanceof PigPen) {
 			inPigPen = true;
 		}
+		if(super.getIsland().getSurface().getHours() == 0) {
+			if(newDay) {
+				if(feeding==false) {
+					lifeState--;
+				}
+				feeding = false;
+				newDay =false;
+			}
+		}else {
+			newDay = true;
+		}
+		
 		if(inPigPen) {
 			super.act(-1);
 			return;
@@ -73,6 +91,12 @@ public class Pig extends Creature{
 		}
 	}
 	
+	public void fed() {
+		feeding = true;
+		if(lifeState < 3)
+			lifeState++;
+	}
+	
 	
 	public int[] findPigPen() {
 		Element[][] elements = super.getIsland().getElements();
@@ -87,6 +111,10 @@ public class Pig extends Creature{
 		int[] pigPen = {-1, -1};
 		return pigPen;
 	}	
+	
+	public boolean isDead() {
+		return (lifeState<1);
+	}
 	
 
 	
