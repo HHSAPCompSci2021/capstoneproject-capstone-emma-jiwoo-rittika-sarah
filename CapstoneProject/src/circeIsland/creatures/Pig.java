@@ -18,10 +18,27 @@ public class Pig extends Creature{
 	private boolean newDay;
 	// 90*130
 
+	/**
+	 * Initilize the Pig 
+	 * width and height ratio are setted to 22.22 and 11.54 and image setted to null
+	 * velocity will setted to 3
+	 * other values are setted as a default that shown in Creature.java constructors
+	 * @param x x coordinate of the pig
+	 * @param y y coordinate of the pig
+	 */
 	public Pig(int x, int y) {
 		this(null, x, y);
 	}
 	
+	/**
+	 * Initilize the Pig 
+	 * width and height ratio are setted to 22.22 and 11.54 
+	 * velocity will setted to 3
+	 * other values are setted as a default that shown in Creature.java constructors
+	 * @param img the Circe image
+	 * @param x x coordinate of the pig
+	 * @param y y coordinate of the pig
+	 */
 	public Pig(PImage img, double x, double y) {
 		super(img, x, y, PIG_WIDTH_RATIO, PIG_HEIGHT_RATIO, 3);
 		inPigPen = false;
@@ -30,6 +47,9 @@ public class Pig extends Creature{
 		newDay = false;
 	}
 	
+	/**
+	 * 
+	 */
 	public void act() {
 		int[] grid= coorToGrid(x,y);
 		if(super.getIsland().getElement(grid[0]+1, grid[1]+1) instanceof PigPen) {
@@ -91,13 +111,19 @@ public class Pig extends Creature{
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void fed() {
 		feeding = true;
 		if(lifeState < 3)
 			lifeState++;
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public int[] findPigPen() {
 		Element[][] elements = super.getIsland().getElements();
 		for(int i = 0; i<elements.length; i++) {
@@ -112,12 +138,17 @@ public class Pig extends Creature{
 		return pigPen;
 	}	
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isDead() {
 		return (lifeState<1);
 	}
 	
-
-	
+	/**
+	 * @return the type of this class ("Pig")
+	 */
 	public String getType() {
 		return "Pig";
 	}

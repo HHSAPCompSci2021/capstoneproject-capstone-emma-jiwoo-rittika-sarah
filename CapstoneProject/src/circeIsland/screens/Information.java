@@ -40,8 +40,8 @@ public class Information extends Screen{
 				+ "- At Circe's workspace, you can brew potions, make food, or get seeds from harvested plants. You can also switch items from\n circe's holdings to the storage.\n" 
 				+ "- To add elements to the Island, click on a location and select the desired element.\n" 
 				+ "- To plant the garden, first move Circe to a garden plot. Ensure Circe is holding the desired seed, then click on the plot to\n plant the seed.\n" 
-				+ "- When a Malicious Visitor enters the Island, turn them into pigs. First feed them with food to stop them from running away.\n Then feed them with the potion to convert them to pigs. Don't forget to give them a pig pen!\n"
-				+ "- Keep feeding the Nymph to ensure it does not leave. Feed the pig to ensure it does not die.\n";
+				+ "- When a Malicious Visitor enters the Island, turn them into pigs. First feed them with food to stop them from running away.\n Then feed them with the potion to convert them to pigs. If you do not do this, they will steal from your inventory. Don't forget to\n give them a pig pen!\n"
+				+ "- Keep feeding the Nymph to ensure it does not leave. Feed the pig with barley to ensure it does not die.\n";
 		
 		
 		setupImages();
@@ -74,7 +74,7 @@ public class Information extends Screen{
 		surface.textSize(20);
 		surface.stroke(0);
 		surface.fill(0);
-		surface.text(info,  50,  100);
+		surface.text(info,  50,  70);
 		
 		//images!
 		//surface.image(island,  surface.width / 2 + 100, 100, 450, 275);

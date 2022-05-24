@@ -313,6 +313,7 @@ public abstract class Creature extends Rectangle2D.Double{
 	 * Not only drawing the creatures, it will update the value of x and y and width and height if the screen width and height are changed.
 	 * If the grid is not set yet, it will do nothing
 	 * 
+	 * @pre Drawing Surface has to be not the null
 	 * @param g Drawing surface object that the creature will be drawan on
 	 * @post g.fill() would be set to 0(black) if the image is null.
 	 */
