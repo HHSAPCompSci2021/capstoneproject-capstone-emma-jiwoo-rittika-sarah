@@ -8,7 +8,7 @@ public class PigPen extends Element{
 
 	public PigPen(Island i, PImage p, int xInput, int yInput) {
 		super(i, p, xInput, yInput);
-		setStandable(false);
+		setStandable(true);
 	}
 
 	@Override
