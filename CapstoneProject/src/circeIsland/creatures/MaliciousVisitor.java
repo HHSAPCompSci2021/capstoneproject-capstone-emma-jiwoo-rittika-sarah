@@ -59,11 +59,7 @@ public class MaliciousVisitor extends Visitor{
 			if(circeHouse[0] == -1) {
 				setHouse();
 			}
-			if(this.intersects(circeHouseRect)) {
-				stealing = true;
-				running = false;
-				stealingCount++;
-			}else if(running && !stealing) {
+			if(running && !stealing) {
 				int[] circeGrid = checkCirceNearby();
 				int dir = -1;
 				if(circeGrid == null) {
@@ -73,6 +69,9 @@ public class MaliciousVisitor extends Visitor{
 				}
 				
 				super.act(dir);
+			}else if(this.intersects(circeHouseRect)) {
+				stealing = true;
+				stealingCount++;
 			}
 		}
 	}
@@ -97,6 +96,13 @@ public class MaliciousVisitor extends Visitor{
 	 */
 	public boolean isRunning() {
 		return running;
+	}
+	
+	/**
+	 * it would make Malicious visitor to move around again instead of keep trying to steal something
+	 */
+	public void doneStealing() {
+		stealing = false;
 	}
 	
 	/**
