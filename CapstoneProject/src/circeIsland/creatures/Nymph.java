@@ -8,7 +8,7 @@ import circeIsland.main.DrawingSurface;
 import processing.core.PImage;
 
 /**
- * 
+ * This class represents nymph, extends from the Visitor
  * @author Jiwoo Kim
  */
 public class Nymph extends Visitor{
@@ -27,7 +27,13 @@ public class Nymph extends Visitor{
 	public static final int BAD = 1;
 	public static final int ANGRY = 0;
 	
-
+	/**
+	 * Initilize the nymph 
+	 * other values are setted as a default that shown in Creature.java constructors and visitor.java constructor
+	 * @param img the visitor image
+	 * @param x x coordinate of the visitor
+	 * @param y y coordinate of the visitor
+	 */
 	public Nymph(PImage img, double x, double y) {
 		super(img, x, y);
 		house = new int[2];
