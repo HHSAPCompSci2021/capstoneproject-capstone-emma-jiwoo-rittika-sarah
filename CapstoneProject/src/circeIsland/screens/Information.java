@@ -16,7 +16,7 @@ public class Information extends Screen{
 	
 	/**
 	 * Creates a new information screen on the given PApplet
-	 * @param surface teh PApplet on which the screen will be displayed
+	 * @param surface the PApplet on which the screen will be displayed
 	 */
 	public Information(DrawingSurface surface) {
 		super(1200, 900, surface);
@@ -68,15 +68,17 @@ public class Information extends Screen{
 		surface.image(circe, surface.width / 2 - 40, 2 * surface.height / 3 - 30, 80, 150);
 		surface.image(mal, surface.width / 2 - 230, 2 * surface.height / 3 - 30, 80, 150);
 		surface.image(nymph, surface.width / 2 + 150 , 2 * surface.height / 3 - 30, 80, 150);
-		//surface.image(island,  surface.width / 2 + 100, surface.height + 100);
-		
-		
 		
 		surface.pop();
 	}
 	
 	
-	
+	/**
+	 * Executes when the mouse is clicked. If the click is within the exit button, the provided DrawingSurface changes screen.
+	 * @param mouseX the x-coordinate of the mouse click
+	 * @param mouseY the y-coordinate of the mouse click
+	 * @post the provided DrawingSurface may be modified
+	 */
 	public void processMouseClick(int mouseX, int mouseY) {
 		if(mouseX > exitButton.x && mouseX <= exitButton.x + exitButton.width && mouseY > exitButton.y && mouseY <= exitButton.y + exitButton.height) {
 			surface.switchScreen(1);

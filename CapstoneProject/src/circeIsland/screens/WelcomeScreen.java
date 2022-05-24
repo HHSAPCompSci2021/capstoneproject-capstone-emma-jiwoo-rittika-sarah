@@ -10,7 +10,10 @@ public class WelcomeScreen extends Screen{
 	private Rectangle infoButton, playButton;
 	private PImage img;
 	
-	
+	/**
+	 * Creates a new welcome screen and initializes the background image, provided the DrawingSurface
+	 * @param surface the DrawingSurface(PApplet) on which this screen will draw
+	 */
 	public WelcomeScreen(DrawingSurface surface) {
 		super(1200, 900, surface);//235 548; 525, 548
 		//width 1 -- 169; h1 = 80
@@ -19,7 +22,9 @@ public class WelcomeScreen extends Screen{
 		setupImages();
 	}
 	
-	
+	/**
+	 * Draws the welcome screen to the DrawingSurface. This includes the buttons for switching to the island screen or information screen.
+	 */
 	public void draw() {
 		surface.push();
 		
@@ -49,6 +54,13 @@ public class WelcomeScreen extends Screen{
 		
 	}
 
+	
+	/**
+	 * Executes when the mouse is clicked
+	 * @param mouseX the x-coordinate of the mouse click
+	 * @param mouseY the y-coordinate of the mouse click
+	 * @post the provided DrawingSurface may be modified
+	 */
 	public void processMouseClick(int mouseX, int mouseY) {
 		if(mouseX > infoButton.x && mouseX <= infoButton.x + infoButton.width && mouseY > infoButton.y && mouseY <= infoButton.y + infoButton.height) {
 			surface.switchScreen(2);

@@ -3,7 +3,6 @@ package circeIsland.screens;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import circeIsland.main.*;
-import g4p_controls.G4P;
 import g4p_controls.GButton;
 import g4p_controls.GEvent;
 import processing.core.PImage;

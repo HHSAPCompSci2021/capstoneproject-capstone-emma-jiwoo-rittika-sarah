@@ -38,14 +38,12 @@ public class Island extends Screen{
 	
 	
 	/**
-	 * Creates a new island in the provided surface, given the location of Circe and her house.
+	 * Creates a new island in the provided surface, given the image of the island, Circe and the location of her house.
 	 * @param surface the PApplet on which this island will be drawn
-	 * @param islandImage
-	 * @param cImage the Image of Circe
-	 * @param circeX the x coordinate of Circe
-	 * @param circeY the y coordinate of Circe
-	 * @param houseX the x coordinate of Circe's house
-	 * @param houseY the y coordinate of Circe's house
+	 * @param islandImage the PImage of this island
+	 * @param c Circe
+	 * @param houseX the x-coordinate of circe's house
+	 * @param houseY the y-coordinate of circe's house
 	 */
 	public Island(DrawingSurface surface, PImage islandImage, Circe c, int houseX, int houseY) {
 		super(1200, 900, surface);
@@ -83,8 +81,6 @@ public class Island extends Screen{
 		
 		
 		changeWithTime();
-		
-		
 		
 		//drawing grid of elements
 		surface.strokeWeight(0);
@@ -188,6 +184,9 @@ public class Island extends Screen{
 		surface.pop();
 	}
 
+	/**
+	 * Adds a Nymph to this Island
+	 */
 	public void addNymph() {
 		//Nymph newVisitor = new Nymph(nymphImage, 200, 200);
 		//newVisitor.putOnIsland(this);
@@ -195,9 +194,14 @@ public class Island extends Screen{
 		nymphVisitor.putOnIsland(this);
 	}
 	
+	/**
+	 * Adds a malicious visitor to this island
+	 */
 	public void addMaliciousVisitor() {
 		//MaliciousVisitor newVisitor = new MaliciousVisitor(malImage, 200, 200);
 		//newVisitor.putOnIsland(this);
+		malVisitor = new MaliciousVisitor(nymphImage, 200, 200);
+		malVisitor.putOnIsland(this);
 	}
 	
 	
@@ -245,6 +249,16 @@ public class Island extends Screen{
 	
 	
 	
+	/**
+	 * Executes when the mouse is clicked, depending on the x,y location of the mouse click.
+	 * - If the click is on land, allows drop down menu to be created
+	 * - If the click is on pond, adds water to Circe's inventory
+	 * - If the click is on a malicious visitor, checks if it can be fed or turned to a pig
+	 * - If the click is on a garden, plants or harvests the garden depending on circe's inventory and the state of the garden
+	 * @param mouseX the x-coordinate of the mouse click
+	 * @param mouseY the y-coordinate of the mouse click
+	 * @post the provided DrawingSurface may be modified
+	 */
 	public void processMouseClick(int mouseX, int mouseY) {
 		if(!mouseClickEnabled) {
 			return;
@@ -268,7 +282,6 @@ public class Island extends Screen{
 				boolean isNear = Math.abs(mv.getXGrid() - circe.getXGrid()) < 3 && Math.abs(mv.getYGrid() - circe.getYGrid()) < 3;
 				Holdable holding = circe.getInventory()[circe.getCurrentHold()];
 				if(holding == null) {
-					
 				}
 				else{
 					int hold = holding.getType();
@@ -287,10 +300,31 @@ public class Island extends Screen{
 					}
 				}
 			}
+			else if(creatures.get(i) instanceof Nymph) {
+				Nymph n = (Nymph)(creatures.get(i));
+				boolean isNear = Math.abs(n.getXGrid() - circe.getXGrid()) < 3 && Math.abs(n.getYGrid() - circe.getYGrid()) < 3;
+				Holdable holding = circe.getInventory()[circe.getCurrentHold()];
+				if(holding != null) {
+					int hold = holding.getType();
+					if(n.contains(mouseX, mouseY) && isNear && (hold == Holdable.BREAD || hold == Holdable.WINE)) {
+						//n.feed(hold);
+						circe.removeFromInventory(circe.getCurrentHold());
+					}
+				}
+			}
+			else if(creatures.get(i) instanceof Pig) {
+				Pig p = (Pig)(creatures.get(i));
+				boolean isNear = Math.abs(p.getXGrid() - circe.getXGrid()) < 3 && Math.abs(p.getYGrid() - circe.getYGrid()) < 3;
+				Holdable holding = circe.getInventory()[circe.getCurrentHold()];
+				if(holding != null) {
+					int hold = holding.getType();
+					if(p.contains(mouseX, mouseY) && isNear && (hold == Holdable.BARLEY_PLANT)) {
+						//p.feed(hold);
+						circe.removeFromInventory(circe.getCurrentHold());
+					}
+				}
+			}
 		}
-		
-		
-		
 		
 		if(circe.getInventoryByCoor(mouseX, mouseY) != -1) {
             circe.grab(circe.getInventoryByCoor(mouseX, mouseY));
@@ -357,17 +391,16 @@ public class Island extends Screen{
 			selectedSpot[0] = clickInGrid[0];
 			selectedSpot[1] = clickInGrid[1];
 		}
-		
 	}
 	
 	
 	
 	/**
 	 * In the event that a key is pressed, takes in the key that is pressed and executes the correct response
-	 * - if the key is W,A, S, D, then moves Circe in the corresponding direction
+	 * - if the key is W, A, S, D, then moves Circe in the corresponding direction
 	 * - if the key is enter and Circe is at her house, then switches the DrawingSurface screen
-	 * - if the key is enter andCirce is near a creature, processes interactions.
 	 * @param key the key pressed
+	 * @post the provided DrawingSurface may be modified
 	 */
 	public void processKey(char key) {
 //		for(int i = 0; i<6; i++) {
@@ -407,10 +440,11 @@ public class Island extends Screen{
 	
 	
 	/**
-	 * Returns the indexes of the location in the 2DArray of elements, given the x and y coordinates on the screen, 
+	 * Returns the indexes of the location in the 2DArray of elements, given the x and y coordinates on the screen. 
+	 * Returned as {x-index in grid, y-index in grid}
 	 * @param xCoor x-coordinate on the screen
 	 * @param yCoor y-coordinate on the screen
-	 * @return int array with the the specific indexes in element[][] at which the given coordinate point occurs.
+	 * @return int[] with the the specific indexes in element[][] at which the given coordinate point occurs. 
 	 */
 	public int[] coorToGrid(double xCoor, double yCoor) {
 		float cellWidth = (surface.width - 12) / element[0].length;
@@ -429,7 +463,7 @@ public class Island extends Screen{
 	 * Returns the Element at a given location in the 2D array of Elements
 	 * @param x the x-index
 	 * @param y the y-index
-	 * @return Element at elements[y][x]
+	 * @return Element at element[y][x]
 	 */
 	public Element getElement(int x, int y) {
 		return element[y][x];
@@ -439,8 +473,8 @@ public class Island extends Screen{
 	/**
 	 * Puts the given element into the given location in the 2D array of elements
 	 * @param e the element to be places
-	 * @param x the x-coordinate of the element in the array
-	 * @param y the y-coordinate of the element in the array
+	 * @param x the x-index of the element in the array
+	 * @param y the y-index of the element in the array
 	 */
 	public void setElement(Element e, int x, int y) {
 		element[y][x] = e;
@@ -488,7 +522,7 @@ public class Island extends Screen{
 	 * Returns the ArrayList of Elements representing all the locations on this Island
 	 * @return the ArrayList of Elements
 	 */
-	public Element[][] getElements(){
+	public Element[][] getElements() {
 		return element;
 	}
 	
@@ -499,40 +533,31 @@ public class Island extends Screen{
 	public DrawingSurface getSurface() {
 		return surface;
 	}
-
-	
 	
 	/**
-	 * Changes the element at the given location to the Element type chosen from the drop down list
+	 * Changes the element at the location of the drop-down menu to the Element type chosen from the drop down list
 	 * @param list the list of options in the drop-down menu
-	 * @param event
+	 * @param event the GEvent that occurred
 	 */
 	public void handleElementChange(GDropList list, GEvent event) {
 		String text = list.getSelectedText();
+		int x = selectedSpot[0];
+		int y = selectedSpot[1];
 		if(text.equals("Choose"))
 			return;
 		
 		if(text.equals("House")) {
-			int x = selectedSpot[0];
-			int y = selectedSpot[1];
 			element[x][y] = new House(this, houseImage, x, y, "norm");
 		}
 		else if(text.equals("Garden")) {
-			int x = selectedSpot[0];
-			int y = selectedSpot[1];
 			element[x][y] = new GardenLand(this, allAGarden, x, y);
 		}
 		else if(text.equals("Pig pen")) {
-			int x = selectedSpot[0];
-			int y = selectedSpot[1];
 			element[x][y] = new PigPen(this, penImage, x, y);
 		}
 		else if(text.equals("Land")) {
-			int x = selectedSpot[0];
-			int y = selectedSpot[1];
 			element[x][y] = new Land(this, x, y);
 		}
-		
 		dropDone = true;
 	}
 
@@ -541,9 +566,9 @@ public class Island extends Screen{
 	/**
 	 * Returns the PImage of the given type of element or creature.
 	 * The types include: "pig"; "nymph"; "malicious visitor"
-	 * @param type the type of element/creature whose image is to be returned
+	 * @param type the type of creature whose image is to be returned
 	 * @return the PImage of the given type
-	 * @pre types must be one of the specified types above
+	 * @pre types must be one of the types specified above
 	 */
 	public PImage getImage(String type) {
 		switch(type) {

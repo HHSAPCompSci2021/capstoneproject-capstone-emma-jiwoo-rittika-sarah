@@ -119,11 +119,6 @@ public class DrawingSurface extends PApplet {
 		textSize(12);
 		fill(0);
 		
-//		if(newCreatureCounter % 4000 == 0 && newCreatureCounter != 0) {
-//			abort();
-//		}
-		
-		
 		stroke(0);
 		if(currentScreen.equals(workshop)) {
 			workshop.setButtonVisible(true);

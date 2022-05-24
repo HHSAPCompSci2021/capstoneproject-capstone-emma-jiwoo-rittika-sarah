@@ -53,22 +53,6 @@ public class Screen{
 	public void processKey(char key) {
 		
 	}
-	
-	/**
-	 * Returns the height of this screen
-	 * @return height
-	 */
-	public int getHeight() {
-		return HEIGHT;//surface.width;
-	}
-	
-	/**
-	 * Returns the width of this screen
-	 * @return width
-	 */
-	public int getWidth() {
-		return WIDTH;//surface.height;
-	}
 
 	/**
 	 * If the mouse is  dragged, performs functions depending on the x and y location of the mouse
@@ -97,4 +81,19 @@ public class Screen{
 	public void processMouseRelease(int mouseX, int mouseY) {
 	}
 	
+	/**
+	 * Returns the height of this screen
+	 * @return height
+	 */
+	public int getHeight() {
+		return HEIGHT;//surface.width;
+	}
+	
+	/**
+	 * Returns the width of this screen
+	 * @return width
+	 */
+	public int getWidth() {
+		return WIDTH;//surface.height;
+	}
 }
