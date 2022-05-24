@@ -5,7 +5,7 @@ import circeIsland.main.DrawingSurface;
 import processing.core.PImage;
 
 /**
- * 
+ * Thsi si the instructions screen
  * @author Rittika Saha
  */
 public class Information extends Screen{

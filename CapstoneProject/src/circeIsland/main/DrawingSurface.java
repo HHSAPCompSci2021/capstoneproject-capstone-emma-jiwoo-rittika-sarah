@@ -17,7 +17,7 @@ import processing.core.PImage;
 import processing.event.MouseEvent;
 
 /**
- * 
+ * Represents the PApplet surface on which the game displays
  * @author Rittika Saha
  *
  */

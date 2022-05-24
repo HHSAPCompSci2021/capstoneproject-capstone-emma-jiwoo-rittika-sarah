@@ -6,7 +6,7 @@ import g4p_controls.GEvent;
 import processing.core.PApplet;
 
 /**
- * 
+ * Represents the screen that draws different elements or creatures
  * @author Rittika Saha
  */
 public class Screen{

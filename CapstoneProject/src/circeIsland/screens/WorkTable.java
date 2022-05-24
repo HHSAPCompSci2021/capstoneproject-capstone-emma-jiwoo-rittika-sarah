@@ -10,12 +10,10 @@ import circeIsland.creatures.Circe;
 import circeIsland.elements.Holdable;
 
 /**
- * 
- * @author Emma Yu, Rittika Saha
- *
  *This class represents the the screen of Circe's work table. It includes an ArrayList of the Holdable items in her storage
  *and allows the user to interact with this storage. It also includes a brewing function that allows the user to 
  *create new items. 
+ * @author Emma Yu, Rittika Saha
  */
 public class WorkTable extends Screen{
 
