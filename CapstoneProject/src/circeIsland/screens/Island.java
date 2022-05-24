@@ -673,8 +673,6 @@ public class Island extends Screen{
 		c2.putOnIsland(this);
 		c3.putOnIsland(this);
 		
-		circe.addOnInventory(new Holdable(Holdable.WATER));
-		circe.addOnInventory(new Holdable(Holdable.WATER));
 		
 		
 		//ALL LAND
