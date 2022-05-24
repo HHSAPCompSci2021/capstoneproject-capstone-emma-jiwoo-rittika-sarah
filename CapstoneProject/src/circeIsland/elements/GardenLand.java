@@ -132,26 +132,21 @@ public class GardenLand extends Element{
 	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
 		act();
 		surface.push();
-		//System.out.println(lifeState);
 		if(getIsInGrid()) {
 			PImage toBeUsed = null;
 			if (lifeState == UNPLANTED) {
 				toBeUsed = getImage();
 			}
 			else if (lifeState == BUD) {
-				//System.out.println("BUD");
 				toBeUsed = budImage;
 			}
 			else if (lifeState == SPROUT) {
-				//System.out.println("Sprout");
 				toBeUsed = sproutImage;
 			}
 			else if (lifeState == GROWN) {
-				//System.out.println("GRown");
 				toBeUsed = grownImage;
 			}
 			else if (lifeState == DEAD) {
-				//System.out.println("Dead");
 				toBeUsed = deadImage;
 			}
 			
@@ -171,11 +166,6 @@ public class GardenLand extends Element{
 		
 		surface.pop();
 	}
-		
-//		surface.fill(105, 67, 45);
-//		surface.rect(6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight), cellWidth, cellHeight);
-//		surface.fill(0);
-//		surface.text("garden", 6+(getXCoor() * cellWidth), 9+(getYCoor()*cellHeight)+cellHeight);
 		
 	
 	/**

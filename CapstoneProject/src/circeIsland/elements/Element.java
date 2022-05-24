@@ -86,7 +86,7 @@ public abstract class Element {
 	}
 	
 	/**
-	 * Draws the Element
+	 * Draws the Element to the given Drawing Surface
 	 * @param surface DrawingSurface on which to draw the Element
 	 * @param cellWidth Width of the cell
 	 * @param cellHeight Height of the cell

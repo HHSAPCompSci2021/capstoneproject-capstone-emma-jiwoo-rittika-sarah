@@ -5,6 +5,12 @@ import circeIsland.screens.Island;
 
 public class Land extends Element{
 
+	/**
+	 * Creates a new Land with the given Island, and x and y location on the island grid.
+	 * @param i Island on which this Land will draw
+	 * @param xInput the x-index ion the grid
+	 * @param yInput the y-index on the grid
+	 */
 	public Land(Island i, int xInput, int yInput) {
 		super(i, xInput, yInput);
 		setStandable(true);
@@ -15,8 +21,6 @@ public class Land extends Element{
 		surface.push();
 		surface.fill(191, 227, 154);
 		surface.rect(6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight), cellWidth, cellHeight);
-//		surface.fill(0);
-//		surface.text("land", 6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight)+cellHeight);
 		surface.pop();
 	}
 

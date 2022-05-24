@@ -4,6 +4,12 @@ import circeIsland.screens.Island;
 
 public class Pond extends Element{
 
+	/**
+	 * Creates a new Pond with the given Island, and x and y location on the island grid.
+	 * @param i Island on which this Pond will draw
+	 * @param xInput the x-index ion the grid
+	 * @param yInput the y-index on the grid
+	 */
 	public Pond(Island i, int xInput, int yInput) {
 		super(i, xInput, yInput);
 		setStandable(false);

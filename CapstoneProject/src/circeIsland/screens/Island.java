@@ -27,7 +27,6 @@ public class Island extends Screen{
 	private Creature nymphVisitor, malVisitor;
 	
 	private boolean landElementSelected, mouseClickEnabled, dropDone, showWarning;
-	private int warningCase;
 	private int[] selectedSpot;
 	private GDropList list;
 	
@@ -118,7 +117,7 @@ public class Island extends Screen{
 			mouseClickEnabled = false;
 			G4P.setGlobalColorScheme(3);
 			list = new GDropList(surface, (borderX/2) + (selectedSpot[0] * cellWidth), (borderY/2) + (selectedSpot[1]*cellHeight), cellWidth, cellHeight*3, 0);  
-			list.setItems(new String[] {"Choose", "House", "Garden", "Pig pen", "Land", "None"}, 0);
+			list.setItems(new String[] {"Choose", "None", "House", "Garden", "Pig pen", "Land"}, 0);
 			list.addEventHandler(this,  "handleElementChange");
 		}
 		if (dropDone) {
@@ -158,7 +157,6 @@ public class Island extends Screen{
 			if(randType != 0) {
 				w.removeFromStorage(new Holdable(randType));
 				mv.stealMessage(this.surface);
-				System.out.println("stolen" + randType);
 			}
 		}
 	}
@@ -170,15 +168,12 @@ public class Island extends Screen{
 		int factor = 1;
 		surface.image(islandImage, 0, 0, surface.width, surface.height);
 		if(hours >= 16 && hours <= 19) {
-			//surface.tint(0, 153, 204);
 			surface.fill(5, (hours - 7) * 10/factor);
-			//surface.fill(5, (hours - factor) * 10 / factor);
 			surface.rect(0, 0, surface.width, surface.height);
 			factor++;
 		}
 		else if(hours > 19) {
 			surface.fill(5, (factor + 9) * 10);
-			//surface.fill(5, (10 + factor)* 10);
 			surface.rect(0, 0, surface.width, surface.height);
 			factor--;
 		}
@@ -337,52 +332,38 @@ public class Island extends Screen{
 		
 		if(circe.getInventoryByCoor(mouseX, mouseY) != -1) {
             circe.grab(circe.getInventoryByCoor(mouseX, mouseY));
-		} 
-//		//click on circe's house
-//		else if((clickInGrid[0] == circeHouse.getXCoor() || clickInGrid[0] == circeHouse.getXCoor()+1) && (clickInGrid[1] == circeHouse.getYCoor() || clickInGrid[1] == circeHouse.getYCoor() + 1)) {
-//			System.out.println("at circe's");
-//			surface.switchScreen(0);
-//		}
+		}
 		//click on garden
 		else if(clickedElement instanceof GardenLand && circe.intersects(clickedElement.getXCoor() * cellWidth, clickedElement.getYCoor() * cellHeight, cellWidth, cellHeight)){
-			//System.out.println("IT IS GARDEN");
 			GardenLand e = (GardenLand)(element[clickInGrid[0]][clickInGrid[1]]);
 			Holdable holding = circe.getInventory()[circe.getCurrentHold()];
 			
 			if(e.isAlive()) {
 				if(holding != null && holding.getType() == Holdable.WATER) {
-					//System.out.println("watering");
 					e.water();
 					circe.removeFromInventory(circe.getCurrentHold());
 				}
-				//System.out.println(e.getLifeState());
-				//System.out.println("HERE To HARVEST");
 				circe.harvest(e);
 			}
 			else if(e.isDead()) {
-				//System.out.println("I guess it died");
 				element[clickInGrid[0]][clickInGrid[1]] = new GardenLand(this, allAGarden, clickInGrid[0], clickInGrid[1]);
 			}
 			else {
 				if(holding != null) {
 					int hold = holding.getType();
 					if(hold == Holdable.ANITHOS_SEED) {
-						//System.out.println("let's add a");
 						e.plant(hold + 4, allAGarden);
 						circe.removeFromInventory(circe.getCurrentHold());
 					}
 					else if(hold == Holdable.BARLEY_SEED) {
-						//System.out.println("let's add b");
 						e.plant(hold + 4, allBGarden);
 						circe.removeFromInventory(circe.getCurrentHold());
 					}
 					else if (hold == Holdable.GRAPE_SEED) {
-						//System.out.println("let's add g");
 						e.plant(hold + 4, allGGarden);
 						circe.removeFromInventory(circe.getCurrentHold());
 					}
 					else if(hold == Holdable.MARATHOS_SEED) {
-						//System.out.println("let's add m");
 						e.plant(hold + 4, allMGarden);
 						circe.removeFromInventory(circe.getCurrentHold());
 					}					
@@ -431,11 +412,6 @@ public class Island extends Screen{
 	 * @post the provided DrawingSurface may be modified
 	 */
 	public void processKey(char key) {
-//		for(int i = 0; i<6; i++) {
-//			if(circe.getInventory()[i] == null) {
-//				break;
-//			}
-//		}
 		
 		if(key == 'w' || key == 'W') {
 			circe.moveY(Creature.UP);
@@ -451,7 +427,6 @@ public class Island extends Screen{
 		}
 		
 		int[] coor = circe.coorToGrid(circe.getCenterX(), circe.getCenterY());
-		//System.out.println("Circe grid : " + Arrays.toString(coor));
 		
 		if(key == '\n') {
 			float cellWidth = (surface.width - 11) / element[0].length;
