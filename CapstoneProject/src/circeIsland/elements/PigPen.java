@@ -6,6 +6,13 @@ import processing.core.PImage;
 
 public class PigPen extends Element{
 
+	/**
+	 * Creates a new PigPen with the given Island, and x and y location on the island grid.
+	 * @param i Island on which this PigPen will draw
+	 * @param p the PImage of this pig pen
+	 * @param xInput the x-index ion the grid
+	 * @param yInput the y-index on the grid
+	 */
 	public PigPen(Island i, PImage p, int xInput, int yInput) {
 		super(i, p, xInput, yInput);
 		setStandable(true);
@@ -13,14 +20,6 @@ public class PigPen extends Element{
 
 	@Override
 	public void draw(DrawingSurface surface, float cellWidth, float cellHeight) {
-//		surface.push();
-//		surface.fill(253, 221, 230);
-//		surface.rect(6 + (getXCoor() * cellWidth), 9 + (getYCoor()*cellHeight), cellWidth, cellHeight);
-//		surface.fill(0);
-//		surface.text("pig pen", 10 + (getXCoor() * cellWidth), 10 + (getYCoor()*cellHeight)+cellHeight);
-//		surface.pop();
-		
-		
 		if (getImage() != null) {
 			double rateX = getIsland().getWidth()/800;
 			double rateY = getIsland().getHeight()/600;

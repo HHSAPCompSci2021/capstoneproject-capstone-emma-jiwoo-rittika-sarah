@@ -245,7 +245,7 @@ public class WorkTable extends Screen{
 			}
 		}
 		surface.textSize(20);
-		surface.text("surface", boxX, boxY);
+		surface.text("storage", boxX, boxY);
 		surface.pop();
 	}
 	
@@ -377,17 +377,6 @@ public class WorkTable extends Screen{
 		potionRecipe.add(new Holdable(8));
 		potionRecipe.add(new Holdable(9));
 
-	}
-	
-	private void addRecipes() {
-		String wine = "Wine: 3 grapes + 1 water";
-		String bread = "Bread: 5 barley + 2 water";
-		String swinePotion = "Potion: 2 maratho + 3 anithos + 1 water";
-		String seeds = "Seeds: 1 grape/barley/maratho/anithos for 4 seeds";
-		recipes.add(wine);
-		recipes.add(bread);
-		recipes.add(swinePotion);
-		recipes.add(seeds);
 	}
 	
 	/**
@@ -705,11 +694,32 @@ public class WorkTable extends Screen{
 		return thing;
 	}
 	
+	
+	private void addRecipes() {
+		String wine = "Wine: 3 grapes + 1 water";
+		String bread = "Bread: 5 barley + 2 water";
+		String swinePotion = "Potion: 2 maratho + 3 anithos + 1 water";
+		String seeds = "Seeds: 1 grape/barley/maratho/anithos for 4 seeds";
+		recipes.add(wine);
+		recipes.add(bread);
+		recipes.add(swinePotion);
+		recipes.add(seeds);
+	}
 	private void displayRecipes() {
-		surface.image(scroll, 200, 70, 250, 300);
+		surface.image(scroll, 200, 70, 270, 300);
 		surface.fill(0);
 		surface.textSize(20);
-		surface.text("Wine:", 240, 150);
+		surface.text("Wine:", 240, 130);
+		surface.text("3 grapes & 1 water", 240, 150);
+		surface.text("Bread:", 240, 180);
+		surface.text("5 barley & 2 water", 240, 200);
+		surface.text("Seeds:", 240, 220);
+		surface.text("1 grape/barley/", 240, 240);
+		surface.text("marathos/anithos", 240, 255);
+		surface.text("for 4 seeds", 240, 270);
+		surface.text("Potion:", 240, 300);
+		surface.text("2 maratho & 3 anithos", 240, 315);
+		surface.text("& 1 water", 240, 330);
 //		for(int i = 0; i<recipes.size(); i++) {
 //			surface.text(recipes.get(i) + "\n", 60, 80 + (30 * i));
 //		}
