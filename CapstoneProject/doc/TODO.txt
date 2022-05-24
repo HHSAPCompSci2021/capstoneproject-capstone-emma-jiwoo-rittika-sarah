@@ -1,3 +1,0 @@
-[Put your README and UML in this folder!]
-
-late stage: sparkles when pigs change

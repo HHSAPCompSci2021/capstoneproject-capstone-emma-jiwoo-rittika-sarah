@@ -637,7 +637,6 @@ public class Island extends Screen{
 		allMGarden[3] = gardenM3;
 		allMGarden[4] = gardenM4;
 		
-		
 		houseImage = surface.loadImage("Files/HouseVisitor.png");
 		cHImage = surface.loadImage("Files/HouseCirce.png");
 		penImage = surface.loadImage("Files/PigPen.png");
@@ -652,10 +651,10 @@ public class Island extends Screen{
 		
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 250);
-		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 600, 400);
+		//MaliciousVisitor c2 = new MaliciousVisitor(malImage, 600, 400);
 		Pig c3 = new Pig(pigImage, 575, 250);
 		c1.putOnIsland(this);
-		c2.putOnIsland(this);
+		//c2.putOnIsland(this);
 		c3.putOnIsland(this);
 		
 		
