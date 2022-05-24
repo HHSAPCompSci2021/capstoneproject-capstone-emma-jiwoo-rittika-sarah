@@ -18,8 +18,10 @@ public class House extends Element{
 		if (type == "circe") {
 			xSize = 2;
 			ySize = 2;
+			isTaken = true;
 		}
-		isTaken = false;
+		else
+			isTaken = false;
 	}
 
 	@Override
