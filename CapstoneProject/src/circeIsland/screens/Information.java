@@ -21,16 +21,23 @@ public class Information extends Screen{
 	public Information(DrawingSurface surface) {
 		super(1200, 900, surface);
 		exitButton = new Rectangle(super.WIDTH/2 - 25, super.HEIGHT - 100, 50, 30);
-		info = "Welcome to Circe's Island!"
-				+ "\n- To move Circe, use the WASD keys."
-				+ "\n- To enter Circe's workspace and make potions and food, move Circe to her\n house and press RETURN"
-				+ "\n- At Circe's workspace, you can brew potions, make food, or get seeds\n from harvested plants."
-				+ " You can also switch items from circe's holdings\n to the storage."
-				+ "\n- To add elements to the Island, click on a location and select the desired\n element."
-				+ "\n- To plant the garden, first move Circe to a garden plot. Ensure Circe is\n holding the desired\n"
-				+ " seed, then click on the plot to plant the seed"
-				+ "\n- When a Malicious Visitor enters the Island, turn them into pigs. First\n feed them with food "
-				+ "to stop them from running away. Then feed them with the potion to convert them to\n pigs. Don't forget to give them a pig pen!";
+//		info = "Welcome to Circe's Island!"
+//				+ "\n- To move Circe, use the WASD keys."
+//				+ "\n- To enter Circe's workspace and make potions and food, move Circe to her\n house and press RETURN"
+//				+ "\n- At Circe's workspace, you can brew potions, make food, or get seeds\n from harvested plants."
+//				+ " You can also switch items from circe's holdings\n to the storage."
+//				+ "\n- To add elements to the Island, click on a location and select the desired\n element."
+//				+ "\n- To plant the garden, first move Circe to a garden plot. Ensure Circe is\n holding the desired\n"
+//				+ " seed, then click on the plot to plant the seed"
+//				+ "\n- When a Malicious Visitor enters the Island, turn them into pigs. First\n feed them with food "
+//				+ "to stop them from running away. Then feed them with the potion to convert them to\n pigs. Don't forget to give them a pig pen!";
+		
+		info = "You are Circe, an enchantress from Greek mythology, and you have just arrived on your island Aiaia after\n"
+				+ " being banished for using magic. Your goal in this adventure is to transform your island into a habitable\n"
+				+ " haven for other banished nymphs by cultivating your garden, building homes, and turning malicious visitors\n"
+				+ " into pigs!";
+		
+		
 		setupImages();
 	}
 	

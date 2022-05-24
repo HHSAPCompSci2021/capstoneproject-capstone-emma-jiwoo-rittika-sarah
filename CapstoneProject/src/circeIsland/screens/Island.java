@@ -154,11 +154,10 @@ public class Island extends Screen{
 		if(mv.isStealing() && prob < 0.15 && surface.getDays() % 2 == 1 && surface.getHours() % 6 == 0 && surface.getHours() != 0) {
 			WorkTable w = surface.getWorkTable();
 			int randType = (int)(Math.random() * 13);
-			if(randType == 0) {
-				return;
+			if(randType != 0) {
+				w.removeFromStorage(new Holdable(randType));
+				System.out.println("stolen" + randType);
 			}
-			w.removeFromStorage(new Holdable(randType));
-			System.out.println("stolen" + randType);
 		}
 	}
 	
