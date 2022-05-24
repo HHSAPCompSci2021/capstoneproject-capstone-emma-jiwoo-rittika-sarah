@@ -77,7 +77,7 @@ public class WorkTable extends Screen{
 		int i = 1;
 		for (ArrayList<Holdable> h: storage) {
 			h.add(new Holdable(i, holdableImages[i-1]));
-			if (i == 5 || i == 8 || i == 7) {
+			if (i == 1 || i == 2 || i == 3) {
 				h.add(new Holdable(i, holdableImages[i-1]));
 				h.add(new Holdable(i, holdableImages[i-1]));
 				h.add(new Holdable(i, holdableImages[i-1]));
@@ -87,14 +87,12 @@ public class WorkTable extends Screen{
 		}
 	}
 	
+	public void setStartingInventory() {
+		
+	}
+	
 	public void add(Circe c) {
 		circe = c;
-		circe.setInventory(0, new Holdable(4, holdableImages[3]));
-		circe.setInventory(1, new Holdable(3, holdableImages[2]));
-		circe.setInventory(3, new Holdable(10, holdableImages[9]));
-		circe.setInventory(4, new Holdable(12, holdableImages[11]));
-		circe.setInventory(5, new Holdable(11, holdableImages[10]));
-
 	}
 	
 	private void setImages() {
@@ -364,7 +362,6 @@ public class WorkTable extends Screen{
 	
 	public void processMouseClick(int mouseX, int mouseY) {
 //		//inside the brew button
-		System.out.println("processing");
 //		if(mouseX>cookButton.x && mouseX<cookButton.x + cookButton.width && mouseY>cookButton.y && mouseY<cookButton.y + cookButton.height){
 //			brew();
 //		}
@@ -481,7 +478,6 @@ public class WorkTable extends Screen{
 		else if (click.intersects(inventoryButton) && toElementInv(mouseX, mouseY).getType() == curHoldable.getType()) {
 			addToStorage(curHoldable);
 				if (brewedItemNum != 0 && gainSpot == 3) {
-				System.out.println(brewedItemNum);
 				addToStorage(curHoldable);
 				addToStorage(curHoldable);
 				addToStorage(curHoldable);
@@ -589,7 +585,6 @@ public class WorkTable extends Screen{
 	private void brew() {
 		if (matchesRecipe().getType() != 13) {
 			Holdable h =  matchesRecipe();
-			System.out.println("Success" + h.getName());
 			
 			cauldronItems.clear();
 			brewedItem = h;
@@ -639,7 +634,6 @@ public class WorkTable extends Screen{
 		int size = cauldronItems.size();
 		
 		if (size == wineRecipe.size() && w.size() == 0) {
-			System.out.println("wine recipe should work");
 			return new Holdable(10, holdableImages[9]);
 		}
 		if (size == breadRecipe.size() && b.size() == 0)
