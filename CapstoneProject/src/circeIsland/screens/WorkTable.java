@@ -341,7 +341,7 @@ public class WorkTable extends Screen{
 	public void removeFromStorage(Holdable h) {
 		if (h.getType() == 13)
 			return;
-		
+
 		if (storage.get(h.getType()-1).size() == 1 && storage.get(h.getType()-1).get(0).getType() != 13)
 			storage.get(h.getType()-1).add(new Holdable(13));
 		

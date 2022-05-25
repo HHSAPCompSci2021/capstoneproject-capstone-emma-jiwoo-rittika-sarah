@@ -140,6 +140,7 @@ public class MaliciousVisitor extends Visitor{
 	public boolean isStealing() {
 		return stealing;
 	}
+
 	
 	/**
 	 * The MaliciousVisitor will be drawn by Creature.java draw method

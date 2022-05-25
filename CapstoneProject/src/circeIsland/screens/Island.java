@@ -150,18 +150,18 @@ public class Island extends Screen{
 	private void performSteal(Creature c) {
 		MaliciousVisitor mv = (MaliciousVisitor)c;
 		double prob = Math.random();
-		if(mv.isStealing() && prob < 0.15 && surface.getDays() % 2 == 1 && surface.getHours() % 6 == 0 && surface.getHours() != 0) {
-			mv.getStealingCount();
+		if(mv.isStealing() && prob < 0.15 && surface.getDays() % 2 == 1 && surface.getHours() % 6 == 0 && surface.getHours() != 0){ 
 			WorkTable w = surface.getWorkTable();
 			int randType = (int)(Math.random() * 13);
-			if(randType == 0) {
+			if(randType == 0 || randType == 13) {
 				return;
 			}
-			if(randType != 0) {
+			else if(randType != 0) {
 				w.removeFromStorage(new Holdable(randType));
 				mv.stealMessage(this.surface);
 			}
 		}
+		
 	}
 	
 	
@@ -654,10 +654,10 @@ public class Island extends Screen{
 		
 		circe.putOnIsland(this);
 		Nymph c1 = new Nymph(nymphImage, 450, 250);
-		//MaliciousVisitor c2 = new MaliciousVisitor(malImage, 600, 400);
+		MaliciousVisitor c2 = new MaliciousVisitor(malImage, 600, 400);
 		Pig c3 = new Pig(pigImage, 575, 250);
 		c1.putOnIsland(this);
-		//c2.putOnIsland(this);
+		c2.putOnIsland(this);
 		c3.putOnIsland(this);
 		
 		
