@@ -63,7 +63,7 @@ public class MaliciousVisitor extends Visitor{
 				stealing = true;
 				running = false;
 				stealingCount++;
-			}else if(running) {// && !stealing) {
+			}else if(running && !stealing) {
 				int[] circeGrid = checkCirceNearby();
 				int dir = -1;
 				if(circeGrid == null) {
@@ -139,10 +139,6 @@ public class MaliciousVisitor extends Visitor{
 	 */
 	public boolean isStealing() {
 		return stealing;
-	}
-
-	public void stopStealing() {
-		stealing = false;
 	}
 	
 	/**
