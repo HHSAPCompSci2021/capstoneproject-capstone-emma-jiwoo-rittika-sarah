@@ -196,9 +196,9 @@ public class WorkTable extends Screen{
 		int[][] inventory = new int[6][2];
 		for (int i = 0; i<inventory.length; i++) {
 			for (int j = 0; j<inventory[0].length; j++) {
-				if (storage.get(currentNum).get(0).getType() == 13)
+				if (storage.get(currentNum).get(0).getType() == 13) 
 					inventory[i][j] = 0;
-				else
+				else 
 					inventory[i][j] = storage.get(currentNum).size();
 				currentNum ++;
 			}
@@ -339,13 +339,24 @@ public class WorkTable extends Screen{
 	 * @param h The item to be removed
 	 */
 	public void removeFromStorage(Holdable h) {
+		
+		for(ArrayList<Holdable> a : storage) {
+			for(Holdable k : a) {
+				System.out.print(k.getType() + " ");
+			}
+			System.out.println();
+		}
 		if (h.getType() == 13)
 			return;
-
+		if(storage.get(h.getType()-1).get(0).getType() == 13) {
+			return;
+		}
 		if (storage.get(h.getType()-1).size() == 1 && storage.get(h.getType()-1).get(0).getType() != 13)
 			storage.get(h.getType()-1).add(new Holdable(13));
 		
 		storage.get(h.getType()-1).remove(0);
+		
+		
 	}
 	
 	private void declareRecipes() {

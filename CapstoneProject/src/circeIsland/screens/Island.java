@@ -137,11 +137,11 @@ public class Island extends Screen{
 		}
 		circe.draw(surface);
 		
-		//show any required warning every four days
-		if(surface.getDays() % 2 == 0 && surface.getDays() != 0) {
+		//show any required warning every two days
+		if(surface.getDays() % 2 == 0) {
 			int numHouses = getNumHouses();
 			int numNymphs = getNumCreature('n');
-			if(numNymphs - numHouses >= 1)
+			if(numNymphs - numHouses >= 3)
 				drawWarningMessage(1);
 		}
 		
@@ -150,7 +150,7 @@ public class Island extends Screen{
 	private void performSteal(Creature c) {
 		MaliciousVisitor mv = (MaliciousVisitor)c;
 		double prob = Math.random();
-		if(mv.isStealing() && prob < 0.15 && surface.getDays() % 2 == 1 && surface.getHours() % 6 == 0 && surface.getHours() != 0){ 
+		if(mv.isStealing() && prob < 0.2 && surface.getDays() % 2 == 1 && surface.getHours() % 6 == 0){ 
 			WorkTable w = surface.getWorkTable();
 			int randType = (int)(Math.random() * 13);
 			if(randType == 0 || randType == 13) {
@@ -235,7 +235,7 @@ public class Island extends Screen{
 	
 	private void drawWarningMessage(int code) {
 		surface.fill(255);
-		surface.rect(60,  50,  surface.width/4,  surface.height/7 - 120);
+		surface.rect(140,  20,  surface.width/4,  surface.height/7 - 120);
 		String msg = "";
 		
 		switch(code) {
@@ -247,7 +247,7 @@ public class Island extends Screen{
 		
 		double w = surface.textWidth(msg);
 		surface.fill(0);
-		surface.text(msg,  (float)(60 + ((surface.width/4) / 2) - w / 2), (50 + (surface.height/7 - 120)) / 2 + 10);
+		surface.text(msg,  (float)(140 + (surface.width/4) - w / 2), (50 + (surface.height/7 - 120)) / 2 + 10);
 		
 		
 	}

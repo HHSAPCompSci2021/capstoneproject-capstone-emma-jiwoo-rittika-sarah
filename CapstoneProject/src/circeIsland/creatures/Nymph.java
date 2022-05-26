@@ -61,10 +61,10 @@ public class Nymph extends Visitor{
 			}
 			g.fill(170,10,10);
 			if(emotion == BAD) {
-				g.text("huh?", (float)(x+width/5), (float)(y-height/10));
+				g.text("huh!", (float)(x+width/5), (float)(y-height/10));
 			}
 			if(emotion < BAD) {
-				g.text("huh!", (float)(x+width/5), (float)(y-height/10));
+				g.text("huh?", (float)(x+width/5), (float)(y-height/10));
 			}
 			if(house[0] == -1) {
 				setHouse();

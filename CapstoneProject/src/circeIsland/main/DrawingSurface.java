@@ -97,12 +97,18 @@ public class DrawingSurface extends PApplet {
 		if(newCreatureCounter % 3800 == 0 && newCreatureCounter != 0) {
 			island.addNymph();
 		}
-		if(newCreatureCounter % 7600 == 0 && newCreatureCounter != 0) {
+		if(newCreatureCounter == 1920) {
+			island.addNymph();
+		}
+		if(newCreatureCounter == 2200) {
+			island.addMaliciousVisitor();
+		}
+		if(newCreatureCounter % 6600 == 0 && newCreatureCounter != 0) {
 			island.addMaliciousVisitor();
 		}
 		
 		//drawCount += 1/frameRate;
-		if(drawCount >=80) {
+		if(drawCount >=60) {
 			drawCount = 0;
 			hours ++;
 			System.out.println("HOUR UP : " + hours + " " + frameRate);
