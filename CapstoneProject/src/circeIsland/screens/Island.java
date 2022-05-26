@@ -403,6 +403,13 @@ public class Island extends Screen{
 					i--;
 				}
 			}
+			else if(creatures.get(i) instanceof MaliciousVisitor) {
+				MaliciousVisitor mv = (MaliciousVisitor)(creatures.get(i));
+				if(mv.getGetOut()) {
+					creatures.remove(i);
+					i--;
+				}
+			}
 		}
 	}
 	
@@ -720,8 +727,8 @@ public class Island extends Screen{
 		element[3][9].setIsInGrid(false);
 		element[3][9] = null;
 		element[4][9].setIsInGrid(false);
-		element[4][9] = null;
-		element[3][10].setIsInGrid(false);
+//		element[4][9] = null;
+//		element[3][10].setIsInGrid(false);
 		element[3][10] = null;
 		
 		element[8][18].setIsInGrid(false);

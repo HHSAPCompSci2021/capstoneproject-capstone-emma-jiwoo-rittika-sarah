@@ -19,6 +19,7 @@ public class MaliciousVisitor extends Visitor{
 	private boolean running;
 	private int stealingCount;
 	private int[] circeHouse;
+	private Rectangle2D.Double deck;
 	private Rectangle2D.Double circeHouseRect;
 
 	/**
@@ -37,6 +38,7 @@ public class MaliciousVisitor extends Visitor{
 		circeHouse[0] = -1;
 		circeHouse[1] = -1;
 		circeHouseRect = null;
+		deck = null;
 	}
 
 	/**
@@ -57,23 +59,33 @@ public class MaliciousVisitor extends Visitor{
 	public void act() {
 		if(super.getIsInGrid()) {
 			if(circeHouse[0] == -1) {
-				setHouse();
+				setHouseDeck();
 			}
-			if(this.intersects(circeHouseRect)) {
-				stealing = true;
-				//running = false;
-				stealingCount++;
-			}else if(running && !stealing) {
+			
+			if(running) {
 				int[] circeGrid = checkCirceNearby();
 				int dir = -1;
-				if(circeGrid == null) {
+				if(circeGrid == null && !stealing) {
 					dir = super.destinationDir(circeHouse);
-				}else {
+				}else if(circeGrid != null && !stealing){
 					dir = destinationDir(circeGrid);
+				}else {
+					if(this.intersects(deck)) {
+						setGetOut(true);
+						return;
+					}
+					int[] deck = {3, 5};
+					dir = super.destinationDir(deck);
 				}
 				
 				super.act(dir);
+				}
+			if(this.intersects(circeHouseRect)) {
+				stealing = true;
+				running =false;
+				stealingCount++;
 			}
+			
 		}
 	}
 	
@@ -124,14 +136,28 @@ public class MaliciousVisitor extends Visitor{
 		}
 		
 		if(Math.abs(diffY) > Math.abs(diffX)) {
-			if(diffY < 0) 
-				return Creature.UP;
-			return Creature.DOWN;
+			if(diffY < 0) { 
+				if(canStand(x,y+-1 * velocity)) {
+					return UP;
+				}
+			}else if(diffY > 0) {
+				if(canStand(x,y+velocity)) {
+					return DOWN;
+				}
+			}
 		}
 		
-		if(diffX<0)
-			return Creature.LEFT;
-		return Creature.RIGHT;
+		if(diffX < 0) { 
+			if(canStand(x+-1 * velocity,y)) {
+				return LEFT;
+			}
+		}else if(diffX > 0) {
+			if(canStand(x+velocity, y)) {
+				return RIGHT;
+			}
+		}
+		return -1;
+
 	}
 	
 	/**
@@ -139,6 +165,14 @@ public class MaliciousVisitor extends Visitor{
 	 */
 	public boolean isStealing() {
 		return stealing;
+	}
+	
+	/**
+	 * 
+	 * @param b
+	 */
+	public void setStealing(boolean b) {
+		stealing = b;
 	}
 	
 	/**
@@ -151,12 +185,13 @@ public class MaliciousVisitor extends Visitor{
 		if(super.getIsInGrid()) {
 			super.draw(g);
 			if(circeHouse[0] == -1) {
-				setHouse();
+				setHouseDeck();
 			}
 			if(islandWidthResized() || islandHeightResized()) {
 				double cellWidth = (super.getIsland().getSurface().width - 11) / super.getIsland().getElements()[0].length;
 				double cellHeight = (super.getIsland().getSurface().height - 17) / super.getIsland().getElements().length;
 				circeHouseRect = new Rectangle2D.Double(circeHouse[0]*cellWidth-cellWidth/3,circeHouse[1]*cellHeight-cellHeight/3,cellWidth*8/3, cellHeight*8/3);
+				deck = new Rectangle2D.Double(3*cellWidth-cellWidth/2,5*cellHeight-cellHeight/2,cellWidth*2, cellHeight*2);
 			}
 			
 			
@@ -175,14 +210,14 @@ public class MaliciousVisitor extends Visitor{
 	}
 	
 	
-	private void setHouse() {
+	private void setHouseDeck() {
 		House h = super.getIsland().getCirceHouse();
 		circeHouse[0] = h.getXCoor();
 		circeHouse[1] = h.getYCoor();
 		double cellWidth = (super.getIsland().getSurface().width - 11) / super.getIsland().getElements()[0].length;
 		double cellHeight = (super.getIsland().getSurface().height - 17) / super.getIsland().getElements().length;
 		circeHouseRect = new Rectangle2D.Double(circeHouse[0]*cellWidth-cellWidth/3,circeHouse[1]*cellHeight-cellHeight/3,cellWidth*8/3, cellHeight*8/3);
+		deck = new Rectangle2D.Double(3*cellWidth-cellWidth/2,5*cellHeight-cellHeight/2,cellWidth*2, cellHeight*2);
 	}
-
 	
 }

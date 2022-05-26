@@ -11,6 +11,8 @@ public class Visitor extends Creature{
 	
 	public static final double VISITOR_WIDTH_RATIO = 27.77777778;
 	public static final double VISITOR_HEIGHT_RATIO = 11.19402985;
+	private boolean getOut;
+
 			// 75*135
 	
 	/**
@@ -23,6 +25,8 @@ public class Visitor extends Creature{
 	 */
 	public Visitor(PImage img, double x, double y) {
 		super(img, x, y, VISITOR_WIDTH_RATIO, VISITOR_HEIGHT_RATIO);
+		getOut = false;
+
 	}
 	
 	/**
@@ -58,5 +62,20 @@ public class Visitor extends Creature{
 	 */
 	public String getType() {
 		return "Visitor";
+	}
+	
+	/**
+	 * @return true if Visitor wants to get out of the island, false otherwise
+	 */
+	public boolean getGetOut() {
+		return getOut;
+	}
+	
+	/**
+	 * Set up the visitor willingness to get out
+	 * @param b  true if Visitor wants to get out of the island, false otherwise
+	 */
+	public void setGetOut(boolean b) {
+		getOut = b;
 	}
 }

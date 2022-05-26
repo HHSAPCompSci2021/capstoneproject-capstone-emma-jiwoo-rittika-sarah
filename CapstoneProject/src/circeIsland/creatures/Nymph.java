@@ -17,7 +17,6 @@ public class Nymph extends Visitor{
 	private Rectangle2D.Double houseRect;
 	private boolean inHouse;
 	private Rectangle2D.Double deck;
-	private boolean getOut;
 	private int emotion;
 	private boolean feeding;
 	private boolean newDay;
@@ -108,7 +107,7 @@ public class Nymph extends Visitor{
 		
 		if(emotion<=ANGRY) {
 			if(this.intersects(deck)) {
-				getOut = true;
+				setGetOut(true);
 				return;
 			}
 			int[] deck = {3, 5};
@@ -165,22 +164,7 @@ public class Nymph extends Visitor{
 	public int[] getHouseLoc() {
 		return house;
 	}
-	
-	/**
-	 * Set wheter nymph wants to go out or not by boolean b
-	 * true represents nymph wants to go out, and false represents nymph does not want to go out the island
-	 * @param b new nymph wanting go out state
-	 */
-	public void setGetOut(boolean b) {
-		getOut = b;
-	}
-	
-	/**
-	 * @return true if nymph wants to get out of the island, false otherwise
-	 */
-	public boolean getGetOut() {
-		return getOut;
-	}
+
 
 	/**
 	 * @return the type of this class ("Nymph")
