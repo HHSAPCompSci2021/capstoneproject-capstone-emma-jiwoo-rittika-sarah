@@ -130,7 +130,6 @@ public class Island extends Screen{
 		for(Creature c : creatures) {
 			c.act();
 			c.draw(surface);
-			
 			if(c instanceof MaliciousVisitor) {
 				performSteal(c);
 			}
