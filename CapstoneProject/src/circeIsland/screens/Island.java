@@ -158,6 +158,7 @@ public class Island extends Screen{
 			else if(randType != 0) {
 				w.removeFromStorage(new Holdable(randType));
 				mv.stealMessage(this.surface);
+				mv.beginRunning();
 			}
 		}
 		
