@@ -61,7 +61,7 @@ public class MaliciousVisitor extends Visitor{
 			}
 			if(this.intersects(circeHouseRect)) {
 				stealing = true;
-				running = false;
+				//running = false;
 				stealingCount++;
 			}else if(running && !stealing) {
 				int[] circeGrid = checkCirceNearby();
