@@ -19,7 +19,7 @@ import circeIsland.elements.*;
  * @author Jiwoo Kim
  */
 public abstract class Creature extends Rectangle2D.Double{
-	private int velocity;
+	protected int velocity;
 	private PImage image;
 	private Island myIsland;
 	private boolean isInGrid;
@@ -288,20 +288,38 @@ public abstract class Creature extends Rectangle2D.Double{
 		int[] grid = coorToGrid(x, y+height);
 		int diffX = grid[0] - destination[0];
 		int diffY = grid[1] - destination[1];
+		int dir = -1;
 		
 		if(diffX == 0 && diffY == 0) {
 			return -1;
 		}
 		
 		if(Math.abs(diffY) > Math.abs(diffX)) {
-			if(diffY < 0) 
-				return Creature.DOWN;
-			return Creature.UP;
+			if(diffY > 0) { 
+				if(canStand(x,y+-1 * velocity)) {
+					return UP;
+				}
+			}else if(diffY < 0) {
+				if(canStand(x,y+velocity)) {
+					return DOWN;
+				}
+			}else {
+				dir = (int)(Math.random()*2)+2;
+			}
 		}
 		
-		if(diffX<0)
-			return Creature.RIGHT;
-		return Creature.LEFT;
+		if(diffX > 0) { 
+			if(canStand(x+-1 * velocity,y)) {
+				return LEFT;
+			}
+		}else if(diffX < 0) {
+			if(canStand(x+velocity, y)) {
+				return RIGHT;
+			}
+		}else {
+			dir = (int)(Math.random()*2);
+		}
+		return dir;
 
 	}	
 	
